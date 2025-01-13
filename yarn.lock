@@ -790,12 +790,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/mosip@^1.7.0-alpha.2":
-  version "1.7.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.2.tgz#b3de70d993607142d739c7ada0c021b0d0f32b46"
-  integrity sha512-UiZUxuUiNGP/9CuQh1yPtmXmZTRAFiY4jQI2qlihCXZ8A0JbdXut2g3Dw3dRNvA9SvUnix1uuQpmWU/tAePWJA==
-  dependencies:
-    "@hapi/hapi" "^20.0.1"
+"@opencrvs/mosip@^1.7.0-alpha.6":
+  version "1.7.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.7.0-alpha.6.tgz#b763a972e871e1d3c62ef71281c3ce481ec9573e"
+  integrity sha512-OEaBASV/77ikC7AB80HIk3E1er7blZZ0wszrNn+wycvlyaN+/itHBqFEB3prBiERHmP0yPbcVx+tz+1PnmuEpQ==
 
 "@opencrvs/toolkit@0.0.6-events":
   version "0.0.6-events"

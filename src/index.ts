@@ -61,7 +61,10 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
-import { mosipRegistrationHandler } from '@opencrvs/mosip'
+import {
+  mosipRegistrationForReviewHandler,
+  mosipRegistrationHandler
+} from '@opencrvs/mosip'
 import { env } from './environment'
 import {
   getCustomEventsHandler,
@@ -426,6 +429,17 @@ export async function createServer() {
       tags: ['api'],
       description:
         'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/sent-notification-for-review',
+    handler: mosipRegistrationForReviewHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api']
     }
   })
 

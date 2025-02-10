@@ -64,7 +64,8 @@ import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
-  mosipRegistrationHandler
+  mosipRegistrationHandler,
+  isVerified
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -73,6 +74,7 @@ import {
   onRegisterHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
+import { eventRegistrationHandler } from './api/event-registration/handler'
 
 export interface ITokenPayload {
   sub: string
@@ -186,6 +188,20 @@ async function getPublicKey(): Promise<string> {
     }
     await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
+  }
+}
+
+const withVerification = (
+  verified: (request: Hapi.Request) => boolean,
+  onVerified: Hapi.Lifecycle.Method<any>,
+  onUnverified: Hapi.Lifecycle.Method<any>
+): Hapi.Lifecycle.Method => {
+  return (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
+    if (verified(request)) {
+      return onVerified(request, h)
+    } else {
+      return onUnverified(request, h)
+    }
   }
 }
 
@@ -432,9 +448,13 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: mosipRegistrationHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
+    handler: withVerification(
+      isVerified,
+      mosipRegistrationHandler({
+        url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+      }),
+      eventRegistrationHandler
+    ),
     options: {
       tags: ['api'],
       description:

@@ -64,8 +64,7 @@ import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
-  mosipRegistrationHandler,
-  isVerified
+  mosipRegistrationHandler
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -75,6 +74,7 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
+import { isVerified } from './utils/mosip-utils'
 
 export interface ITokenPayload {
   sub: string
@@ -192,12 +192,17 @@ async function getPublicKey(): Promise<string> {
 }
 
 const withVerification = (
-  verified: (request: Hapi.Request) => boolean,
+  verified: (
+    // eslint-disable-next-line no-unused-vars
+    request: Hapi.Request,
+    // eslint-disable-next-line no-unused-vars
+    h: Hapi.ResponseToolkit
+  ) => Promise<boolean>,
   onVerified: Hapi.Lifecycle.Method<any>,
   onUnverified: Hapi.Lifecycle.Method<any>
 ): Hapi.Lifecycle.Method => {
-  return (request: Hapi.Request, h: Hapi.ResponseToolkit) => {
-    if (verified(request)) {
+  return async (request, h) => {
+    if (await verified(request, h)) {
       return onVerified(request, h)
     } else {
       return onUnverified(request, h)

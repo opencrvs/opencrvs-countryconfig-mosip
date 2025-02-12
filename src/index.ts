@@ -456,10 +456,16 @@ export async function createServer() {
       })(request, h)) as unknown as VerificationStatus
 
       if (shouldForwardToIDSystem(result)) {
+        logger.info(
+          'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+        )
         return mosipRegistrationHandler({
           url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
         })
       } else {
+        logger.info(
+          'Failed country specified custom logic check for id creation. Bypassing id system...'
+        )
         return eventRegistrationHandler
       }
     },

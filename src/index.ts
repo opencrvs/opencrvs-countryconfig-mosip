@@ -64,7 +64,8 @@ import { recordNotificationHandler } from './api/record-notification/handler'
 import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
-  mosipRegistrationHandler
+  mosipRegistrationHandler,
+  verify
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -74,7 +75,6 @@ import {
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
-import { isVerified } from './utils/mosip-utils'
 
 export interface ITokenPayload {
   sub: string
@@ -191,23 +191,20 @@ async function getPublicKey(): Promise<string> {
   }
 }
 
-const withVerification = (
-  verified: (
-    // eslint-disable-next-line no-unused-vars
-    request: Hapi.Request,
-    // eslint-disable-next-line no-unused-vars
-    h: Hapi.ResponseToolkit
-  ) => Promise<boolean>,
-  onVerified: Hapi.Lifecycle.Method<any>,
-  onUnverified: Hapi.Lifecycle.Method<any>
-): Hapi.Lifecycle.Method => {
-  return async (request, h) => {
-    if (await verified(request, h)) {
-      return onVerified(request, h)
-    } else {
-      return onUnverified(request, h)
-    }
-  }
+interface VerificationStatus {
+  father: boolean
+  mother: boolean
+  informant: boolean
+}
+
+/**
+ * Determines whether the registration data should be forwarded to the identity system
+ * for unique ID creation based on the custom country specific logic built on verification statuses.
+ */
+export function shouldForwardToIDSystem(
+  verificationStatus: VerificationStatus
+) {
+  return verificationStatus.informant
 }
 
 export async function createServer() {
@@ -453,13 +450,19 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/event-registration',
-    handler: withVerification(
-      isVerified,
-      mosipRegistrationHandler({
+    handler: async (request, h) => {
+      const result = (await verify({
         url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-      }),
-      eventRegistrationHandler
-    ),
+      })(request, h)) as unknown as VerificationStatus
+
+      if (shouldForwardToIDSystem(result)) {
+        return mosipRegistrationHandler({
+          url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+        })
+      } else {
+        return eventRegistrationHandler
+      }
+    },
     options: {
       tags: ['api'],
       description:

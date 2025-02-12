@@ -202,7 +202,7 @@ interface VerificationStatus {
  * for unique ID creation based on the custom country specific logic built on verification statuses.
  */
 export function shouldForwardToIDSystem(
-  verificationStatus: VerificationStatus
+  verificationStatus: Partial<VerificationStatus>
 ) {
   return verificationStatus.informant
 }
@@ -451,10 +451,10 @@ export async function createServer() {
     method: 'POST',
     path: '/event-registration',
     handler: async (request, h) => {
-      const result = (await verify({
-        url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-      })(request, h)) as unknown as VerificationStatus
-
+      const result = await verify({
+        url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024',
+        request
+      })
       if (shouldForwardToIDSystem(result)) {
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'

@@ -61,7 +61,8 @@ import {
   detailsExistConditional,
   ageOfIndividualValidators,
   ageOfParentsConditionals,
-  disableIfVerifiedOrAuthenticated
+  disableIfVerifiedOrAuthenticated,
+  hideIfIDReaderFilledBirthDate
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -81,11 +82,14 @@ import {
   getCommonSectionMapping,
   getCustomFieldMapping
 } from '@countryconfig/utils/mapping/field-mapping-utils'
-import { getReasonForLateRegistration } from '../custom-fields'
-import { getIDNumberFields, getIDType } from '../custom-fields'
-import { getGenderCustom } from './custom-fields'
 import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
 import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
+import {
+  getReasonForLateRegistration,
+  getGenderCustom,
+  getIDType,
+  getIDNumberFields
+} from '../common/common-custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
 
@@ -262,7 +266,7 @@ export const birthForm: ISerializedForm = {
               'informant',
               disableIfVerifiedOrAuthenticated,
               getInitialValueFromIDReader('gender')
-            ), // Required field.
+            ),
             getBirthDate(
               'informantBirthDate',
               informantBirthDateConditionals.concat(
@@ -282,7 +286,11 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(hideIfInformantMotherOrFather),
+            exactDateOfBirthUnknown(
+              hideIfInformantMotherOrFather.concat(
+                hideIfIDReaderFilledBirthDate
+              )
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
@@ -378,7 +386,9 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.motherBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown(
+              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
               exactDateOfBirthUnknownConditional.concat(
@@ -483,7 +493,9 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(detailsExistConditional),
+            exactDateOfBirthUnknown(
+              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+            ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
               exactDateOfBirthUnknownConditional.concat(

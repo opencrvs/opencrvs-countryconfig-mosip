@@ -86,6 +86,11 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
             parameters: [['NATIONAL_ID']]
           },
           {
+            fieldName: 'mosipAid',
+            operation: 'childIdentityToFieldTransformer',
+            parameters: [['MOSIP_AID']]
+          },
+          {
             fieldName: 'birthConfigurableIdentifier1',
             operation: 'childIdentityToFieldTransformer',
             parameters: [['BIRTH_CONFIGURABLE_IDENTIFIER_1']]
@@ -105,6 +110,7 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
           operation: 'childFieldToIdentityTransformer',
           parameters: [
             [
+              'MOSIP_AID',
               'BIRTH_CONFIGURABLE_IDENTIFIER_1',
               'BIRTH_CONFIGURABLE_IDENTIFIER_2',
               'BIRTH_CONFIGURABLE_IDENTIFIER_3'
@@ -115,6 +121,7 @@ export function getSectionMapping(mappingId: string): ISectionMapping {
           operation: 'childIdentityToFieldTransformer',
           parameters: [
             [
+              'MOSIP_AID',
               'BIRTH_CONFIGURABLE_IDENTIFIER_1',
               'BIRTH_CONFIGURABLE_IDENTIFIER_2',
               'BIRTH_CONFIGURABLE_IDENTIFIER_3'

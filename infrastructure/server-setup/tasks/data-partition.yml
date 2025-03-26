@@ -215,7 +215,7 @@
   when: not vsexport_data_backup.stat.exists
 
 - name: Check SQLite data directory
-  file:
+  stat:
     path: /data/sqlite
   register: sqlite_data
 

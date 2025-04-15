@@ -67,7 +67,7 @@ import {
   mosipRegistrationHandler,
   verify,
   mosipCorrectionRequestHandler,
-  mosipCorrectionlApprovalHandler,
+  mosipCorrectionApprovalHandler,
   mosipCorrectionHandler
 } from '@opencrvs/mosip'
 import { env } from './environment'
@@ -686,7 +686,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: '/events/{event}/actions/approve-correction',
-    handler: mosipCorrectionlApprovalHandler({
+    handler: mosipCorrectionApprovalHandler({
       url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
     }),
     options: {

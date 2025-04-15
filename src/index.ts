@@ -65,7 +65,10 @@ import {
   mosipRegistrationForReviewHandler,
   mosipRegistrationForApprovalHandler,
   mosipRegistrationHandler,
-  verify
+  verify,
+  mosipCorrectionRequestHandler,
+  mosipCorrectionlApprovalHandler,
+  mosipCorrectionHandler
 } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
@@ -665,6 +668,42 @@ export async function createServer() {
     options: {
       tags: ['api', 'custom-event'],
       description: 'Receives notifications on sent-for-approval action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/request-correction',
+    handler: mosipCorrectionRequestHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on correction request action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/approve-correction',
+    handler: mosipCorrectionlApprovalHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on correction approval action'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/events/{event}/actions/make-correction',
+    handler: mosipCorrectionHandler({
+      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+    }),
+    options: {
+      tags: ['api', 'custom-event'],
+      description: 'Receives notifications on correction action'
     }
   })
 

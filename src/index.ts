@@ -87,6 +87,7 @@ import {
   getEmailFromTaskResource,
   getEventType,
   getInformantFullName,
+  getInformantRelation,
   getPatientNationalId,
   getPhoneNumberFromTaskResource
 } from './utils/fhir'
@@ -216,6 +217,7 @@ interface VerificationStatus {
   father: boolean
   mother: boolean
   informant: boolean
+  spouse: boolean
 }
 
 /**
@@ -230,7 +232,8 @@ export function shouldForwardToIDSystem(
   const {
     father: isFatherVerified,
     mother: isMotherVerified,
-    informant: isInformantVerified
+    informant: isInformantVerified,
+    spouse: isSpouseVerified
   } = verificationStatus
 
   // E-Signet
@@ -252,6 +255,12 @@ export function shouldForwardToIDSystem(
       'birth.informant.informant-view-group.verified'
     ) === 'authenticated'
 
+  const isSpouseAuthenticated =
+    findQuestionnaireResponse(
+      bundle,
+      'death.spouse.spouse-view-group.verified'
+    ) === 'authenticated'
+
   const eventType = getEventType(bundle)
   if (eventType === EVENT_TYPE.BIRTH) {
     const child = getChild(bundle)
@@ -264,6 +273,10 @@ export function shouldForwardToIDSystem(
         isMotherAuthenticated)
     )
   } else if (eventType === EVENT_TYPE.DEATH) {
+    const relation = getInformantRelation(bundle)
+    if (relation === 'SPOUSE') {
+      return isSpouseVerified || isSpouseAuthenticated
+    }
     return isInformantAuthenticated || isInformantVerified
   } else return true
 }

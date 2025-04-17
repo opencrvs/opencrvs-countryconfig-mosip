@@ -97,6 +97,7 @@ import { getTaskResource, getTrackingIdFromTaskResource } from './utils'
 import { ActionType } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
 import { onRegisterHandler } from './api/registration'
+import { createUniqueRegistrationNumberFromBundle } from './api/event-registration/service'
 
 export interface ITokenPayload {
   sub: string
@@ -558,6 +559,9 @@ export async function createServer() {
               fullName: (bundle) => getChildFullName(bundle),
               dateOfBirth: (bundle) => getChildBirthDate(bundle) ?? '',
               gender: (bundle) => getChildGender(bundle) ?? '',
+              birthCertificateNumber: (bundle) =>
+                createUniqueRegistrationNumberFromBundle(bundle)
+                  .registrationNumber,
               nationalIdNumber: (bundle) => {
                 let deceased
                 try {

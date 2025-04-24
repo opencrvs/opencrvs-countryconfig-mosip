@@ -82,7 +82,7 @@ import {
   fhirBirthToMosip,
   fhirDeathToMosip,
   shouldForwardToIDSystem
-} from './mosip'
+} from './utils/mosip'
 
 export interface ITokenPayload {
   sub: string

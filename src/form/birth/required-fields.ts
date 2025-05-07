@@ -9,12 +9,8 @@
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
 
-import { MessageDescriptor } from 'react-intl'
-import {
-  formMessageDescriptors,
-  informantMessageDescriptors
-} from '../common/messages'
-import { Conditional, SerializedFormField } from '../types/types'
+import { formMessageDescriptors } from '../common/messages'
+import { SerializedFormField } from '../types/types'
 import { divider } from '../common/common-optional-fields'
 import {
   birthInformantTypeOptions,

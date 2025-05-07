@@ -17,6 +17,7 @@ import {
 } from './select-options'
 import { certificateHandlebars } from '../birth/certificate-handlebars'
 import { getFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
+import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { Validator } from '../types/validators'
 
 const exactDobConditional: Conditional[] = [
@@ -91,40 +92,88 @@ export const getMaritalStatus = (
   options: maritalStatusOptions
 })
 
-export const registrationEmail: SerializedFormField = {
-  name: 'registrationEmail',
-  type: 'TEXT',
-  label: formMessageDescriptors.email,
-  required: true, // Email is the configured INFORMANT_NOTIFICATION_DELIVERY_METHOD in Farajaland
-  initialValue: '',
-  validator: [
-    {
-      operation: 'emailAddressFormat'
-    }
-  ],
-  conditionals: [],
-  mapping: getFieldMapping(
-    'registrationEmail',
-    certificateHandlebars.contactEmail
-  )
+export function registrationEmail(
+  sectionId: string,
+  conditionals: Conditional[] = []
+): SerializedFormField {
+  const fieldName: string = `${sectionId}Email`
+  const fieldId: string = `birth.${sectionId}.${sectionId}-view-group.${fieldName}`
+  return sectionId === 'informant'
+    ? {
+        name: 'registrationEmail',
+        type: 'TEXT',
+        label: formMessageDescriptors.email,
+        required: false,
+        initialValue: '',
+        validator: [
+          {
+            operation: 'emailAddressFormat'
+          }
+        ],
+        conditionals,
+        mapping: getFieldMapping(
+          'registrationEmail',
+          certificateHandlebars.contactEmail
+        )
+      }
+    : {
+        name: fieldName,
+        type: 'TEXT',
+        label: formMessageDescriptors.email,
+        required: false,
+        initialValue: '',
+        validator: [
+          {
+            operation: 'emailAddressFormat'
+          }
+        ],
+        conditionals,
+        customQuestionMappingId: fieldId,
+        custom: true,
+        mapping: getCustomFieldMapping(fieldId)
+      }
 }
 
-export const registrationPhone: SerializedFormField = {
-  name: 'registrationPhone',
-  type: 'TEL',
-  label: formMessageDescriptors.phoneNumber,
-  required: false,
-  initialValue: '',
-  validator: [
-    {
-      operation: 'phoneNumberFormat'
-    }
-  ],
-  conditionals: [],
-  mapping: getFieldMapping(
-    'registrationPhone',
-    certificateHandlebars.contactPhoneNumber
-  )
+export function registrationPhone(
+  sectionId: string,
+  conditionals: Conditional[] = []
+): SerializedFormField {
+  const fieldName: string = `${sectionId}Mobile`
+  const fieldId: string = `birth.${sectionId}.${sectionId}-view-group.${fieldName}`
+  return sectionId === 'informant'
+    ? {
+        name: 'registrationPhone',
+        type: 'TEL',
+        label: formMessageDescriptors.phoneNumber,
+        required: false,
+        initialValue: '',
+        validator: [
+          {
+            operation: 'phoneNumberFormat'
+          }
+        ],
+        conditionals,
+        mapping: getFieldMapping(
+          'registrationPhone',
+          certificateHandlebars.contactPhoneNumber
+        )
+      }
+    : {
+        name: fieldName,
+        type: 'TEL',
+        label: formMessageDescriptors.phoneNumber,
+        required: false,
+        initialValue: '',
+        validator: [
+          {
+            operation: 'phoneNumberFormat'
+          }
+        ],
+        conditionals,
+        customQuestionMappingId: fieldId,
+        custom: true,
+        mapping: getCustomFieldMapping(fieldId)
+      }
 }
 
 export const divider = (

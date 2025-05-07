@@ -126,10 +126,30 @@ export const informantMessageDescriptors = {
 }
 
 export const formMessageDescriptors = {
+  placeOfBirthIndividualTown: {
+    defaultMessage: 'Town / Village',
+    description: 'Title of the placeOfBirthIndividualTown',
+    id: 'form.field.label.placeOfBirthIndividualTown'
+  },
+  ageAtBirthOfChild: {
+    defaultMessage: 'Age as at the Date of Birth of Child',
+    description: 'Title of the age as at the Date of Birth of Child',
+    id: 'form.field.label.ageAtBirthOfChild'
+  },
   primaryAddress: {
     defaultMessage: 'Usual place of residence',
     description: 'Title of the primary adress',
     id: 'form.field.label.primaryAddress'
+  },
+  childBirthOrder: {
+    defaultMessage: 'Live birth order',
+    description: 'Form section title for Child',
+    id: 'form.field.label.birthOrder'
+  },
+  numberOfChildren: {
+    defaultMessage: 'Number of children',
+    description: 'Form section title for Child',
+    id: 'form.field.label.numberOfChildren'
   },
   spouseSectionName: {
     defaultMessage: 'Spouse details',
@@ -244,7 +264,7 @@ export const formMessageDescriptors = {
     id: 'form.field.label.birthTypeHigherMultipleDelivery'
   },
   weightAtBirth: {
-    defaultMessage: 'Weight at birth',
+    defaultMessage: 'Birth weight',
     description: 'Label for form field: Weight at birth',
     id: 'form.field.label.weightAtBirth'
   },
@@ -252,6 +272,11 @@ export const formMessageDescriptors = {
     defaultMessage: 'Phone number',
     description: 'Input label for phone input',
     id: 'form.field.label.phoneNumber'
+  },
+  registrationLandLine: {
+    defaultMessage: 'Land Line No.',
+    description: 'Input label for phone input',
+    id: 'form.field.label.registrationLandLine'
   },
   email: {
     defaultMessage: 'Email',
@@ -287,9 +312,19 @@ export const formMessageDescriptors = {
     id: 'form.field.label.educationAttainment'
   },
   nameInEnglishPreviewGroup: {
-    defaultMessage: 'Full name',
+    defaultMessage: 'Full name in English',
     description: 'Label for child name in english',
     id: 'form.preview.group.label.english.name'
+  },
+  nameInSinhalaPreviewGroup: {
+    defaultMessage: 'Full name in Sinhala',
+    description: 'Label for child name in sinhala',
+    id: 'form.preview.group.label.sinhala.name'
+  },
+  nameInTamilPreviewGroup: {
+    defaultMessage: 'Full name in Tamil',
+    description: 'Label for child name in tamil',
+    id: 'form.preview.group.label.tamil.name'
   },
   dateOfBirth: {
     defaultMessage: 'Date of birth',
@@ -356,6 +391,11 @@ export const formMessageDescriptors = {
     description: 'Label for form field: Place of delivery',
     id: 'form.field.label.placeOfBirth'
   },
+  placeOfBirthIndividual: {
+    defaultMessage: 'Place of birth',
+    description: 'Label for form field: Place of birth',
+    id: 'recordAudit.placeOfBirth'
+  },
   healthInstitution: {
     defaultMessage: 'Health Institution',
     description: 'Select item for Health Institution',
@@ -372,7 +412,7 @@ export const formMessageDescriptors = {
     id: 'form.field.label.otherInstitution'
   },
   informantsRelationWithChild: {
-    defaultMessage: 'Relationship to child',
+    defaultMessage: 'Informant type',
     description: 'Label for Relationship to child',
     id: 'form.field.label.informantsRelationWithChild'
   },

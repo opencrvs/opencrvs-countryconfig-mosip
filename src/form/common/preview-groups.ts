@@ -26,6 +26,20 @@ export const childNameInEnglish: IPreviewGroup = {
   delimiter: ' '
 }
 
+export const childNameInSinhala: IPreviewGroup = {
+  id: 'childNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'childSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const childNameInTamil: IPreviewGroup = {
+  id: 'childNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'childTamilFirstName',
+  delimiter: ' '
+}
+
 export const informantNameInEnglish: IPreviewGroup = {
   id: 'informantNameInEnglish',
   label: {
@@ -34,6 +48,20 @@ export const informantNameInEnglish: IPreviewGroup = {
     id: 'form.preview.group.label.informant.english.name'
   },
   fieldToRedirect: 'informantFamilyNameEng',
+  delimiter: ' '
+}
+
+export const informantNameInSinhala: IPreviewGroup = {
+  id: 'informantNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'informantSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const informantNameInTamil: IPreviewGroup = {
+  id: 'informantNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'informantTamilFirstName',
   delimiter: ' '
 }
 
@@ -71,9 +99,88 @@ export const motherNameInEnglish: IPreviewGroup = {
   label: {
     defaultMessage: 'Full name',
     description: "Group label for mother's name in english",
-    id: 'form.preview.group.label.mother.english.name'
+    id: 'form.preview.group.label.father.english.name'
   },
   fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const motherNameInSinhala: IPreviewGroup = {
+  id: 'motherNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'motherSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const motherNameInTamil: IPreviewGroup = {
+  id: 'motherNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'motherTamilFirstName',
+  delimiter: ' '
+}
+
+export const grandfatherNameInEnglish: IPreviewGroup = {
+  id: 'grandfatherNameInEnglish',
+  label: {
+    defaultMessage: 'Full name',
+    description: "Group label for grandfather's name in english",
+    id: 'form.preview.group.label.father.english.name'
+  },
+  fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const grandfatherNameInSinhala: IPreviewGroup = {
+  id: 'grandfatherNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'grandfatherSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const grandfatherNameInTamil: IPreviewGroup = {
+  id: 'grandfatherNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'grandfatherTamilFirstName',
+  delimiter: ' '
+}
+export const placeOfMarrriage: IPreviewGroup = {
+  id: 'placeOfMarrriage',
+  label: formMessageDescriptors.placeOfMarrriage,
+  fieldToRedirect: 'marriage-placeOfMarrriage-separator',
+  delimiter: ' '
+}
+
+export const grandfatherPlaceOfBirth: IPreviewGroup = {
+  id: 'grandfatherPlaceOfBirth',
+  label: formMessageDescriptors.placeOfBirthIndividual,
+  fieldToRedirect: 'grandfather-placeOfBirth-separator',
+  delimiter: ' '
+}
+
+export const greatGrandfatherNameInSinhala: IPreviewGroup = {
+  id: 'greatGrandfatherNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'greatGrandfatherSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const greatGrandfatherNameInTamil: IPreviewGroup = {
+  id: 'greatGrandfatherNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'greatGrandfatherTamilFirstName',
+  delimiter: ' '
+}
+export const greatGrandfatherPlaceOfBirth: IPreviewGroup = {
+  id: 'greatGrandfatherPlaceOfBirth',
+  label: formMessageDescriptors.placeOfBirthIndividual,
+  fieldToRedirect: 'greatGrandfather-placeOfBirth-separator',
+  delimiter: ' '
+}
+
+export const motherPlaceOfBirth: IPreviewGroup = {
+  id: 'motherPlaceOfBirth',
+  label: formMessageDescriptors.placeOfBirthIndividual,
+  fieldToRedirect: 'mother-placeOfBirth-separator',
   delimiter: ' '
 }
 
@@ -107,6 +214,27 @@ export const fatherNameInEnglish: IPreviewGroup = {
     id: 'form.preview.group.label.father.english.name'
   },
   fieldToRedirect: 'familyNameEng',
+  delimiter: ' '
+}
+
+export const fatherNameInSinhala: IPreviewGroup = {
+  id: 'fatherNameInSinhala',
+  label: formMessageDescriptors.nameInSinhalaPreviewGroup,
+  fieldToRedirect: 'fatherSinhalaFirstName',
+  delimiter: ' '
+}
+
+export const fatherNameInTamil: IPreviewGroup = {
+  id: 'fatherNameInTamil',
+  label: formMessageDescriptors.nameInTamilPreviewGroup,
+  fieldToRedirect: 'fatherTamilFirstName',
+  delimiter: ' '
+}
+
+export const fatherPlaceOfBirth: IPreviewGroup = {
+  id: 'fatherPlaceOfBirth',
+  label: formMessageDescriptors.placeOfBirthIndividual,
+  fieldToRedirect: 'father-placeOfBirth-separator',
   delimiter: ' '
 }
 

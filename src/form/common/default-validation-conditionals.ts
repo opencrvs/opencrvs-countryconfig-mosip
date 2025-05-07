@@ -108,6 +108,16 @@ export const hideIfInformantMotherOrFather = [
   }
 ]
 
+export const hideIfSinhala = {
+  action: 'hide',
+  expression: 'window.__localeId__ === "si"'
+}
+
+export const hideIfTamil = {
+  action: 'hide',
+  expression: 'window.__localeId__ === "ta"'
+}
+
 export const isInformantSpouse =
   '!values.informantType || values.informantType==="SPOUSE"'
 
@@ -295,7 +305,21 @@ export const isValidBirthDate = [
 ] satisfies Validator[]
 
 export function getNationalIDValidators(configCase: string): Validator[] {
-  if (configCase === 'father') {
+  if (configCase === 'greatGrandfather') {
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      }
+    ]
+  } else if (configCase === 'grandfather') {
+    return [
+      {
+        operation: 'validIDNumber',
+        parameters: ['NATIONAL_ID']
+      }
+    ]
+  } else if (configCase === 'father') {
     return [
       {
         operation: 'validIDNumber',

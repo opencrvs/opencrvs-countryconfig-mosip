@@ -139,7 +139,7 @@ certificate.label.death,,Death,මරණය,மரணம்
 certificate.label.dob,,D.o.B,උ.ප.ද.,ப.ப.தி
 certificate.label.dod,,D.o.D,ක්‍රියාකාරීත්වයයි.,த.த.தி.
 certificate.parent.details.label.age,Person age,Age,වයස,வயது
-certificate.parent.details.label.dateOfBirth,Parent Date of Birth,Date of Birth,උපන්දිනය,பிறந்த தேதி
+certificate.parent.details.label.dateOfBirth,Parent Date of Birth,Date of Birth,උපන් දිනය,பிறந்த தேதி
 certificate.parent.details.label.familyName,Parent last name,Last name,අවසන් නම,கடைசி பெயர்
 certificate.parent.details.label.familyNameInEng,Parent last name,Last name,අවසන් නම,கடைசி பெயர்
 certificate.parent.details.label.firstName,Parent first names,First name(s),මුල් නම(විස්තර),முதல் பெயர்(கள்)
@@ -190,7 +190,7 @@ config.application.deathTabTitle,The title for death tab,Death,මරණය,ம�
 config.application.deathTabTitleExport,The title for death tab for VSExport,Deaths,මිරිස්,மரணங்கள்
 config.application.emptystate,Vital Statistics Export Empty State Text,The previous month's vital statistics data (based on vital event registrations occurring within that month) will become available for you to export as of the 1st of every month. Large CSV files cannot be opened in Excel and should therefore be opened in a statistical program such as {posit}.,"පසුගිය මාසයේ අත්සන් සංඛ්‍යාව (එවිට සිදුවීම් ලිපි ලියාපදිංචි වීමෙන් පිටපත් වීමට ලබාදෙනු ඇත) ඔබට මාසික පළාත් ලබාදෙනු ඇති දත්ත සංඛ්‍යාව මාස 1 වෙනිදා ඔබට නිර්දේශ කිරීමට ලබාගත හැකිය. විශේෂ CSV ගොනුවන් Excel වෙත විවෘත කළ නොහැකිය හෝ එයට හැකියාවූ තිරසාර වෛරසක ප්‍රවර්ගයට විවෘත කළ යුතුය, එන්නත් {posit} විසින්.",கடைசியாக கடந்த மாதத்தின் முக்கிய புள்ளியல் தரவு (அந்த மாதத்தில் நடக்கும் முக்கிய நிகழ்வுகளின் பதிவுகளின் அடிப்படையில்) நீங்கள் ஒவ்வொரு மாதம் 1 ம் தேதியில் ஏற்றுமதி செய்யக்கூடும். பெரும்பாக்கி சி.எஸ்.வி கோப்புகளை எக்செல் இல் திறக்க முடியாது என்று கருதப்படுகின்றது மற்றும் அதாவது {posit} போன்ற ஒரு புள்ளியல் நிரலில் திறக்க வேண்டும்.
 config.application.export,Download Export CSV,Export,නිර්දේශය,ஏற்றுமதி
-config.application.vitalStatistics,Vital Statistics Export,"Month-{month}-Farajaland-{event, select, birth{birth} death{death} other{birth}}-event-statistics.csv {fileSize}","මාසය-{month}-ෆරජාලන්ඩ්-{event, select, birth{උපන්} death{මරයි} other{උපන්}}-ස්ථාන-සංඛ්‍යාව.csv {fileSize}","மாதம்-{month}-பரஜாலந்து-{event, select, birth{பிறப்பு} death{மரணம்} other{பிறப்பு}}-நிகரான-புள்ளியிடம்.சி.வி {fileSize}"
+config.application.vitalStatistics,Vital Statistics Export,"Month-{month}-Sri-Lanka-{event, select, birth{birth} death{death} other{birth}}-event-statistics.csv {fileSize}","මාසය-{month}-ෆරජාලන්ඩ්-{event, select, birth{උපන්} death{මරයි} other{උපන්}}-ස්ථාන-සංඛ්‍යාව.csv {fileSize}","மாதம்-{month}-பரஜாலந்து-{event, select, birth{பிறப்பு} death{மரணம்} other{பிறப்பு}}-நிகரான-புள்ளியிடம்.சி.வி {fileSize}"
 config.application.vsExportDownloadFailed,Vital Statistics Export Empty State Text,Sorry! Something went wrong,සමාවන්න! දෝෂයක් සිදු විය,மன்னிக்கவும்! ஏதாவது தவறினால் ஏனையவை நெருக்கமாக இல்லை
 config.application.vsexport,VS Export tab,Vital statistics,විශේෂ සංඛ්‍යාලයන්,முக்கிய புள்ளிகள்
 config.certTemplate,Label for certificate templates,Certificate Template,සහත් අක්ෂර ආකෘතිය,சான்றிதழ் வார்ப்புரு
@@ -215,7 +215,7 @@ constants.allStatuses,Label for select option All statuses,All statuses,සි�
 constants.apiUser,The description for API_USER role,API User,API භාවිතයේ පරිශීලකයා,API பயனர்
 constants.application.title,Application title,Application,අයිකනය,விண்ணப்பி
 constants.applicationArchivedOn,,Application archived on,අයිතිකරු ගෙවීමේ අයිතිකරුගේ {officeName} මට පිළිගන්න.,விண்ணப்பம் சேமிக்கப்பட்டது
-constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS,OpenCRVS
+constants.applicationName,Declaration name of CRVS,One Registry,One Registry,One Registry
 constants.archived_declaration,Application has been archived,Archived,අතිරික්කුවක්,பதிவுசீராக்கப்பட்டுள்ளது
 constants.assignRecord,A label for the Assign record -button,Assign record,රාජකාරීත්වය වෙනස් කරන්න,பதிவை ஒதுக்கவும்
 constants.averageRateOfRegistrations,A label for Average rate of registrations,Avg. {amount}%,මා. {amount}%,சராசரி {amount}%
@@ -232,7 +232,7 @@ constants.collectedBy,The collected by sec text,Collected by,එකතු කළ
 constants.collectorDetails,Label for collector details,Collector Details,සංඛ්‍යාල විස්තරයන්,கலெக்டர் விவரங்கள்
 constants.comment,Label for rejection comment,Comment,අදහසයි,கருத்து
 constants.config,,Configuration,මාධ්‍යයක්,கட்டமைப்பு
-constants.countryName,Name of the OpenCRVS implementation country,Farajaland,පොදු Farajaland,பரஜாலாந்த்
+constants.countryName,Name of the OpenCRVS implementation country,Sri Lannka,ශ්‍රී ලංකාව,இலங்கை
 constants.customTimePeriod,Label for Custom time period,Custom time period,සැකසුම් කාල කාලය,தனிப்பட்ட கால காலம்
 constants.dataEntryClerk,The description for DATA_ENTRY_CLERK type,Data entry clerk,දත්ත ඇතුලත් කරන්නේ කර්මාන්තශ්‍රයක්යි,தரவு உள்ளடக்கு பணியாளர்
 constants.dateOfDeclaration,Date of declaration label,Date of declaration,ප්‍රකාශනා කළ දිනය,அறிவிப்பு தேதி
@@ -839,6 +839,8 @@ form.field.label.addressLine1UrbanOption,,Residential Area,නිවාස ක�
 form.field.label.addressLine2,,Area / Ward / Mouja / Village,කලාපය / ප්‍රාදේශීය / මුජා / ගමට,பகுதி / வார்ட் / மௌஜா / ஊர்
 form.field.label.addressLine2UrbanOption,,Street,වීදිය,தெரு
 form.field.label.addressLine3,,Union / Municipality / Cantonment,එක්සන් / නගරය / කැන්ටෝන්මෙන්ට්,கூட்டமைப்பு / நகராட்சி / கேண்டமெண்ட்
+form.field.label.admissionNumber,,Hospital Admission Number,රෝහල් ඇතුළත් කිරීමේ අංකය,மருத்துவமனை சேர்க்கை எண்
+form.field.label.ageAtBirthOfChild,,Age as at the Date of Birth of Child,දරුවා උපන් වන විට වයස,குழந்தை பிறந்த தேதியின்படி வயது
 form.field.label.ageOfBride,,Age of bride,මතුවාවේ වයස,மணமக்களின் வயது
 form.field.label.ageOfDeceased,,Age of deceased,මියාසිකයාවේ වයසයි,இறந்தவரின் வயது
 form.field.label.ageOfFather,,Age of father,පියාගේ වයස,அப்பாவின் வயது
@@ -877,7 +879,8 @@ form.field.label.attendantAtBirthNurse,,Nurse,නර්ස්,மருத்த
 form.field.label.attendantAtBirthOther,,Other,අමතර,மற்றொரு
 form.field.label.attendantAtBirthTraditionalBirthAttendant,,Traditional birth attendant,සාමාජික උපත් ප්‍රසූතිය,பாரம்பரிய பிறவிப் பரிசுப் பணியாளர்
 form.field.label.birthLocation,,Hospital / Clinic,රෝහල / රෝහල්ගල,மருத்துவமனை / கிளினிக்
-form.field.label.birthType,,Type of birth,උපරිම වර්ගය,பிறப்பு வகை
+form.field.label.birthOrder,,Live birth order,සජීවී උපත් අනුපිළිවෙළ,பிறப்பு ஒழுங்கு
+form.field.label.birthType,,Type of birth,උපත් ස්වභාවය,பிறப்பு வகை
 form.field.label.birthTypeHigherMultipleDelivery,,Higher multiple delivery,උසස් බහුල නිවේදනය,உயர் பல விநியோகம்
 form.field.label.birthTypeQuadruplet,,Quadruplet,චක්‍රව්පල්ට්,நான்குப்பேர்
 form.field.label.birthTypeSingle,,Single,එකයි,ஒற்றை
@@ -898,10 +901,12 @@ form.field.label.childFirstNames,,First name(s),මුල් නම(විස්
 form.field.label.childSexOther,,Other,අමතර,மற்றொரு
 form.field.label.cityUrbanOption,Label for City,Town,නගරය,நகரம்
 form.field.label.confirm,,Yes,ඔව්,ஆம்
+form.field.label.contactDetails,,Contact Details,සම්බන්ධතා විස්තර,தொடர்பு விவரங்கள்
 form.field.label.corrector.supportDocumentSubtitle,,"For all record corrections at a minimum an affidavit must be provided. For material errors and omissions eg. in paternity cases, a court order must also be provided.","සිසුන් සිහිනයේ විශේෂ දෝෂ සහ අත්සන් සංකේතන සංවර්ධනයන් සඳහා අවශ්‍ය ප්‍රතිස්ථාපනයක් ලබා දෙයි. පිරිමිත් ප්‍රතිස්ථාපන ප්‍රකාශකරු සඳහා, අත්සන් සහ අත්සන් දෝෂ සංකේතන සංවර්ධනයන් ලබා දෙයි.","அனைத்து பதிவு சரியாக்கங்களுக்கு குறைந்தபட்சம் ஒரு அபிதாவிட் வழங்கப்பட வேண்டும். பொருத்தமான பிழைகள் மற்றும் விடைகள் என்பதில், பாத்திர்த்தல் வழக்குகளில், ஒரு நீதிமன்ற கட்டளையும் வழங்கப்பட வேண்டும்."
 form.field.label.country,,Country,රාජගේන්තුව,நாடு
 form.field.label.creatingNewUser,,Creating new user,නව පරිශීලකයාගේ සෑදීමක් කරමු,புதிய பயனரை உருவாக்குவது
-form.field.label.dateOfBirth,,Date of birth,උපන්දිනය,பிறந்த தேதி
+form.field.label.dateOfAdmission,,Date of Admission,ඇතුළත් වීමේ දිනය,சேர்க்கை தேதி
+form.field.label.dateOfBirth,,Date of birth,උපන් දිනය,பிறந்த தேதி
 form.field.label.dateOfMarriage,,Date of marriage,විවාහයේ දිනය,திருமண தேதி
 form.field.label.deathAtFacility,,What hospital did the death occur at?,මෘදුකාංගයේ මධ්‍යස්ථානයේ මහත්කාරයේ සිටිනවාද?,இந்த மரணம் எதில் நடந்தது?
 form.field.label.deathAtOtherLocation,,What is the other address that the death occurred at?,මධ්‍යස්ථානය කොරෝනාවේ නිවසට මධ්‍යම සිදු වී ඇත්ද?,இறந்தது எங்கே இருந்தது என்று மற்றொரு முகவரி என்ன?
@@ -979,7 +984,7 @@ form.field.label.educationAttainmentNotStated,,Not stated,නොවැයි,க
 form.field.label.email,,Email,ඊ-මොලය,மின்னஞ்சல்
 form.field.label.empty,empty string,,,
 form.field.label.exactDateOfBirthUnknown,,Exact date of birth unknown,උදාහරණයේ උපන් දිනය දැන්ම නොදක්වයි,பிறந்த தேதி தெரியவில்லை
-form.field.label.familyName,,Last name,අවසන් නම,கடைசி பெயர்
+form.field.label.familyName,,Last name in English,අවසන් නම,கடைசி பெயர்
 form.field.label.father.nationality,,Nationality,ජාතිකත්වය,தேசியம்
 form.field.label.father.nationalityBangladesh,,Bangladesh,බাংলাদেশ,பங்களாதேஷ்
 form.field.label.fatherFamilyName,,Last Name(s) in default character set other than English,ඉංග්‍රීසි අක්ෂර සැතිවලින් වෙනස් කළ පෙරහන් නාම(වර්ග)යන්,ஆங்கில மொழிக்கு வேறு இயல்பு எழுத்துக்கு கடைசி பெயர்(கள்)
@@ -987,7 +992,7 @@ form.field.label.fatherFirstNames,,First Name(s) in default character set other 
 form.field.label.fatherIsDeceased,,Father has died,පියා මියා ඇත,அப்பா மரணமடைந்துள்ளார்.
 form.field.label.fatherPlaceOfBirth,,What is his village of origin?,ඔහුව ප්‍රසිද්ධ ගමක් කුමක් ඇතුල්ලා?,அவருடைய பிள்ளையின் ஊர் எது?
 form.field.label.fatherPrimaryAddress,,Usual place of residence,සාමාජික ස්ථානය,வாசிக்கும் இடம்
-form.field.label.fathersDetailsExist,,Father's details are not available,පිටවීම් විස්තර {name} ලබා දෙන්නේ නැත.,அப்பாவின் விவரங்கள் கிடைக்கவில்லை.
+form.field.label.fathersDetailsExist,,Father's details unavailable,පියාගේ විස්තර නොමැත,தந்தையின் விவரங்கள் கிடைக்கவில்லை
 form.field.label.fetchDeceasedDetails,,VERIFY NATIONAL ID,ජාතික හැඳුනුම් පරීක්ෂණය කරන්න.,தேசிய ஐடி சரிபார்க்கவும்
 form.field.label.fetchFatherDetails,,VERIFY NATIONAL ID,ජාතික හැඳුනුම් පරීක්ෂණය කරන්න.,தேசிய ஐடி சரிபார்க்கவும்
 form.field.label.fetchIdentifierModalErrorTitle,,Invalid Id,අවලංගු හැඳුනුම්පතය,தவறான ஐடி
@@ -1002,9 +1007,12 @@ form.field.label.fetchRegistrationModalInfo,,Birth Registration Number,උපන
 form.field.label.fileSizeError,,File size must be less than 2MB,ගොනු ප්‍රමාණය 2MB හෝ එමට වඩා කෙටි විය යුතු බවට සීයයි.,கோப்பு அளவு 2MB க்குக் குறைவாக இருக்க வேண்டும்.
 form.field.label.fileUploadError,,{type} supported image only,{type} ආකාරයේ පමණක් පින්තූර සහය දක්වයි,{type} வகை படங்கள் மட்டுமே ஆதரிக்கப்படுகிறது
 form.field.label.firstName,,First name(s),මුල් නම(විස්තර),முதல் பெயர்(கள்)
-form.field.label.firstNames,,First name(s),මුල් නම(විස්තර),முதல் பெயர்(கள்)
+form.field.label.firstNames,,First name(s) in English,ඉංග්‍රීසිෙන් පළමු නම,ஆங்கிலத்தில் முதற் பெயர்
+form.field.label.grandFatherBornInSriLanka,,Was the Grandfather of the child born in Sri Lanka?,දරුවාගේ සීයා උපන්නේ ලංකාවේද?,குழந்தையின் தாத்தா இலங்கையில் பிறந்தாரா?
+form.field.label.greatGrandFatherBornInSriLanka,,"If the Father was not born in Sri Lanka, was the Great Grandfather of the child born in Sri Lanka?",තාත්තා ඉපදුනේ ලංකාවේ නැත්නම් දරුවාගේ ලොකු සීයා ඉපදුනේ ලංකාවේද?,"தந்தை இலங்கையில் பிறக்கவில்லை என்றால், குழந்தையின் பெரியப்பா இலங்கையில் பிறந்தாரா?"
 form.field.label.healthInstitution,,Health Institution,ආධිර සම්පූර්ණය,ஆரோக்கிய நிறுவனம்
 form.field.label.hospital,,Hospital,රෝහල,மருத்துவமனை
+form.field.label.hospitalAdmissionInformation,,Hospital Admission Information (if available),රෝහලට ඇතුළත් වීමේ තොරතුරු (තිබේ නම්),மருத்துவமனையில் அனுமதி தகவல் (கிடைத்தால்)
 form.field.label.iD,,ID Number,අංකය අංකය,ஐடி எண்
 form.field.label.iDType,,Type of ID,අංකයේ වර්ගය,அடையாள வகை
 form.field.label.iDTypeAlienNumber,,Alien Number,ද්විතියි අංකය,ஏலியன் எண்
@@ -1055,13 +1063,13 @@ form.field.label.informantSecondaryAddress,,Secondary Address,දෙවන ල�
 form.field.label.informantSecondaryAddressSameAsPrimary,,Is their secondary address the same as their primary address?,ඔවුන්ගේ දෙවන ලිපිනය අතිරික්කු ලිපිනයට සමානයිද?,அவர்களின் இரண்டாவது முகவரி முக்கிய முகவரியுடன் ஒப்புதலா?
 form.field.label.informantTitle,,Informant's details,නිවේදනගේ විස්තරයන්,தகவல் வழங்குநரின் விவரங்கள்
 form.field.label.informants.nationality,,Nationality,ජාතිකත්වය,தேசியம்
-form.field.label.informantsDateOfBirth,,Date of Birth,උපන්දිනය,பிறந்த தேதி
+form.field.label.informantsDateOfBirth,,Date of Birth,උපන් දිනය,பிறந்த தேதி
 form.field.label.informantsFamilyName,,Last Name(s) in default character set other than English,ඉංග්‍රීසි අක්ෂර සැතිවලින් වෙනස් කළ පෙරහන් නාම(වර්ග)යේ අවසන් නම්(නම)කරුණු වෙනස් කරන්න.,ஆங்கில மொழிக்கு வேறு இயல்பு எழுத்துக்கு கடைசி பெயர்(கள்)
 form.field.label.informantsFamilyNameEng,,Last Name(s) in English,අවසාන නම(නම්) ඉංග්‍රීසි භාෂාවෙන්,கடைசி பெயர்(கள்) ஆங்கிலத்தில்
 form.field.label.informantsGivenNames,,First Name(s) in default character set other than English,ඉංග්‍රීසි අක්ෂර සැතිවරයේ වෙනත් අක්ෂර සිටම පළමු නම(වව්)කයි.,ஆங்கிலம் இல்லாத இயல்புடைய முதல் பெயர்(கள்)
 form.field.label.informantsGivenNamesEng,,First Name(s) in English,ඉංග්‍රීසි නම්බලයන්,ஆங்கிலத்தில் முதல் பெயர்(கள்)
 form.field.label.informantsIdType,,Existing ID,පැරණි ID,ஏற்கனவே உள்ள ஐடி
-form.field.label.informantsRelationWithChild,,Relationship to child,ළමයාට සම්බන්ධතාවය,குழந்தைக்கு உறவு
+form.field.label.informantsRelationWithChild,,Informant type,තොරතුරු සපයන්නාගේ වර්ගය,தகவல் தருபவர் வகை
 form.field.label.informantsRelationWithDeceased,,Relationship to deceased,මස්සාර සම්බන්ධය,இறந்தவருடன் உறவு
 form.field.label.internationalAddressLine1,,Address Line 1,ලිපිනය පේළි 1,முகவரி வரி 1
 form.field.label.internationalAddressLine2,,Address Line 2,ලිපිනය පේළිය 2,முகவரி வரி 2
@@ -1103,10 +1111,11 @@ form.field.label.motherIsDeceased,,Mother has died,අම්මා මිය ග
 form.field.label.motherPlaceOfBirth,,What is her village of origin?,ඇසෙන් පිළිබද ගමක් කුමක් තිබේ?,அவள் பிறந்த ஊர் எது?
 form.field.label.motherPlaceOfHeritage,,What is her place of origin (heritage)?,ඇයේ ස්ථානය (ස්ථානය) කුමක්ද?,அவள் பிறந்த இடம் (பரம்பரை) என்ன?
 form.field.label.motherPrimaryAddress,,Usual place of residence,සාමාජික ස්ථානය,வாசிக்கும் இடம்
-form.field.label.mothersDetailsExist,,Mother's details are not available,අම්මාවේ විස්තර {details} ලබා නොපෙනේ.,தாயின் விவரங்கள் கிடைக்கவில்லை.
+form.field.label.mothersDetailsExist,,Mother's details unavailable,අම්මාවේ විස්තර {details} ලබා නොපෙනේ.,தாயின் விவரங்கள் கிடைக்கவில்லை.
 form.field.label.multipleBirth,,No. of previous births,පෙර උපසිරැසි ගණන,முந்தைய ஜன்மங்களின் எண்ணிக்கை
 form.field.label.name,,Name,නම,பெயர்
 form.field.label.nationality,,Nationality,ජාතිකත්වය,தேசியம்
+form.field.label.numberOfChildren,,Number of children,ළමුන් සංඛ්යාව,குழந்தைகளின் எண்ணிக்கை
 form.field.label.occupation,,Occupation,ආත්මය,பணி
 form.field.label.optionalLabel,,Optional,විකල්පයට අයත් විකල්පයක් නොවේ.,விருப்பமாகும்
 form.field.label.otherAddress,,Other address,වෙනත් ලිපිනය,மற்றும் முகவரி
@@ -1118,6 +1127,7 @@ form.field.label.parentDetailsType,,Do you have the mother and father's details?
 form.field.label.phoneNumber,,Phone number,දුරකථන අංකය,தொலைபேசி எண்
 form.field.label.physician,,Physician,වෛරස්කාරයා,மருத்துவர்
 form.field.label.placeOfBirth,,Location,ස්ථානය,இடம்
+form.field.label.placeOfBirthIndividualTown,,Town / Village,නගරය / ගම,நகரம் / கிராமம்
 form.field.label.placeOfBirthPreview,,Place of delivery,නිෂ්පාදන ස්ථානය,விநியோக இடம்
 form.field.label.placeOfDeath,,Place of death,මරණ ස්ථානය,மரண இடம்
 form.field.label.placeOfDeathOther,,Different Address,වෙනත් ලිපිනය,வேறு முகவரி
@@ -1125,7 +1135,7 @@ form.field.label.placeOfDeathSameAsCurrent,,Current address of the deceased,ම�
 form.field.label.placeOfDeathSameAsPermanent,,Permanent address of the deceased,මස්සාරේ ස්ථානයේ ස්ථානවේදය,இறந்தவரின் நிரந்தர முகவரி
 form.field.label.placeOfDeathSameAsPrimary,,Deceased's usual place of residence,මසයාගේ සාමාන්‍ය ස්වරූපය,இறந்தவரின் பொது வசதியின் இடம்
 form.field.label.placeOfDeathType,,Type of Place,ස්ථානයේ වර්ගය,இடம் வகை
-form.field.label.placeOfMarriage,,Place of marriage,විවාහයේ ස්ථානය,திருமண இடம்
+form.field.label.placeOfMarriage,,Place of marriage,විවාහ ස්ථානය,திருமணம் நடக்கும் இடம்
 form.field.label.polygamy,,Polygamous,බහුල්මියාවාවන්,பலவீட்டு
 form.field.label.postCode,,Number,අංකය,எண்
 form.field.label.primaryAddress,,Usual place of residence,සාමාජික ස්ථානය,வாசிக்கும் இடம்
@@ -1149,12 +1159,14 @@ form.field.label.proofOfInformantsID,,Proof of informant's ID,නිවේදන
 form.field.label.proofOfMarriageNotice,,Notice of intention to marriage,විවාහය පිළිබඳ දැනුම් පරිවාසය,திருமண இருப்பிடம் தெரிவு அறிக்கை
 form.field.label.proofOfMothersID,,Proof of mother's ID,මව්ගේ හැඳුනුම් ප්‍රතිස්ථාපනය,தாயின் அடையாளம் சான்றிதழ்
 form.field.label.proofOfParentPrimaryAddress,,Proof of Permanent Address of Parent,විස්තරයේ මව්බිම්බුරේ ස්වරූප පාර තහවුරු සහායකයාව,பெற்றோரின் நிரந்தர முகவரி சான்றிதழ்
+form.field.label.race,,Race,ජාතිය,இனம்
 form.field.label.radio.father,,Only the father's,පියාගේ පමණි.,அப்பாவின் மட்டும்
 form.field.label.radio.mother,,Only the mother's,පියාගේ පණුවෙන්ම,அம்மாவின் மட்டும்
 form.field.label.reasonFatherNotApplying,,Reason,කාලය,காரணம்
 form.field.label.reasonFatherNotApplyingPreview,,Reason,කාලය,காரணம்
 form.field.label.reasonMotherNotApplyingPreview,,Reason,කාලය,காரணம்
 form.field.label.reasonNotApplying,,Reason,කාලය,காரணம்
+form.field.label.registrationLandLine,,Land Line No.,ලෑන්ඩ් ලයින් නො.,லேண்ட் லைன் எண்.
 form.field.label.registrationName,,Registration Name,ලියාපදිංචි නම,பதிவு பெயர்
 form.field.label.registrationOffice,,Registration Office,ලියාපදිංචි කාර්යාලය,பதிவு அலுவலகம்
 form.field.label.relInstHeadPlaceOfBirth,,Head of the institution where the birth occurred,උපන් දිනය සිදු වීමේ ආයතනයේ හැඳුනුම්කරු,பிறந்த இடத்தின் முதலாளி
@@ -1182,11 +1194,15 @@ form.field.label.sex,,Sex,"I'm sorry, but I can't assist with that request. If y
 form.field.label.sexFemale,,Female,ගැහැණු ස්තුතියි,பெண்
 form.field.label.sexMale,,Male,පුරුෂයා,ஆண்
 form.field.label.sexUnknown,,Unknown,නොදන්න,அறியப்படாது
+form.field.label.sinhalaFirstName,,First name in Sinhala,සිංහලෙන් පළමු නම,சிங்களத்தில் முதற் பெயர்
+form.field.label.sinhalaLastName,,Last name in Sinhala,සිංහලෙන් අවසාන නම,சிங்களத்தில் கடைசி பெயர்
 form.field.label.socialSecurityNumber,,Social security no./NAPSA,සාමාජික ආරක්ෂක අංකය/NAPSA,சமூக பாதுகாப்பு எண் / NAPSA
 form.field.label.someoneElse,Other Label,Someone else,තවත් කාර්යයක්,யாரோ மற்றவர்
 form.field.label.someoneElseCollector,,Print and issue to someone else,මුදා දැනුම් ප්‍රින්ට් කරන්න හෝ වෙනස් කරන්න,அச்சிடுக மற்றவருக்கு
 form.field.label.spouseDetailsExist,,Spouse's details are not available,සිහින් විස්තර {name} ලබා දෙන්නේ නැත.,உடன் தொலைபேசியில் கூட்டுறவு விவரங்கள் இல்லை
 form.field.label.state,Label for State,Province,පළාත,மாகாணம்
+form.field.label.tamilFirstName,,First name in Tamil,දෙමළෙන් පළමු නම,தமிழில் முதற் பெயர்
+form.field.label.tamilLastName,,Last name in Tamil,දෙමළෙන් අවසාන නම,தமிழில் கடைசி பெயர்
 form.field.label.totalFees,Label for input Reason for Change,,,
 form.field.label.typeOfDocument,,Choose type of supporting document,උදව් ලිපි වර්ගය තෝරන්න,ஆதரவு ஆவண வகையைத் தேர்ந்தெடுக்கவும்.
 form.field.label.typeOfId,,Type of ID,අංකයේ වර්ගය,அடையாள வகை
@@ -1208,8 +1224,10 @@ form.field.label.userSignatureAttachmentTitle,,Upload signature,අත්සන�
 form.field.label.userSurname,,User's surname,පරිශීලකවරුවේ ප්‍රධාන නම,பயனரின் குடும்பப் பெயர்
 form.field.label.verbalAutopsy,,Verbal autopsy,වචන මරණ පරීක්ෂණය,வாய்மொழி பிரேத பரிசோதனை
 form.field.label.verbalAutopsyReport,,Verbal autopsy report,ශ්‍රී ලංකාවේ ප්‍රාදේශීය අනුමැතියා වාර්තාව,உவமை பரிசோதனை அறிக்கை
-form.field.label.weightAtBirth,,Weight at birth,උපරිම බරය,பிறந்த நேரத்தில் எடை
+form.field.label.weightAtBirth,,Birth weight,උපත් බර,பிறப்பு எடை
+form.field.label.wereParentsMarried,,Were parents married?,දෙමාපියන් විවාහ වී සිටිද?,பெற்றோர் திருமணம் செய்து கொண்டார்களா?
 form.field.label.whatDocToUpload,,Which document type are you uploading?,ඔබ උඩුගත කරන ලද ලේඛන වර්ගය කුමන්ත්‍රණයයි?,நீங்கள் எந்த ஆவண வகையை பதிவேற்றுகிறீர்கள்?
+form.field.label.yearOfBirth,,Year of birth,උපන් වර්ෂය,பிறந்த ஆண்டு
 form.field.nidNotVerified,,Authenticate,සත්‍යාව තහවුරු කරන්න,அங்கீகரிக்கவும்
 form.field.nidNotVerifiedReviewSection,,Unauthenticated,අපේක්ෂාවන්ට සහිතව නොවේ.,அதை அங்கீகரிக்கப்படவில்லை
 form.field.nidOffline,,National ID authentication is currently not available offline.,ජාතික හැඳුනුම් හඳුනා නොහැකි තරගයේ දැනුම දැනුම් දැනුම් ලබා දෙනවා.,தேசிய ஐடி அங்கீகாரம் தற்போது ஆஃப்லைனில் கிடைக்கவில்லை.
@@ -1222,11 +1240,13 @@ form.field.select.placeholder,,Select,තෝරන්න,தேர்ந்த�
 form.field.showLabel,Button to show section,Show,පෙන්වන්න,காட்டு
 form.field.tooltip.tooltipNationalID,,The National ID can only be numeric and must be 10 digits long,ජාතික හැඳුනුම් අංකය සංඛ්‍යාත්මයෙන් පමණි විය යුතු හා 10 දශක දිගු විසින් විය හැකිය,தேசிய ஐடி எண்ணிக்கையாக மட்டுமே இருக்க வேண்டும் மற்றும் 10 இலக்கங்களாக இருக்க வேண்டும்.
 form.group.reasonNotApplying.parents,,Why are the mother and father not applying?,මව් සහ පියා ඇතුළු වෙනස් කිරීම් කරනවාද?,அம்மா மற்றும் அப்பா ஏன் விண்ணப்பிக்கவில்லை?
-form.preview.group.label.english.name,,Full name,සම්පූර්ණ නම,முழு பெயர்
+form.preview.group.label.english.name,,Full name in English,ඉංග්‍රීසිෙන් සම්පූර්ණ නම,ஆங்கிலத்தில் முழுப் பெயர்
 form.preview.group.label.father.english.name,,Full name,සම්පූර්ණ නම,முழு பெயர்
 form.preview.group.label.informant.english.name,,Full name,සම්පූර්ණ නම,முழு பெயர்
 form.preview.group.label.mother.english.name,,Full name,පූර්ව නම,முழு பெயர்
+form.preview.group.label.sinhala.name,,Full name in Sinhala,සිංහලෙන් සම්පූර්ණ නම,சிங்களத்தில் முழுப் பெயர்
 form.preview.group.label.spouse.english.name,,Full name,මෙම අන්තර්ජාල නාමයට පිළිබඳව දත්ත ලබා ගැනීමට අවශ්‍ය නාමයයි.,முழு பெயர்
+form.preview.group.label.tamil.name,,Full name in Tamil,දෙමළෙන් සම්පූර්ණ නම,தமிழில் முழுப் பெயர்
 form.preview.group.label.witness.one.english.name,,Witness One English name,එක් දුරකථනවාදී උදව්වක්,ஒரு ஆங்கில பெயர் சாட்சி
 form.preview.group.label.witness.two.english.name,,Witness Two English name,දෙවනි ඉංග්‍රීසි නමයි,இரண்டு ஆங்கில பெயர் சாட்சி
 form.preview.tag.other.institution,,Other institution address,වෙනත් සංළු ලිපිනය,மற்ற நிறுவறின் முகவரி
@@ -1274,6 +1294,7 @@ form.section.documents.title,,Upload supporting documents,සහයෝගී ල
 form.section.documents.uploadImage,,Upload a photo of the supporting document,සහයෝගී ලේඛනයේ ඡායාරූපය උඩුගත කරන්න.,ஆதரவு ஆவணத்தின் புகைப்படத்தை பதிவேற்றவும்.
 form.section.father.name,,Father,පියාව,அப்பா
 form.section.father.title,,Father's details,පියාවේ විස්තරයන්,அப்பாவின் விவரங்கள்
+form.section.grandfather.name,,Details of the Grandfather / Great Grandfather,සීයෙකුගේ / මහා සීයෙකුගේ විස්තර,தாத்தா / பெரிய தாத்தாவின் விவரங்கள்
 form.section.groom.headOfGroomFamily,,Head of groom's family,මතුගෙවියේ ස්වාමිපාලනයේ හිමිකරු,மனைவியின் குடும்பத்தின் தலைவர்
 form.section.groom.name,,Groom,මිනිස්සු,மணமகன்
 form.section.groom.title,,Groom's details,මගේ විවාහකාගේ විස්තරයන්,மணமக்களின் விவரங்கள்
@@ -1293,7 +1314,7 @@ form.section.label.timePeriodLast7Days,Label for option of time period select: l
 form.section.label.timePeriodLast90Days,Label for option of time period select: last 90 days,Last 90 days,අවසන් 90 දිනයන්,கடந்த 90 நாட்கள்
 form.section.label.timePeriodLastYear,Label for option of time period select: last year,Last year,පසුගිය වසරයේ,கடந்த ஆண்டு
 form.section.marriageEvent.date,,Date of marriage,විවාහයේ දිනය,திருமண தேதி
-form.section.marriageEvent.name,,Marriage event details,විවාහක සහිත සියළු විස්තරයන්,திருமண நிகழ்வு விவரங்கள்
+form.section.marriageEvent.name,,Details of marriage,විවාහයේ විස්තරයන්,திருமண விவரங்கள்
 form.section.marriageEvent.title,,Marriage details,විවාහක විස්තරයන්,திருமண விவரங்கள்
 form.section.mother.name,,Mother,මව්බිම්බුවා,தாய்
 form.section.mother.title,,Mother's details,මව්ගේ විස්තරයන්,தாயின் விவரங்கள்
@@ -1864,7 +1885,7 @@ recordAudit.archive.confirmation.body,Confirmation body for archiving a declarat
 recordAudit.archive.confirmation.title,Confirmation title for archiving a declaration,Archive declaration?,ආත්‍රාත්තී ප්‍රකාශය?,ஆவண அறிக்கை?
 recordAudit.archive.status,Archived status,Archived,අතිරික්කුවක්,பதிவுசீராக்கப்பட்டுள்ளது
 recordAudit.contact,Contact for record audit,Contact,ඇමතුම්කරන්න,தொடர்பு
-recordAudit.dateOfBirth,Label for date of birth,Date of birth,උපන්දිනය,பிறந்த தேதி
+recordAudit.dateOfBirth,Label for date of birth,Date of birth,උපන් දිනය,பிறந்த தேதி
 recordAudit.dateOfDeath,Label for date of death,Date of death,මධ්‍යමාන දිනය,மரண தேதி
 recordAudit.dateOfMarriage,Label for date of marriage,Date of marriage,විවාහයේ දිනය,திருமண தேதி
 recordAudit.declaration.markAsDuplicate,,Marked as a duplicate,නිවැරදි ලිපියක් ලක් විය,நகலாக குறிக்கப்பட்டது
@@ -2079,13 +2100,13 @@ review.form.section.review.title,Form section title for Review,Review,අදා�
 review.formData.header,,"{isDraft, select, true {Check responses with the informant before sending for review} other {Review the answers with the supporting documents}}","{isDraft, select, true {ප‍්‍රතිවූරු සමඟ පිළිබඳ සාකච්චා කරන්නේ ප්‍රකාශ කරන්න} other {සහයෝගී ලිපි සමඟ පිළිබඳ සමානව විමසීම කරන්න}}","{isDraft, select, true {பரிசோதனைக்கு அனுமதியை அனுப்புவது முன்னேற்க்கொள்ளுங்கள்} other {ஆதரப்பத்திருவேற்களுடன் பதில்களைப் பரிசோதனை செய்யுங்கள்}}"
 review.header.subject.subjectWitName,Header subject that shows which declaration type to review with informant name,"{eventType, select, birth {Birth} death {Death} other {Marriage} } declaration for {name}","{eventType, select, උපන්දිනය {උපන්දිනය} මධ්‍යය {මධ්‍යය} වෙනත් {විවේශ} } ප්‍රකාශය {name} වෙනිදා සඳහන් කිරීමට","{name} க்கான {eventType, select, birth {பிறப்பு} death {மரணம்} other {திருமணம்}} அறிக்கை"
 review.header.subject.subjectWithoutName,Header subject that shows which declaration type to review,"{eventType, select, birth {Birth} death {Death} other {Marriage}} Declaration","{eventType, select, birth {උපන්දිනය} death {මධ්‍යය} other {විවේචනය}} ප්‍රකාශකය","{eventType, select, birth {பிறப்பு} death {மரணம்} other {திருமணம்}} அறிக்கை"
-review.header.title.govtName,Header title that shows bgd govt name,Republic of Farajaland,ෆරාජලන්තයාන්ගේ ජනරාජ්වර්ධය,பராஜாலந்தின் குடியரசு
+review.header.title.govtName,Header title that shows bgd govt name,Democratic Socialist Republic of Sri Lanka,ශ්‍රී ලංකා ප්‍රජාතාන්ත්‍රික සමාජවාදී ජනරජය,இலங்கை சனநாயக சோசலிசக் குடியரசு
 review.inputs.additionalComments,Label for input Additional comments,Comments,විවේචනාවන්,கருத்துகள்
 review.inputs.brideSignature,Label for informants signature input,Signature of Bride,මගේ අත්සන් රහිතයාව,மணமகளின் கையொப்பம்
 review.inputs.groomSignature,Label for informants signature input,Signature of Groom,මගේ අත්සන් රහිතය,பரிசுத்தர் கையொப்பம்
 review.inputs.informantsSignature,Label for informants signature input,Signature of informant,නිවේදනයේ අත්සන් ලිපිය,அறிக்கையாளரின் கையொப்பம்
 review.inputs.supportingDocuments,Section heading title for supporting documents,Supporting documents,සහය ලබා ගැනීම්,ஆதரவு ஆவணங்கள்
-review.inputs.terms,Label for signature terms,"We, the undersigned declare under penalty of perjury under the laws of Farajaland that the forgoing information is true and correct to the best of our knowledge and belief. We further declare that no legal objections to the marriage is known and hereby apply for a certificate of marriage","අපි, අපේ අත්සන් කිරීමේදී, ප්‍රතින්දා ප්‍රකාශය යටතේ ප්‍රතින්දා ප්‍රකාශයක් සිදු කිරීමට අපි ෆරජලන්ඩ් රකින නීතියට අපේ දැනුමේ සහ බහුලව සත්‍යයක් සහිත නිසා සත්‍යයක් සහිත නොවේ. අපි එක්වන්නේ නිවේදනය නොදක්වන බවට කිසිවක් නොදක්වන බවට අදාලව විසින් ප්‍රතික්ෂේප සහිත නිසා අපි විවෘත විය හැකිය.","நாங்கள் கையொப்பமின்றி பரிதாபம் நீக்கும் பாராஜாலந்தின் சட்டங்கள் கீழ் உண்மையாக மற்றும் சரியான தகவல் எங்கள் அறிவும் நம்பிக்கையும் உள்ளது என்று அறிவுறுதிப்படுத்துகிறோம். மேலும், விவாஹத்துக்கு சட்டவிரோதங்கள் எந்தவொருவரும் அறியப்பட்டிருக்கவில்லை என்று அறிவுறுதிப்படுத்துகிறோம் மற்றும் விவாஹ சான்றிதழ் விண்ணப்பிக்கிறோம்."
+review.inputs.terms,Label for signature terms,"We, the undersigned declare under penalty of perjury under the laws of Sri Lanka that the forgoing information is true and correct to the best of our knowledge and belief. We further declare that no legal objections to the marriage is known and hereby apply for a certificate of marriage","We, the undersigned declare under penalty of perjury under the laws of Sri Lanka that the forgoing information is true and correct to the best of our knowledge and belief. We further declare that no legal objections to the marriage is known and hereby apply for a certificate of marriage","We, the undersigned declare under penalty of perjury under the laws of Sri Lanka that the forgoing information is true and correct to the best of our knowledge and belief. We further declare that no legal objections to the marriage is known and hereby apply for a certificate of marriage"
 review.inputs.witnessOneSignature,Label for informants signature input,Signature of Witness 1,සලකුණු කිරීමේ අත්සන් අංකය 1,சாட்சி 1 கையொப்பம்
 review.inputs.witnessTwoSignature,Label for informants signature input,Signature of Witness 2,සලකුණු කිරීමේ අත්සන් අංක 2,சாட்சி 2 கையொப்பம்
 review.modal.desc.submitConfirmation,Submit description text on modal,"{completeDeclaration, select, true {This declaration will be sent for review.} other {This incomplete declaration will be sent for review.}}","{completeDeclaration, select, true {මෙම ප්‍රලේඛනය සඳහා සටහන යවා ඇත්තේ.} other {මෙම සම්පූර්ණ නොසංවික්රීය ප්‍රලේඛනය සඳහා සටහන යවා ඇත්තේ.}}","{completeDeclaration, select, true {இந்த அறிக்கையை மதிப்பீடுக்கு அனுப்பப்படும்.} other {இந்த முடிவற்ற அறிக்கையை மதிப்பீடுக்கு அனுப்பப்படும்.}}"
@@ -2106,7 +2127,7 @@ review.rejection.form.title,Rejection form title,Reason for rejection?,පරී
 review.signature.clear,Label for button that clear signature input,Clear,Could you please provide me with the full sentence that you would like me to translate to Sinhala?,அழைக்கும்
 review.signature.delete,Label for button that deletes signature,Delete,මකන්න,நீக்குக
 review.signature.description,Label awknowledging the correctness of the declaration,"I, the undersigned, hereby declare that the particulars in this form are true and correct to the best of my knowledge.","මම, අත්සාහායෙන්, මෙම පරිශීලකයා වෙනස් වී ඇත්ද නැත්ද පිළිගත් විස්තර සටහන් සඳහා මගේ දැනටමත් සැකසුම් සඳහා සත්‍ය හා සුබපැතුම් සහිත විය.","ஞான், கீழே கையொப்பியவர், இந்த படிவத்தில் உள்ள விபரங்கள் எனக்கு உண்மையாக உள்ளன என்று முழுமையாக அறிக்கையை அறிவிக்கிறேன்."
-review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Farajaland.","මෙම ලේඛනය සමඟ විස්තරවීම් අත්සන් කිරීමෙන් මම එක් ප්‍රතිචාරයක් ලබා දෙනවිට, එම ප්‍රතිචාරය ප්‍රකාශ කළ හැකි අනුමැතියන් පරිදි ෆරජලන්ද් රජුගේ නීතියන් ඉඩකඩම් සම්පූර්ණ වේ යැයි එක් කරනු ලැබේ.","இந்த ஆவணத்தை ஒரு மின்னணு கையொப்பம் செய்வதன் மூலம், நான் பதிவு செய்யும் போது அதன் கையொப்பம் பத்திரமாக பொருந்தும் என்று ஒருவர் ஒப்புக்கொள்கிறேன், பாரஜாலந்தின் சட்டங்கள் அனுமதிக்கும் எதுவும் வரை."
+review.signature.input.description,Description awknowledging the correctness of the declaration,"By signing this document with an electronic signature, I agree that such signature will be valid as handwritten signatures to the extent allowed by the laws of Sri Lanka.","මෙම ලේඛනය සමඟ විස්තරවීම් අත්සන් කිරීමෙන් මම එක් ප්‍රතිචාරයක් ලබා දෙනවිට, එම ප්‍රතිචාරය ප්‍රකාශ කළ හැකි අනුමැතියන් පරිදි ෆරජලන්ද් රජුගේ නීතියන් ඉඩකඩම් සම්පූර්ණ වේ යැයි එක් කරනු ලැබේ.","இந்த ஆவணத்தை ஒரு மின்னணு கையொப்பம் செய்வதன் மூலம், நான் பதிவு செய்யும் போது அதன் கையொப்பம் பத்திரமாக பொருந்தும் என்று ஒருவர் ஒப்புக்கொள்கிறேன், பாரஜாலந்தின் சட்டங்கள் அனுமதிக்கும் எதுவும் வரை."
 review.signature.open,Label for button that opens the signature input,Sign,ලියන්න,கையொப்பம்
 reviewAction.description,The description for review action,"By clicking register, you confirm that the information entered is correct and the member can be registered.",ලියාපදිංචි කිරීමෙන් ඔබ ඇතුළත් කළ තොරතුරු නිවැරදි විය හැකිය යුතුයි හා මෙම සාමාජිකයා ලියාපදිංචි කළ හැකිය.,"பதிவு செய்வதன் மூலம், நீங்கள் உள்ளிடப்பட்ட தகவல்கள் சரியானவை என்று உறுதிசெய்கிறீர்கள் மற்றும் உறுதிப்படுத்தப்பட்ட உறுதிப்படுத்தப்பட்டவர் பதிவு செய்யப்படலாம்."
 reviewAction.register,The label for register button of review action,Register,ලියාපදිංචිය,பதிவு செய்க
@@ -2145,7 +2166,7 @@ settings.changeLanguage,Change language title,Change language,භාෂාව �
 settings.changeLanguage.success,Change language success,Language updated to English,ඔබ පැවැත්වීමට ඇති භාෂාව සිසුන් සඳහා ප්‍රවේශ කරන්නේ නැත.,மொழி புதுப்பிக்கப்பட்டது
 settings.changePassword,Password change modal header,Change password,මුරපදය වෙනස් කරන්න,கடவுச்சொல் மாற்றுக
 settings.changePhone,Change phone number title,Change phone number,දුරකථන අංකය වෙනස් කරන්න,தொலைபேசி எண்ணை மாற்றுக.
-settings.message.changeLanguage,Change language message,Your prefered language that you want to use on OpenCRVS,ඔබගේ කැමති භාෂාව ඔබට OpenCRVS භාවිතා කිරීමට අවශ්‍ය ද?,உங்கள் விருப்பின் மொழி அமைப்பை நீங்கள் OpenCRVS பயன்படுத்த விரும்புகிறீர்களா?
+settings.message.changeLanguage,Change language message,Your prefered language that you want to use on One Registry,ඔබගේ කැමති භාෂාව ඔබට One Registry භාවිතා කිරීමට අවශ්‍ය ද?,உங்கள் விருப்பின் மொழி அமைப்பை நீங்கள் One Registry பயன்படுத்த விரும்புகிறீர்களா?
 settings.profile.tile,Profile header,Profile,පැතිකඩය,சுயவிவரம்
 settings.security.tile,Security header,Security,ආරක්ෂක,பாதுகாப்பு
 settings.system.tile,System header,System,පද්ධතිය,அமைப்பு
@@ -2212,7 +2233,7 @@ system.user.settings.avatarUpdating,Profile image message when uploading,Updatin
 system.user.settings.emailAddressUpdated,Email change message on success,Email address updated,ඊමෙල් ලිපිනය යාවත්කාලී විය,மின்னஞ்சல் முகவரி புதுப்பிக்கப்பட்டது
 system.user.settings.incorrectPassword,Response message for incorrect password for password change,Current password incorrect. Please try again.,වත්මන් මුරපදය වැරදියි. නැවත උත්සහා කරන්න.,தற்போதைய கடவுச்சொல் தவறானது. மீண்டும் முயற்சி செய்க.
 system.user.settings.incorrectVerifyCode,Response message for incorrect Verify code for phone number change,Verify code incorrect. Please try again.,කෝඩ් විසින් සබැඳිය වැරදියි. කරුණාකර නැවත උත්සහා කරන්න.,குறியீட்டை சரிபார்க்கவும். மீண்டும் முயற்சிக்கவும்.
-system.user.settings.language,Language name,"{language, select, en {English} fr {Français} other {{language}}}","{භාෂා, තෝරන්න, en {ඉංග්‍රීසි} fr {ෆ්‍රංශ්} other {{භාෂා}}}","{மொழி, தேர்ந்தெடு, en {ஆங்கிலம்} fr {பிரஞ்சு} other {{மொழி}}}"
+system.user.settings.language,Language name,"{language, select, en {English} si {Sinhala} ta {Tamil} other {{language}}}","{language, select, en {ඉංග්‍රීසි} si {සිංහල} ta {දෙමළ} other {{language}}}","{language, select, en {ஆங்கிலம்} si {சிங்களம்} ta {தமிழ்} other {{language}}}"
 system.user.settings.name,label for Name,Name,නම,பெயர்
 system.user.settings.passwordUpdated,Password change message on success,Password was successfully changed,මුරපදය සාර්ථකව වෙනස් කරන ලදි,கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது
 system.user.settings.phonedNumberUpdated,Phone change message on success,Phone number updated,දුරකතන අංකය යාවත්කාලී විය,தொலைபேசி எண் புதுப்பிக்கப்பட்டது
@@ -2350,7 +2371,7 @@ v2.constants.address,Label for address,Address,ලිපිනය,முகவ�
 v2.constants.allEvents,Label for select option All events,All events,සියලු සිදුවීම්,அனைத்து நிகழ்வுகளும்
 v2.constants.allStatuses,Label for select option All statuses,All statuses,සියලු තත්ත්වයන්,அனைத்து நிலைகளும்
 v2.constants.application.title,Application title,Application,අයිතිය,விண்ணப்பி
-v2.constants.applicationName,Declaration name of CRVS,OpenCRVS,OpenCRVS,OpenCRVS
+v2.constants.applicationName,Declaration name of CRVS,One Registry,One Registry,One Registry
 v2.constants.assignRecord,A label for the Assign record -button,Assign record,රාජකාරීත්වය සඳහා ලක් පිටපත් කරන්න,பதிவை ஒதுக்கவும்
 v2.constants.averageRateOfRegistrations,A label for Average rate of registrations,avg. {amount}%,මාධ්‍ය සහිත {amount}%,சராசரி {amount}%
 v2.constants.birth,A label from the birth event,Birth,උපන්දිනය,பிறப்பு
@@ -2362,7 +2383,7 @@ v2.constants.certified,A label for certified,certified,බාරදෙන,சா
 v2.constants.collected,The status label for collected,collected,එක් කර ඇත,சேகரிக்கப்பட்டுள்ளது
 v2.constants.collectedBy,The collected by sec text,Collected by,එකතු කළ හැකිය.,சேகரிக்கப்பட்டுள்ளது
 v2.constants.comment,Label for rejection comment,Comment,අදහසයි,கருத்து
-v2.constants.countryName,Name of the OpenCRVS implementation country,Farajaland,පොදු Farajaland,பரஜாலாந்த்
+v2.constants.countryName,Name of the OpenCRVS implementation country,Sri Lanka,ශ්‍රී ලංකාව,இலங்கை
 v2.constants.customTimePeriod,Label for Custom time period,Custom time period,සැකසුම් කාල කාලය,தனிப்பட்ட கால காலம்
 v2.constants.dateOfDeclaration,Date of declaration label,Date of declaration,ප්‍රකාශයේ දිනය,அறிவிப்பு தேதி
 v2.constants.death,A label from the death event,Death,මරණය,மரணம்
@@ -2901,7 +2922,7 @@ validations.validNationalId,The error message that appears when an invalid value
 validations.validPassportNumber,The error message that appears when an invalid value is used as passport number,The Passport Number can only be alpha numeric and must be {validLength} characters long,කාමර අංකය පරික්ෂා හා වලංගු දිනය විසින් {validLength} අක්ෂර හෝ අක්ෂර සංඛ්‍යාවේ දිනය විසින් ය.,பாஸ்போர்ட் எண் அல்பாநியூமெரிக் மட்டுமே இருக்க வேண்டும் மற்றும் {validLength} எண்கள் நீளமாக இருக்க வேண்டும்.
 verifyCertificate.brn,Label for Birth Registration Number,BRN,BRN,பி.ஆர்.என்.
 verifyCertificate.certifiedAt,Label for date of certification,Date of certification,සහත් දිනය,சான்றிதழ் தேதி
-verifyCertificate.dateOfBirth,Label for date of birth,Date of birth,උපන්දිනය,பிறந்த தேதி
+verifyCertificate.dateOfBirth,Label for date of birth,Date of birth,උපන් දිනය,பிறந்த தேதி
 verifyCertificate.dateOfDeath,Label for date of death,Date of death,මධ්‍යම දිනය,மரண தேதி
 verifyCertificate.drn,Label for Death Registration Number,DRN,DRN,"மன்னிக்கவும், நான் அதை பரிந்துரைக்க முடியவில்லை."
 verifyCertificate.errorMessage,message for error alert,The certificate is a potential forgery please...,සහත්කය ව්‍යාත්මක ප්‍රතික්ෂේපයක් වේදිකාවක් වේ...,சான்றிதழ் ஒரு விளம்பரமாக இருக்கலாம் என்று எச்சரிக்கை சொல்லப்படுகிறது...
@@ -2925,7 +2946,7 @@ views.idReader.label.manualInput,Label that shows below the divider on the id re
 views.idReader.label.or,Label that shows on the divider,Or,නැතහොත්,அல்லது
 views.idVerification.banner.actions.reset,,Reset,නැවත සකසන්න,மீள்வெட்டு
 views.idVerification.banner.actions.revoke,,Revoke,නවතම අවලංගු කරන්න,ரத்து செய்
-views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.","මෙම හැඳුනුම Farajaland ජාතික හැඳුනුම පද්ධතිය සමඟ සාර්ථකව සපයා ඇත. සංස්කරණය කිරීම සඳහා, කරුණාකර ප්‍රස්තාරය ඉවත් කරන්න.",இந்த அடையாளம் {officeName} தேசிய ஐடி அமைப்புடன் வெற்றிகரமாக உறுதிப்படுத்தப்பட்டுள்ளது. திருத்தங்களை செய்ய முன்பு உறுதிப்படுத்தலை நீக்கவும்.
+views.idVerification.banner.authenticated.description,,"This identity has been successfully authenticated with the Sri Lanka National ID System. To make edits, please remove the authentication first.","මෙම හැඳුනුම්පත ශ්‍රී ලංකා ජාතික හැඳුනුම්පත් පද්ධතිය සමඟ සාර්ථකව සත්‍යාපනය කර ඇත. සංස්කරණයන් සිදු කිරීමට, කරුණාකර මුලින් සත්‍යාපනය ඉවත් කරන්න.","இந்த அடையாளம் இலங்கை தேசிய அடையாள அட்டைப் பதிவுசெய்யும் முறைமையுடன் வெற்றிகரமாக உறுதிப்படுத்தப்பட்டுள்ளது. திருத்தங்களைச் செய்ய, தயவுசெய்து முதலில் உறுதிப்படுத்தலை அகற்றவும்."
 views.idVerification.banner.authenticated.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Authenticated status and unlock the fields for editing.",‘ඉදිරිපත්’ කිරීමෙන් ඔබට ID සබැඳි තත්ත්වය ඉවත් කරනු ලැබේ හා සංස්කරණ ස්වයංක්‍රීය ක්ෂේත්‍ර විවෘත කරයි.,"‘தொடருவதன் மூலம், நீங்கள் ID உறுதிசெய்யப்பட்ட நிலையை நீக்கி, தொகுப்புகளை திருத்த விரும்புகிறீர்கள்.’"
 views.idVerification.banner.authenticated.resetConfirmation.title,,Revoke authenticated ID?,ටානියාල් අත්සන් කිරීම?,அங்கீகரிக்கப்பட்ட ஐடி ரத்து செய்யவா?
 views.idVerification.banner.authenticated.title,,ID Authenticated,අනුමත විස්තරය අනුමත කර ඇත,ஐடி சரிபார்க்கப்பட்டது
@@ -2935,7 +2956,7 @@ views.idVerification.banner.failed.resetConfirmation.title,,Reset information?,�
 views.idVerification.banner.failed.title,,ID Verification Failed,අනුමත පිවිසුම අසාර්ථකයි,ஐடி சரிபார்ப்பு தோல்வி ஏற்பட்டது
 views.idVerification.banner.failedFetchIdDetails.description,Explains the failure to fetch individual details possibly due to network issues or incorrect ID information.,We were unable to retrieve the individuals details for the National ID System. Please try again.,අපි ජාතික හැඳුනුම් අංකය පද්ධති දත්ත ලබා ගැනීමට නොහැක. නැවත උත්සහා කරන්න.,தேசிய ஐடி அமைப்புக்கான தனிப்பட்ட விவரங்களை எங்கள் பயன்படுத்த முடியவில்லை. மீண்டும் முயற்சி செய்க.
 views.idVerification.banner.failedFetchIdDetails.title,Displayed when fetching individual details from the National ID System fails.,Failed to retrieve individuals details,පුද්ගලික විස්තර ලබා ගැනීම අසාර්ථක විය.,தகுதியாளர்களின் விவரங்களைப் பெற முடியவில்லை
-views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.","මෙම හැඳුනුම් දත්ත ෆරජාලන්ඩ් ජාතික හැඳුනුම් පද්ධතියේ සාර්ථකව සත්‍යාපනය කර ඇත. කරුණාකර අනිවාර්යෙන් මුදල් පරීක්ෂා කර බලන්න. සංස්කරණයන් සක්‍රීය කිරීම සඳහා, කරුණාකර සමස්ත පිළිගත් සත්‍යාපනය ඉවත් කරන්න.",இந்த அடையாள தரவு வெற்றிகரமாக பரிசீலிக்கப்பட்டுள்ளது பரஜாலாந்தின் தேசிய ஐடி அமைப்புடன். தயவுசெய்து குறிப்பிட்டவரின் உடல் அமையாததன் மூலம் அவர்களின் அடையாளத்தை சரிபார்க்கப்படவில்லை. திருத்தங்களை செய்ய முன்னோட்டத்தை முடக்குவதற்கு முன்பு பரிசீலனை நீக்கவும்.
+views.idVerification.banner.verified.description,,"This identity data has been successfully verified with the Sri Lanka National ID System. Please note that their identity has not been authenticated using the individual's biometrics. To make edits, please remove the verification first.","මෙම හැඳුනුම් දත්ත ශ්‍රී ලංකා ජාතික හැඳුනුම්පත් පද්ධතිය සමඟ සාර්ථකව සත්‍යපත් කර ඇත. ඔවුන්ගේ හැඳුනුම ජෛව චිහ්න භාවිතයෙන් සත්‍යාපනය කර නොමැති බව කරුණාවෙන් සලකන්න. සංස්කරණයන් සිදු කිරීමට, කරුණාකර මුලින් සත්‍යපත් කිරීම ඉවත් කරන්න.","இந்த அடையாளத் தரவு இலங்கை தேசிய அடையாள அட்டைப் பதிவுசெய்யும் முறைமையுடன் வெற்றிகரமாக சரிபார்க்கப்பட்டுள்ளது. தனிநபரின் உயிர் விபரங்களைப் பயன்படுத்தி அவர்களின் அடையாளம் உறுதிப்படுத்தப்படவில்லை என்பதை கவனிக்கவும். திருத்தங்களைச் செய்ய, தயவுசெய்து முதலில் சரிபார்ப்பை அகற்றவும்."
 views.idVerification.banner.verified.resetConfirmation.description,,"By clicking ‘Continue,’ you’ll remove ID Verified status and unlock the fields for editing.","‘ඉදිරිපත් කිරීම’ ක්‍රික් කිරීමෙන් ඔබට ID සත්‍යාපනය ඉවත් කරනු ඇත්තේ නිසා, සංස්කරණ ක්ෂේත්‍ර සහිත ක්ෂේත්‍ර ස්ථිර විවෘත කිරීමට ඉඩ දෙනු ඇත.","‘தொடருவதன் மூலம், நீங்கள் ID சரிபார்க்கப்பட்ட நிலையை நீக்கி, தொகுப்புகளை திருத்த வேண்டும்.’"
 views.idVerification.banner.verified.resetConfirmation.title,,Revoke valid ID?,වලංගු හැඳුනුම් අංකය ඉවත් කරනවාද?,செல்லுபடியாகும் ஐடி ரத்து செய்யவா?
 views.idVerification.banner.verified.title,,ID Verified,අනාගත වීමේ හැකියාව තහවුරු කරන ලදි,ஐடி சரிபார்க்கப்பட்டது

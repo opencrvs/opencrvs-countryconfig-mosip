@@ -22,33 +22,35 @@ import {
   getDetailsExist,
   getReasonNotExisting
 } from '../common/common-required-fields'
-import {
-  exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
-  getMaritalStatus,
-  registrationEmail,
-  registrationPhone,
-  getEducation,
-  getOccupation,
-  divider
-} from '../common/common-optional-fields'
-import {
-  attendantAtBirth,
-  birthType,
-  multipleBirth,
-  weightAtBirth
-} from './optional-fields'
+import { divider } from '../common/common-optional-fields'
+import { birthType, weightAtBirth } from './optional-fields'
 import {
   childNameInEnglish,
   fatherNameInEnglish,
   informantNameInEnglish,
-  motherNameInEnglish
+  motherNameInEnglish,
+  childNameInSinhala,
+  childNameInTamil,
+  motherNameInSinhala,
+  motherNameInTamil,
+  fatherNameInSinhala,
+  fatherNameInTamil,
+  informantNameInSinhala,
+  informantNameInTamil,
+  grandfatherNameInEnglish,
+  grandfatherNameInSinhala,
+  grandfatherNameInTamil,
+  fatherPlaceOfBirth,
+  motherPlaceOfBirth,
+  greatGrandfatherNameInSinhala,
+  greatGrandfatherNameInTamil,
+  grandfatherPlaceOfBirth,
+  greatGrandfatherPlaceOfBirth
 } from '../common/preview-groups'
 import {
   isValidChildBirthDate,
   hideIfInformantMotherOrFather,
   mothersDetailsExistConditionals,
-  mothersBirthDateConditionals,
   parentsBirthDateValidators,
   detailsExist,
   motherFirstNameConditionals,
@@ -58,18 +60,14 @@ import {
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
   informantNotMotherOrFather,
-  detailsExistConditional,
-  ageOfIndividualValidators,
-  ageOfParentsConditionals,
   disableIfVerifiedOrAuthenticated,
-  exactDateOfBirthUnknownConditionals,
-  typeOfIDVerificationConditionals
+  typeOfIDVerificationConditionals,
+  hideIfTamil,
+  hideIfSinhala
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
-  informantFamilyNameConditionals,
-  informantBirthDateConditionals,
-  exactDateOfBirthUnknownConditional
+  informantFamilyNameConditionals
 } from '../common/default-validation-conditionals'
 import {
   documentsSection,
@@ -86,9 +84,24 @@ import {
 import { idReaderFields, getInitialValueFromIDReader } from '@opencrvs/mosip'
 import { esignetConfig, qrCodeConfig } from '../common/id-reader-configurations'
 import {
-  getReasonForLateRegistration,
+  getBirthOrder,
   getIDType,
-  getIDNumberFields
+  getIDNumberFields,
+  getFirstNameInSinhalaField,
+  getFirstNameInTamilField,
+  getFamilyNameInSinhalaField,
+  getFamilyNameInTamilField,
+  getNumberOfChildren,
+  getMarried,
+  placeOfEventInividual,
+  getIDNumber,
+  getRace,
+  getAgeAtDateOfBirthOfChild,
+  getContactDetails,
+  getHospitalAdmissionDetails,
+  getDateMarried,
+  getBornInSriLanka,
+  getYearOfBirth
 } from '../common/common-custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
@@ -186,8 +199,13 @@ export const birthForm: ISerializedForm = {
         {
           id: 'child-view-group',
           fields: [
-            // COMMENT IN AND DUPLICATE AS REQUIRED IN ORDER TO CREATE A CUSTOM FIELD: createCustomFieldExample(),
-            // createCustomFieldExample(),
+            getBirthDate(
+              'childBirthDate',
+              [],
+              isValidChildBirthDate,
+              certificateHandlebars.eventDate
+            ), // Required field.
+            // PLACE OF BIRTH FIELDS WILL RENDER HERE
             getFirstNameField(
               'childNameInEnglish',
               [],
@@ -198,21 +216,37 @@ export const birthForm: ISerializedForm = {
               [],
               certificateHandlebars.childFamilyName
             ), // Required field.  Names in Latin characters must be provided for international passport
+            getFirstNameInSinhalaField(
+              'child',
+              [hideIfTamil],
+              'chiledNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'child',
+              [hideIfSinhala],
+              'childNameInTamil'
+            ),
+            getFamilyNameInSinhalaField(
+              'child',
+              [hideIfTamil],
+              'chiledNameInSinhala'
+            ),
+            getFamilyNameInTamilField(
+              'child',
+              [hideIfSinhala],
+              'childNameInTamil'
+            ),
             getGender(certificateHandlebars.childGender), // Required field.
-            getBirthDate(
-              'childBirthDate',
-              [],
-              isValidChildBirthDate,
-              certificateHandlebars.eventDate
-            ), // Required field.
-            getReasonForLateRegistration('birth'),
-            // PLACE OF BIRTH FIELDS WILL RENDER HERE
-            divider('place-of-birth-seperator'),
-            attendantAtBirth,
+            weightAtBirth,
+            getBirthOrder(),
             birthType,
-            weightAtBirth
+            getNumberOfChildren()
           ],
-          previewGroups: [childNameInEnglish] // Preview groups are used to structure data nicely in Review Page UI
+          previewGroups: [
+            childNameInEnglish,
+            childNameInSinhala,
+            childNameInTamil
+          ] // Preview groups are used to structure data nicely in Review Page UI
         }
       ]
     },
@@ -231,6 +265,12 @@ export const birthForm: ISerializedForm = {
           fields: [
             informantType, // Required field.
             otherInformantType(Event.Birth), // Required field.
+            getNationality(
+              certificateHandlebars.informantNationality,
+              hideIfInformantMotherOrFather.concat(
+                disableIfVerifiedOrAuthenticated
+              )
+            ), // Required field.
             ...idReaderFields(
               'birth',
               'informant',
@@ -242,6 +282,13 @@ export const birthForm: ISerializedForm = {
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               )
+            ),
+            ...getIDNumberFields(
+              'informant',
+              hideIfInformantMotherOrFather.concat(
+                typeOfIDVerificationConditionals
+              ),
+              true
             ),
             getFirstNameField(
               'informantNameInEnglish',
@@ -261,63 +308,25 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.informantFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
-            getBirthDate(
-              'informantBirthDate',
-              informantBirthDateConditionals.concat(
-                hideIfInformantMotherOrFather,
-                disableIfVerifiedOrAuthenticated
-              ),
-              [
-                {
-                  operation: 'dateFormatIsCorrect',
-                  parameters: []
-                },
-                {
-                  operation: 'dateInPast',
-                  parameters: []
-                },
-                {
-                  operation: 'isAgeInYearsBetween',
-                  parameters: [16, 100]
-                }
-              ],
-              certificateHandlebars.informantBirthDate,
-              getInitialValueFromIDReader('birthDate')
-            ), // Required field.
-            exactDateOfBirthUnknown(
-              hideIfInformantMotherOrFather.concat(
-                exactDateOfBirthUnknownConditionals
-              )
-            ),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantMotherOrFather,
-                exactDateOfBirthUnknownConditionals
-              ),
-              ageOfIndividualValidators,
-              certificateHandlebars.ageOfInformantInYears
-            ),
-            getNationality(
-              certificateHandlebars.informantNationality,
-              hideIfInformantMotherOrFather.concat(
-                disableIfVerifiedOrAuthenticated
-              )
-            ), // Required field.
-            getIDType(
-              'birth',
+            getFirstNameInSinhalaField(
               'informant',
-              hideIfInformantMotherOrFather.concat(
-                typeOfIDVerificationConditionals
-              ),
-              true
+              informantFamilyNameConditionals.concat(hideIfTamil),
+              'informantNameInSinhala'
             ),
-            ...getIDNumberFields(
+            getFirstNameInTamilField(
               'informant',
-              hideIfInformantMotherOrFather.concat(
-                typeOfIDVerificationConditionals
-              ),
-              true
+              informantFamilyNameConditionals.concat(hideIfSinhala),
+              'informantNameInTamil'
+            ),
+            getFamilyNameInSinhalaField(
+              'informant',
+              informantFamilyNameConditionals.concat(hideIfTamil),
+              'informantNameInSinhala'
+            ),
+            getFamilyNameInTamilField(
+              'informant',
+              informantFamilyNameConditionals.concat(hideIfSinhala),
+              'informantNameInTamil'
             ),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-seperator', [
@@ -326,115 +335,16 @@ export const birthForm: ISerializedForm = {
                 expression: informantNotMotherOrFather
               }
             ]),
-            registrationPhone, // If you wish to enable automated SMS notifications to informants, include this
-            registrationEmail // If you wish to enable automated Email notifications to informants, include this
+            ...getContactDetails('informant')
           ],
-          previewGroups: [informantNameInEnglish]
+          previewGroups: [
+            informantNameInEnglish,
+            informantNameInSinhala,
+            informantNameInTamil
+          ]
         }
       ],
       mapping: getCommonSectionMapping('informant')
-    },
-    {
-      id: 'mother',
-      viewType: 'form',
-      name: formMessageDescriptors.motherName,
-      title: formMessageDescriptors.motherTitle,
-      groups: [
-        {
-          id: 'mother-view-group',
-          fields: [
-            getDetailsExist(
-              formMessageDescriptors.mothersDetailsExist,
-              mothersDetailsExistConditionals
-            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            divider(
-              'mother-details-seperator',
-              mothersDetailsExistConditionals
-            ),
-            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
-            ...idReaderFields(
-              'birth',
-              'mother',
-              qrCodeConfig,
-              esignetConfig,
-              getCustomFieldMapping(`birth.mother.mother-view-group.verified`),
-              detailsExist
-            ),
-            getFirstNameField(
-              'motherNameInEnglish',
-              motherFirstNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.motherFirstName,
-              getInitialValueFromIDReader('firstName')
-            ), // Required field.
-            getFamilyNameField(
-              'motherNameInEnglish',
-              motherFamilyNameConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              certificateHandlebars.motherFamilyName,
-              getInitialValueFromIDReader('familyName')
-            ), // Required field.
-            getBirthDate(
-              'motherBirthDate',
-              mothersBirthDateConditionals.concat(
-                disableIfVerifiedOrAuthenticated
-              ),
-              parentsBirthDateValidators,
-              certificateHandlebars.motherBirthDate,
-              getInitialValueFromIDReader('birthDate')
-            ), // Required field.
-            exactDateOfBirthUnknown(
-              detailsExistConditional.concat(
-                exactDateOfBirthUnknownConditionals
-              )
-            ),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfMother,
-              exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional,
-                exactDateOfBirthUnknownConditionals
-              ),
-              ageOfParentsConditionals,
-              certificateHandlebars.ageOfMotherInYears
-            ),
-            getNationality(
-              certificateHandlebars.motherNationality,
-              detailsExist.concat(disableIfVerifiedOrAuthenticated)
-            ), // Required field.
-            getIDType(
-              'birth',
-              'mother',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            ...getIDNumberFields(
-              'mother',
-              detailsExist.concat(typeOfIDVerificationConditionals),
-              true
-            ),
-            // ADDRESS FIELDS WILL RENDER HERE
-            divider('mother-address-seperator', detailsExist),
-            getMaritalStatus(certificateHandlebars.motherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getEducation(certificateHandlebars.motherEducationalAttainment),
-            getOccupation(certificateHandlebars.motherOccupation, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            multipleBirth
-          ],
-          previewGroups: [motherNameInEnglish]
-        }
-      ],
-      mapping: getSectionMapping('mother')
     },
     {
       id: 'father',
@@ -462,6 +372,10 @@ export const birthForm: ISerializedForm = {
               fathersDetailsExistConditionals
             ),
             getReasonNotExisting('fatherReasonNotApplying'), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            getNationality(
+              certificateHandlebars.fatherNationality,
+              detailsExist.concat(disableIfVerifiedOrAuthenticated)
+            ), // Required field.
             ...idReaderFields(
               'birth',
               'father',
@@ -469,6 +383,17 @@ export const birthForm: ISerializedForm = {
               esignetConfig,
               getCustomFieldMapping(`birth.father.father-view-group.verified`),
               detailsExist
+            ),
+            getIDType(
+              'birth',
+              'father',
+              detailsExist.concat(typeOfIDVerificationConditionals),
+              true
+            ),
+            ...getIDNumberFields(
+              'father',
+              detailsExist.concat(typeOfIDVerificationConditionals),
+              true
             ),
             getFirstNameField(
               'fatherNameInEnglish',
@@ -486,6 +411,26 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherFamilyName,
               getInitialValueFromIDReader('familyName')
             ), // Required field.
+            getFirstNameInSinhalaField(
+              'father',
+              detailsExist.concat(hideIfTamil),
+              'fatherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'father',
+              detailsExist.concat(hideIfSinhala),
+              'fatherNameInTamil'
+            ),
+            getFamilyNameInSinhalaField(
+              'father',
+              detailsExist.concat(hideIfTamil),
+              'fatherNameInSinhala'
+            ),
+            getFamilyNameInTamilField(
+              'father',
+              detailsExist.concat(hideIfSinhala),
+              'fatherNameInTamil'
+            ),
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals.concat(
@@ -495,55 +440,250 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.fatherBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
-            exactDateOfBirthUnknown(
-              detailsExistConditional.concat(
-                exactDateOfBirthUnknownConditionals
-              )
+            ...placeOfEventInividual(
+              'father',
+              detailsExist,
+              'fatherPlaceOfBirth',
+              'Birth'
             ),
-            getAgeOfIndividualInYears(
-              formMessageDescriptors.ageOfFather,
-              exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional,
-                exactDateOfBirthUnknownConditionals
-              ),
-              ageOfParentsConditionals,
-              certificateHandlebars.ageOfFatherInYears
+            getRace('father', detailsExist)
+          ],
+          previewGroups: [
+            fatherNameInEnglish,
+            fatherNameInSinhala,
+            fatherNameInTamil,
+            fatherPlaceOfBirth
+          ]
+        }
+      ],
+      mapping: getSectionMapping('father')
+    },
+    {
+      id: 'mother',
+      viewType: 'form',
+      name: formMessageDescriptors.motherName,
+      title: formMessageDescriptors.motherTitle,
+      groups: [
+        {
+          id: 'mother-view-group',
+          fields: [
+            getDetailsExist(
+              formMessageDescriptors.mothersDetailsExist,
+              mothersDetailsExistConditionals
+            ), // Strongly recommend is required if you want to register abandoned / orphaned children!
+            divider(
+              'mother-details-seperator',
+              mothersDetailsExistConditionals
             ),
+            getReasonNotExisting(certificateHandlebars.motherReasonNotApplying), // Strongly recommend is required if you want to register abandoned / orphaned children!
             getNationality(
-              certificateHandlebars.fatherNationality,
+              certificateHandlebars.motherNationality,
               detailsExist.concat(disableIfVerifiedOrAuthenticated)
             ), // Required field.
+            ...idReaderFields(
+              'birth',
+              'mother',
+              qrCodeConfig,
+              esignetConfig,
+              getCustomFieldMapping(`birth.mother.mother-view-group.verified`),
+              detailsExist
+            ),
             getIDType(
               'birth',
-              'father',
+              'mother',
               detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
             ...getIDNumberFields(
-              'father',
+              'mother',
               detailsExist.concat(typeOfIDVerificationConditionals),
               true
             ),
+            getFirstNameField(
+              'motherNameInEnglish',
+              motherFirstNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
+              certificateHandlebars.motherFirstName,
+              getInitialValueFromIDReader('firstName')
+            ), // Required field.
+            getFamilyNameField(
+              'motherNameInEnglish',
+              motherFamilyNameConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
+              certificateHandlebars.motherFamilyName,
+              getInitialValueFromIDReader('familyName')
+            ), // Required field.
+            getFirstNameInSinhalaField(
+              'mother',
+              detailsExist.concat(hideIfTamil),
+              'motherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'mother',
+              detailsExist.concat(hideIfSinhala),
+              'motherNameInTamil'
+            ),
+            getFamilyNameInSinhalaField(
+              'mother',
+              detailsExist.concat(hideIfTamil),
+              'motherNameInSinhala'
+            ),
+            getFamilyNameInTamilField(
+              'mother',
+              detailsExist.concat(hideIfSinhala),
+              'motherNameInTamil'
+            ),
+            getAgeAtDateOfBirthOfChild(detailsExist),
+            ...placeOfEventInividual(
+              'mother',
+              detailsExist,
+              'motherPlaceOfBirth',
+              'Birth'
+            ),
+            getRace('mother', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('father-address-seperator', detailsExist),
-            getMaritalStatus(certificateHandlebars.fatherMaritalStatus, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ]),
-            getEducation(certificateHandlebars.fatherEducationalAttainment),
-            getOccupation(certificateHandlebars.fatherOccupation, [
-              {
-                action: 'hide',
-                expression: '!values.detailsExist'
-              }
-            ])
+            ...getContactDetails('mother', detailsExist),
+            ...getHospitalAdmissionDetails(detailsExist)
           ],
-          previewGroups: [fatherNameInEnglish]
+          previewGroups: [
+            motherNameInEnglish,
+            motherNameInSinhala,
+            motherNameInTamil,
+            motherPlaceOfBirth
+          ]
         }
       ],
-      mapping: getSectionMapping('father')
+      mapping: getSectionMapping('mother')
+    },
+    {
+      id: 'marriage',
+      viewType: 'form',
+      name: {
+        defaultMessage: 'Details of the Marriage',
+        description: 'Form section name for Marriage Details',
+        id: 'form.section.marriageEvent.name'
+      },
+      title: {
+        defaultMessage: 'Details of the Marriage',
+        description: 'Form section title for Marriage Details',
+        id: 'form.section.marriageEvent.name'
+      },
+      groups: [
+        {
+          id: 'marriage-view-group',
+          fields: [
+            getMarried(),
+            ...placeOfEventInividual(
+              'marriage',
+              detailsExist,
+              'placeOfMarrriage',
+              'Marrriage'
+            ),
+            getDateMarried()
+          ]
+        }
+      ]
+    },
+    {
+      id: 'grandfather',
+      viewType: 'form',
+      name: {
+        defaultMessage: 'Details of the Grandfather / Great Grandfather',
+        description: 'Form section name for grandFather',
+        id: 'form.section.grandfather.name'
+      },
+      title: {
+        defaultMessage: 'Details of the Grandfather / Great Grandfather',
+        description: 'Form section name for grandFather',
+        id: 'form.section.grandfather.name'
+      },
+      groups: [
+        {
+          id: 'grandfather-view-group',
+          fields: [
+            getBornInSriLanka('grandfather'),
+            getFirstNameInSinhalaField(
+              'grandfather',
+              [hideIfTamil],
+              'grandfatherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'grandfatherNameInTamil'
+            ),
+            getFamilyNameInSinhalaField(
+              'grandfather',
+              [hideIfTamil],
+              'grandfatherNameInSinhala'
+            ),
+            getFamilyNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'grandfatherNameInTamil'
+            ),
+            getIDNumber('grandfather', 'NATIONAL_ID', [], false),
+            getYearOfBirth('grandfather'),
+            ...placeOfEventInividual(
+              'grandfather',
+              detailsExist,
+              'grandfatherPlaceOfBirth',
+              'Birth'
+            ),
+            getBornInSriLanka('grandfather', 'greatGrandfather'),
+            getFirstNameInSinhalaField(
+              'grandfather',
+              [hideIfTamil],
+              'greatGrandfatherNameInSinhala',
+              'greatGrandfather'
+            ),
+            getFirstNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'greatGrandfatherNameInTamil',
+              'greatGrandfather'
+            ),
+            getFamilyNameInSinhalaField(
+              'grandfather',
+              [hideIfTamil],
+              'greatGrandfatherNameInSinhala',
+              'greatGrandfather'
+            ),
+            getFamilyNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'greatGrandfatherNameInTamil',
+              'greatGrandfather'
+            ),
+            getIDNumber(
+              'grandfather',
+              'NATIONAL_ID',
+              [],
+              false,
+              'greatGrandfather'
+            ),
+            getYearOfBirth('grandfather', 'greatGrandfather'),
+            ...placeOfEventInividual(
+              'grandfather',
+              detailsExist,
+              'greatGrandfatherPlaceOfBirth',
+              'greatGrandfather',
+              'Birth'
+            )
+          ],
+          previewGroups: [
+            grandfatherNameInEnglish,
+            grandfatherNameInSinhala,
+            grandfatherNameInTamil,
+            greatGrandfatherNameInSinhala,
+            greatGrandfatherNameInTamil,
+            grandfatherPlaceOfBirth,
+            greatGrandfatherPlaceOfBirth
+          ]
+        }
+      ]
     },
     documentsSection, // REQUIRED SECTION FOR DOCUMENT ATTACHMENTS
     previewSection, // REQUIRED SECTION TO PREVIEW DECLARATION BEFORE SUBMIT

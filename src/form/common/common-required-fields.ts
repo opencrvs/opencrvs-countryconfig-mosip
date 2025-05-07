@@ -110,7 +110,7 @@ export const getNationality = (
     type: 'SELECT_WITH_OPTIONS',
     label: formMessageDescriptors.nationality,
     required: true,
-    initialValue: 'FAR',
+    initialValue: 'LKA',
     validator: [],
     placeholder: formMessageDescriptors.formSelectPlaceholder,
     options: {
@@ -124,12 +124,7 @@ export const otherInformantType = (event: Event) =>
   ({
     name: 'otherInformantType',
     type: 'TEXT',
-    label:
-      event == Event.Birth
-        ? formMessageDescriptors.informantsRelationWithChild
-        : event == Event.Death
-          ? formMessageDescriptors.relationshipToDeceased
-          : formMessageDescriptors.relationshipToSpouses,
+    label: formMessageDescriptors.other,
     placeholder: formMessageDescriptors.relationshipPlaceHolder,
     required: true,
     initialValue: '',

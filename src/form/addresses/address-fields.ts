@@ -311,7 +311,7 @@ export function getAddressFields(
         ? useCase
         : `${useCase}Address`,
       required: true,
-      initialValue: 'FAR',
+      initialValue: 'LKA',
       validator: [],
       placeholder: {
         defaultMessage: 'Select',

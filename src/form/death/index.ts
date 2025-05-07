@@ -63,7 +63,7 @@ import {
   spouseFirstNameConditionals,
   hideIfInformantSpouse,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate,
+  exactDateOfBirthUnknownConditionals,
   typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
@@ -218,17 +218,20 @@ export const deathForm = {
               [
                 {
                   action: 'hide',
-                  expression: 'values.exactDateOfBirthUnknown'
+                  expression:
+                    'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
                 }
               ].concat(disableIfVerifiedOrAuthenticated),
               isValidBirthDate,
               certificateHandlebars.deceasedBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.,
-            exactDateOfBirthUnknown(hideIfIDReaderFilledBirthDate),
+            exactDateOfBirthUnknown(exactDateOfBirthUnknownConditionals),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfDeceased,
-              exactDateOfBirthUnknownConditional,
+              exactDateOfBirthUnknownConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfDeceasedConditionals,
               certificateHandlebars.ageOfDeceasedInYears
             ),
@@ -335,17 +338,24 @@ export const deathForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate,
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              hideIfInformantSpouse.concat(hideIfIDReaderFilledBirthDate)
+              hideIfInformantSpouse.concat(exactDateOfBirthUnknownConditionals)
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
-              exactDateOfBirthUnknownConditional.concat(hideIfInformantSpouse),
+              exactDateOfBirthUnknownConditional.concat(
+                hideIfInformantSpouse,
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
             ),
@@ -432,11 +442,14 @@ export const deathForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExist.concat(hideIfIDReaderFilledBirthDate)
+              detailsExist.concat(exactDateOfBirthUnknownConditionals)
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfSpouse,
-              exactDateOfBirthUnknownConditional.concat(detailsExist),
+              exactDateOfBirthUnknownConditional.concat(
+                detailsExist,
+                exactDateOfBirthUnknownConditionals
+              ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfSpouseInYears
             ),

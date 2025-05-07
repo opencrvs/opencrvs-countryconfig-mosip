@@ -15,8 +15,10 @@ import {
   defineFormPage,
   field,
   FieldType,
+  ImageMimeType,
   not,
   or,
+  PageTypes,
   TranslationConfig
 } from '@opencrvs/toolkit/events'
 import { requireMotherDetails } from './mother'
@@ -26,8 +28,8 @@ import { InformantType } from './informant'
 const IdType = {
   NATIONAL_ID: 'NATIONAL_ID',
   PASSPORT: 'PASSPORT',
-  BIRTH_REGISTRATION_NUMBER: 'BIRTH_REGISTRATION_NUMBER',
-  NONE: 'NONE'
+  BIRTH_CERTIFICATE: 'BIRTH_CERTIFICATE',
+  OTHER: 'OTHER'
 } as const
 
 const idTypeMessageDescriptors = {
@@ -41,17 +43,26 @@ const idTypeMessageDescriptors = {
     description: 'Option for form field: Type of ID',
     id: 'v2.form.field.label.iDTypePassport'
   },
-  BIRTH_REGISTRATION_NUMBER: {
-    defaultMessage: 'Birth Registration Number',
+  BIRTH_CERTIFICATE: {
+    defaultMessage: 'Birth Certificate',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeBRN'
+    id: 'v2.form.field.label.iDTypeBirthCertificate'
   },
-  NONE: {
-    defaultMessage: 'None',
+  OTHER: {
+    defaultMessage: 'Other',
     description: 'Option for form field: Type of ID',
-    id: 'v2.form.field.label.iDTypeNone'
+    id: 'v2.form.field.label.iDTypeOther'
   }
 } satisfies Record<keyof typeof IdType, TranslationConfig>
+
+const DEFAULT_FILE_CONFIGURATION = {
+  maxFileSize: 5 * 1024 * 1024,
+  acceptedFileTypes: [
+    ImageMimeType.enum['image/jpeg'],
+    ImageMimeType.enum['image/png'],
+    ImageMimeType.enum['image/jpg']
+  ]
+}
 
 const idTypeOptions = createSelectOptions(IdType, idTypeMessageDescriptors)
 
@@ -77,6 +88,7 @@ const otherOptions = createSelectOptions(Other, otherMessageDescriptors)
 
 export const documents = defineFormPage({
   id: 'documents',
+  type: PageTypes.enum.FORM,
   title: {
     defaultMessage: 'Upload supporting documents',
     description: 'Form section title for documents',
@@ -87,9 +99,10 @@ export const documents = defineFormPage({
       id: 'documents.proofOfBirth',
       type: FieldType.FILE,
       required: false,
-      options: {
+      configuration: {
+        ...DEFAULT_FILE_CONFIGURATION,
         style: {
-          fullWidth: true
+          width: 'full'
         }
       },
       label: {
@@ -107,6 +120,7 @@ export const documents = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfMother.label'
       },
+      configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
       conditionals: [
         {
@@ -125,6 +139,7 @@ export const documents = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfFather.label'
       },
+      configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
       conditionals: [
         {
@@ -142,6 +157,7 @@ export const documents = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.documents.field.proofOfInformant.label'
       },
+      configuration: DEFAULT_FILE_CONFIGURATION,
       options: idTypeOptions,
       conditionals: [
         {
@@ -165,6 +181,7 @@ export const documents = defineFormPage({
         description: 'This is the label for the field',
         id: 'v2.event.birth.action.declare.form.section.documents.field.proofOther.label'
       },
+      configuration: DEFAULT_FILE_CONFIGURATION,
       options: otherOptions,
       conditionals: [
         {

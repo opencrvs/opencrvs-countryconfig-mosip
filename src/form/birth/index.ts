@@ -62,7 +62,7 @@ import {
   ageOfIndividualValidators,
   ageOfParentsConditionals,
   disableIfVerifiedOrAuthenticated,
-  hideIfIDReaderFilledBirthDate,
+  exactDateOfBirthUnknownConditionals,
   typeOfIDVerificationConditionals
 } from '../common/default-validation-conditionals'
 import {
@@ -275,6 +275,10 @@ export const birthForm: ISerializedForm = {
                 {
                   operation: 'dateInPast',
                   parameters: []
+                },
+                {
+                  operation: 'isAgeInYearsBetween',
+                  parameters: [16, 100]
                 }
               ],
               certificateHandlebars.informantBirthDate,
@@ -282,13 +286,14 @@ export const birthForm: ISerializedForm = {
             ), // Required field.
             exactDateOfBirthUnknown(
               hideIfInformantMotherOrFather.concat(
-                hideIfIDReaderFilledBirthDate
+                exactDateOfBirthUnknownConditionals
               )
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfInformant,
               exactDateOfBirthUnknownConditional.concat(
-                hideIfInformantMotherOrFather
+                hideIfInformantMotherOrFather,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfIndividualValidators,
               certificateHandlebars.ageOfInformantInYears
@@ -381,12 +386,15 @@ export const birthForm: ISerializedForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+              detailsExistConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              )
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfMother,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
+                detailsExistConditional,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfMotherInYears
@@ -488,12 +496,15 @@ export const birthForm: ISerializedForm = {
               getInitialValueFromIDReader('birthDate')
             ), // Required field.
             exactDateOfBirthUnknown(
-              detailsExistConditional.concat(hideIfIDReaderFilledBirthDate)
+              detailsExistConditional.concat(
+                exactDateOfBirthUnknownConditionals
+              )
             ),
             getAgeOfIndividualInYears(
               formMessageDescriptors.ageOfFather,
               exactDateOfBirthUnknownConditional.concat(
-                detailsExistConditional
+                detailsExistConditional,
+                exactDateOfBirthUnknownConditionals
               ),
               ageOfParentsConditionals,
               certificateHandlebars.ageOfFatherInYears

@@ -66,7 +66,8 @@ export const mothersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -157,7 +158,8 @@ export const fathersBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -382,7 +384,8 @@ export function getNationalIDValidators(configCase: string): Validator[] {
 export const informantBirthDateConditionals = [
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -397,7 +400,8 @@ export const spouseBirthDateConditionals = [
   },
   {
     action: 'hide',
-    expression: 'values.exactDateOfBirthUnknown'
+    expression:
+      'values.exactDateOfBirthUnknown && !$form?.idReader?.birthDate && $form?.verified !== "verified" && $form?.verified !== "authenticated"'
   },
   {
     action: 'disable',
@@ -460,11 +464,10 @@ export const disableIfVerifiedOrAuthenticated = [
   }
 ]
 
-export const hideIfIDReaderFilledBirthDate = [
+export const hideIfQRReaderFilledBirthDate = [
   {
     action: 'hide',
-    expression:
-      '$form?.idReader?.birthDate || $form?.esignetCallback?.data?.birthDate'
+    expression: '$form?.idReader?.birthDate'
   }
 ]
 
@@ -475,6 +478,10 @@ const disableIfVerified = [
   }
 ]
 
+export const hideIfVerified = [
+  { action: 'hide', expression: '$form?.verified === "verified"' }
+]
+
 const hideIfAuthenticated = [
   { action: 'hide', expression: '$form?.verified === "authenticated"' }
 ]
@@ -482,4 +489,10 @@ const hideIfAuthenticated = [
 export const typeOfIDVerificationConditionals = [
   ...disableIfVerified,
   ...hideIfAuthenticated
+]
+
+export const exactDateOfBirthUnknownConditionals = [
+  ...hideIfQRReaderFilledBirthDate,
+  ...hideIfAuthenticated,
+  ...hideIfVerified
 ]

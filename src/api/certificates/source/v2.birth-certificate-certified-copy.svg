@@ -2,7 +2,7 @@
   <g clip-path="url(#clip0_5_2)">
     <path d="M583 0H0V842H583V0Z" fill="white" />
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-      <tspan x="62" y="426.352">01 April 2012 </tspan>
+      <tspan x="62" y="426.352">{{ formatDate (lookup $state "modifiedAt") "dd MMMM yyyy"}}</tspan>
     </text>
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
       <tspan x="62" y="413.552">Date of certification&#10;</tspan>
@@ -40,7 +40,7 @@
     </text>
     <path d="M50 206H534" stroke="#C86E00" stroke-width="2" stroke-linecap="round" />
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
-      <tspan x="70" y="229.76">Membership etails</tspan>
+      <tspan x="70" y="229.76">Details</tspan>
     </text>
     <path d="M70 233.5H514" stroke="#ECECEC" />
     <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
@@ -54,7 +54,7 @@
     </mask>
     <g mask="url(#mask0_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="247.708">{{ lookup $data "applicant.firstname" }} {{ lookup $data "applicant.surname" }}</tspan>
+        <tspan x="312" y="247.708">{{ lookup $declaration "child.firstname" }} {{ lookup $declaration "child.surname" }}</tspan>
       </text>
     </g>
     <path d="M70 253.5H514" stroke="#ECECEC" />
@@ -69,7 +69,7 @@
     </mask>
     <g mask="url(#mask1_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="267.708">{{ lookup $data "applicant.dob"  }}</tspan>
+        <tspan x="312" y="267.708">{{ lookup $declaration "child.dob"  }}</tspan>
       </text>
     </g>
     <path d="M70 273.5H514" stroke="#ECECEC" />
@@ -78,14 +78,14 @@
       <tspan x="70" y="287.708">3.</tspan>
     </text>
     <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-      <tspan x="90" y="287.208">Recommender Full name</tspan>
+      <tspan x="90" y="287.208">Mother Full name</tspan>
     </text>
     <mask id="mask2_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="312" y="278" width="202" height="12">
       <path d="M514 278H312V290H514V278Z" fill="white" />
     </mask>
     <g mask="url(#mask2_5_2)">
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" letter-spacing="0em">
-        <tspan x="312" y="287.708">{{ lookup $data "recommender.firstname"  }} {{ lookup $data "recommender.surname"  }}</tspan>
+        <tspan x="312" y="287.708">{{ lookup $declaration "mother.firstname"  }} {{ lookup $declaration "mother.surname"  }}</tspan>
       </text>
     </g>
     <path d="M70 293.5H514" stroke="#ECECEC" />
@@ -118,10 +118,10 @@
       <path d="M67.5169 162.446L67.3672 161.925H66.527L66.3773 162.446H65.7446L66.5712 160.007H67.3128L68.1496 162.446H67.5169ZM67.0951 160.956C67.0838 160.915 67.0679 160.861 67.0475 160.793C67.0293 160.722 67.0101 160.651 66.9896 160.578C66.9715 160.506 66.9568 160.445 66.9454 160.395C66.9364 160.445 66.9216 160.507 66.9012 160.582C66.8831 160.654 66.8649 160.726 66.8468 160.796C66.8286 160.864 66.8139 160.917 66.8026 160.956L66.6597 161.442H67.238L67.0951 160.956Z" fill="#222222" />
       <path d="M64.1376 162.445H63.5662V160.017H64.9779V160.486H64.1376V161.037H64.9166V161.507H64.1376V162.445Z" fill="#222222" />
       <text fill="#222222" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="8" font-weight="bold" letter-spacing="0em">
-        <tspan x="114" y="149.208">Farajaland Countryside Tennis Club</tspan>
+        <tspan x="114" y="149.208">Farajaland</tspan>
       </text>
       <text fill="#C86E00" xml:space="preserve" style="white-space: pre" font-family="Noto Sans" font-size="10" font-weight="bold" letter-spacing="0em">
-        <tspan x="114" y="165.76">Farajaland Tennis Club Membership Certificate</tspan>
+        <tspan x="114" y="165.76">Farajaland Birth Certificate Certified Copy</tspan>
       </text>
     </g>
     <mask id="mask4_5_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="53" y="513" width="484" height="40">

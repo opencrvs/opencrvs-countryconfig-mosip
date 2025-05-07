@@ -70,11 +70,19 @@ import {
 import { env } from './environment'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler,
-  onRegisterHandler
+  onAnyActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
+import { getEventType } from './utils/fhir'
+import { ActionType } from '@opencrvs/toolkit/events'
+import { Event } from './form/types/types'
+import { onRegisterHandler } from './api/registration'
+import {
+  fhirBirthToMosip,
+  fhirDeathToMosip,
+  shouldForwardToIDSystem
+} from './utils/mosip'
 
 export interface ITokenPayload {
   sub: string
@@ -189,23 +197,6 @@ async function getPublicKey(): Promise<string> {
     await new Promise((resolve) => setTimeout(resolve, 3000))
     return getPublicKey()
   }
-}
-
-interface VerificationStatus {
-  father: boolean
-  mother: boolean
-  informant: boolean
-}
-
-/**
- * Determines whether the registration data should be forwarded to the identity system
- * for unique ID creation based on the custom country specific logic built on verification statuses.
- */
-export function shouldForwardToIDSystem(
-  // eslint-disable-next-line no-unused-vars
-  verificationStatus: Partial<VerificationStatus>
-) {
-  return true
 }
 
 export async function createServer() {
@@ -454,12 +445,23 @@ export async function createServer() {
     handler: async (request, h) => {
       const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
       const result = await verify({ url, request })
+      const bundle = request.payload as fhir3.Bundle
 
-      if (shouldForwardToIDSystem(result)) {
+      if (shouldForwardToIDSystem(request.payload as fhir3.Bundle, result)) {
+        const payload =
+          getEventType(bundle) === 'BIRTH'
+            ? fhirBirthToMosip(bundle)
+            : fhirDeathToMosip(bundle)
+
         logger.info(
           'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
         )
-        return mosipRegistrationHandler({ url })(request, h)
+
+        return mosipRegistrationHandler({
+          url,
+          headers: request.headers,
+          payload
+        })(request, h)
       } else {
         logger.info(
           'Failed country specified custom logic check for id creation. Bypassing id system...'
@@ -604,17 +606,27 @@ export async function createServer() {
     path: '/events',
     handler: getCustomEventsHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Serves custom events'
     }
   })
 
   server.route({
     method: 'POST',
-    path: '/events/TENNIS_CLUB_MEMBERSHIP/actions/REGISTER',
+    path: '/events/{event}/actions/{action}',
+    handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: `/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
     handler: onRegisterHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })
@@ -658,10 +670,10 @@ export async function createServer() {
 
   server.route({
     method: 'POST',
-    path: '/events/{event}/actions/{action}',
-    handler: onAnyActionHandler,
+    path: `/events/${Event.V2_BIRTH}/actions/${ActionType.REGISTER}`,
+    handler: onRegisterHandler,
     options: {
-      tags: ['api', 'custom-event'],
+      tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
     }
   })

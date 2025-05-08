@@ -1015,7 +1015,7 @@ form.field.label.greatGrandFatherBornInSriLanka,,"If the Grandfather was not bor
 form.field.label.healthInstitution,,Health Institution,ආධිර සම්පූර්ණය,ஆரோக்கிய நிறுவனம்
 form.field.label.hospital,,Hospital,රෝහල,மருத்துவமனை
 form.field.label.hospitalAdmissionInformation,,Hospital Admission Information (if available),රෝහලට ඇතුළත් වීමේ තොරතුරු (තිබේ නම්),மருத்துவமனையில் அனுமதி தகவல் (கிடைத்தால்)
-form.field.label.iD,,ID Number,අංකය අංකය,ஐடி எண்
+form.field.label.iD,,National Identity Card No.,ජාතික හැඳුනුම්පත් අංකය,தேசிய அடையாள அட்டை எண்
 form.field.label.iDType,,Type of ID,අංකයේ වර්ගය,அடையாள வகை
 form.field.label.iDTypeAlienNumber,,Alien Number,ද්විතියි අංකය,ஏலியன் எண்
 form.field.label.iDTypeBRN,,Birth Registration Number,උපන්දින ලියාපදිංචි අංකය,பிறப்பு பதிவு எண்
@@ -1117,7 +1117,7 @@ form.field.label.mothersDetailsExist,,Mother's details unavailable,අම්ම�
 form.field.label.multipleBirth,,No. of previous births,පෙර උපසිරැසි ගණන,முந்தைய ஜன்மங்களின் எண்ணிக்கை
 form.field.label.name,,Name,නම,பெயர்
 form.field.label.nationality,,Nationality,ජාතිකත්වය,தேசியம்
-form.field.label.numberOfChildren,,Number of children,ළමුන් සංඛ්යාව,குழந்தைகளின் எண்ணிக்கை
+form.field.label.numberOfChildren,,"If multiple births, number of children","බහු උපත් නම්, දරුවන් ගණන","பல்வேறு பிறப்புகள் இருந்தால், குழந்தைகளின் எண்ணிக்கை"
 form.field.label.occupation,,Occupation,ආත්මය,பணி
 form.field.label.optionalLabel,,Optional,විකල්පයට අයත් විකල්පයක් නොවේ.,விருப்பமாகும்
 form.field.label.otherAddress,,Other address,වෙනත් ලිපිනය,மற்றும் முகவரி
@@ -1999,7 +1999,7 @@ register.eventInfo.birth.listItem0,,I am here to start the birth registration pr
 register.eventInfo.birth.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,ඔබට කාර්යාලයට සහතිකය ලබා ගැනීමට පැමිණිය යුතු දිනය පිළිබඳව දැනුම්දෙන SMS පණිවිඩයක් ලැබේ – ඔබගේ හැඳුනුම්පත අරගෙන යන්න.,சான்றிதழை பெற நீங்கள் அலுவலகம் செல்ல வேண்டிய நேரத்தைத் தெரிவிக்க ஒரு குறுஞ்செய்தி வரும் – உங்கள் அடையாள அட்டையை கொண்டு செல்லவும்.
 register.eventInfo.birth.listItem2,,"Make sure you collect the certificate. A birth certificate is critical for this child, especially to make their life easy later on. It will help to access health services, school examinations and government benefits.","තහවුරු කරන්න ඔබට සහයෝගය ලබාගත යුතුය. මෙම ළමයාගේ ජීවිතය පසුගිය වසරේ පසු පහසු කිරීමට තිබේ. එය සෞඛ්‍ය සේවාවන්, පාසලේ පරීක්ෂණ සහ රජයේ බාහිර ලදි.","சான்றிதழை சேகரிக்க உறுதிப்படுத்துங்கள். இந்த குழந்தைக்கு பிறப்பு சான்றிதழ் முக்கியம், குறிப்பாக அவர்கள் பின்னணியில் உதவும். இது சுகாதார சேவைகளை, பள்ளி தேர்வுகளை மற்றும் அரசு நன்குலுக்களை அணுக உதவும்."
 register.eventInfo.birth.listItem3,,,,
-register.eventInfo.birth.title,,Introduce the birth registration process to the informant,නිවාස වාර්තා ස්ථානයට පිළිබඳ දැනුම්දීමක් දැක්කගත හැකිය.,தகவல் வழியாக பிறப்பு பதிவு செய்ய அறிவித்தல் {informant}
+register.eventInfo.birth.title,,Introduce the birth registration process to the informant,නිවාස වාර්තා ස්ථානයට පිළිබඳ දැනුම්දීමක් දැක්කගත හැකිය.,பிறப்புப் பதிவு செயல்முறையை தகவல் வழங்குபவருக்கு அறிமுகப்படுத்தவும்
 register.eventInfo.death.listItem0,,I am here to start the death registration process for you.,මා ඔබට මධ්‍යහන ලියාපදිංචි කිරීමේ ක්‍රියාකාරී කිරීම සඳහා මෙම්බර් ඇතුල් වෙයි.,உங்களுக்கு மரண பதிவு செய்துவிட வந்துவிட்டேன்.
 register.eventInfo.death.listItem1,,You will receive an SMS to tell you when to visit the office to collect the certificate - Take your ID with you.,ඔබට සහයෝගිතා SMS එක ලැබේ නම් ලියාපදිංචි ගොනු ගමනට පැමිණෙන්නේ නම් - ඔබගේ හැඳුනුම් එක එකතු කරන්න.,உங்களுக்கு சான்றிதழை பெற அலுவலகத்தில் சந்திக்க எப்போது வர வேண்டும் என்று தெரிவிக்கும் எஸ்எம்எஸ் பெறுவீர்கள் - உங்கள் ஐடி உங்களுடைய கூட்டுத்தாவரை எடுத்து செல்லுங்கள்.
 register.eventInfo.death.listItem2,,Make sure you collect the certificate. A death certificate is critical to support with inheritance claims and to resolve the affairs of the deceased e.g. closing bank accounts and settling loans.,තහවුරු ලබාගන්නේ සියලුම ප්‍රවේශ අයිතියන් සහ මස්පිලියන් සහිත ප්‍රවේශ අයිතියන් සඳහා අවශ්‍ය වේ. බැංකු ගිනුම් වසා ගැනීම් සහ ණය කිරීම් සදහා මධ්‍යස්ථාන වසා ගැනීම සහ ණය කිරීම සදහා මහතා අවශ්‍ය වේ.,"சான்றிதழை சேகரிக்க உறுதிப்படுத்துங்கள். பிரபஞ்சத்தில் இல்லாதவரின் சம்பளங்களை உதவ முக்கியமான மரண சான்றிதழ் உதவும், உத்தரவுகளை தீர்மானிக்க உதவும் என்பது முக்கியமாகும், உதாரணம், வங்கி கணக்குகளை மூடுவது மற்றும் கடன்களை தீர்மானிக்கும்."
@@ -2603,7 +2603,7 @@ v2.event.birth.action.declare.form.section.person.field.addressHelper.label,This
 v2.event.birth.action.declare.form.section.person.field.age.checkbox.label,This is the label for the field,Exact date of birth unknown,උදාහරණයේ පිටපත් දිනය නොදක්වයි,பிறந்த தேதி தெரியவில்லை
 v2.event.birth.action.declare.form.section.person.field.age.postfix,This is the postfix for age field,years,වසරයන්,ஆண்டுகள்
 v2.event.birth.action.declare.form.section.person.field.age.text.label,This is the label for the field,Age of person,පුද්ගලික වයස්,நபரின் வயது
-v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,ID Number,අංකය අංකය,ஐடி எண்
+v2.event.birth.action.declare.form.section.person.field.brn.label,This is the label for the field,National Identity Card No.,ජාතික හැඳුනුම්පත් අංකය,தேசிய அடையாள அட்டை எண்
 v2.event.birth.action.declare.form.section.person.field.dob.error,This is the error message for invalid date,Must be a valid birth date,වලංගු උපන් දිනය විසින් විය යුතුය,ஒரு செல்லுபடியாக பிறந்த தேதி இருக்க வேண்டும்.
 v2.event.birth.action.declare.form.section.person.field.dob.label,This is the label for the field,Date of birth,උපන්දිනය,பிறந்த தேதி
 v2.event.birth.action.declare.form.section.person.field.educationalAttainment.label,This is the label for the field,Level of education,විශ්වාස මට්ටම,கல்வி அளவு
@@ -2611,9 +2611,9 @@ v2.event.birth.action.declare.form.section.person.field.firstname.label,This is 
 v2.event.birth.action.declare.form.section.person.field.idType.label,This is the label for the field,Type of ID,අත්පොටස් වර්ගය,ஐடி வகை
 v2.event.birth.action.declare.form.section.person.field.maritalStatus.label,This is the label for the field,Marital Status,විවාහක තත්ත්වය,திருமண நிலை
 v2.event.birth.action.declare.form.section.person.field.nationality.label,This is the label for the field,Nationality,ජාතිකත්වය,தேசியம்
-v2.event.birth.action.declare.form.section.person.field.nid.label,This is the label for the field,ID Number,අංකය අංකය,ஐடி எண்
+v2.event.birth.action.declare.form.section.person.field.nid.label,This is the label for the field,National Identity Card No.,ජාතික හැඳුනුම්පත් අංකය,தேசிய அடையாள அட்டை எண்
 v2.event.birth.action.declare.form.section.person.field.occupation.label,This is the label for the field,Occupation,ආත්මය,பணி
-v2.event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,ID Number,අංකය අංකය,ஐடி எண்
+v2.event.birth.action.declare.form.section.person.field.passport.label,This is the label for the field,National Identity Card No.,ජාතික හැඳුනුම්පත් අංකය,தேசிய அடையாள அட்டை எண்
 v2.event.birth.action.declare.form.section.person.field.surname.label,This is the label for the field,Last name,අවසන් නම,கடைசி பெயர்
 v2.event.birth.action.declare.form.version.1,This is the first version of the form,Version 1,සංස්කරණය 1,பதிப்பு 1
 v2.event.birth.action.declare.label,This is shown as the action name anywhere the user can trigger the action from,Declare,නියමිත කරන්න,அறிக்கை

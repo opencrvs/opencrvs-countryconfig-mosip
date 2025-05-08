@@ -526,25 +526,20 @@ export function getHospitalAdmissionDetails(
       maxLength: 250
     },
     {
-      name: fieldName2,
-      customQuestionMappingId: fieldId2,
-      custom: true,
-      required: false,
-      type: 'NUMBER',
       label: {
         id: 'form.field.label.dateOfAdmission',
         description: 'A form field that asks for the date of admission',
         defaultMessage: 'Date of Admission'
       },
+      name: fieldName2,
+      custom: true,
+      required: false,
+      type: 'DATE',
       initialValue: '',
-      validator: [
-        {
-          operation: 'range',
-          parameters: [2000, 2050]
-        }
-      ],
+      validator: [],
+      customQuestionMappingId: fieldId2,
       mapping: getCustomFieldMapping(fieldId2),
-      conditionals
+      conditionals: []
     }
   ]
 }
@@ -605,6 +600,7 @@ export function placeOfEventInividual(
       placeholder: formMessageDescriptors.formSelectPlaceholder,
       previewGroup: previewGroup,
       conditionals,
+      initialValue: 'LKA',
       options: {
         resource: 'countries'
       }

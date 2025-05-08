@@ -222,17 +222,17 @@ export const birthForm: ISerializedForm = {
             getFirstNameInSinhalaField(
               'child',
               [hideIfTamil],
-              'chiledNameInSinhala'
+              'childNameInSinhala'
+            ),
+            getFamilyNameInSinhalaField(
+              'child',
+              [hideIfTamil],
+              'childNameInSinhala'
             ),
             getFirstNameInTamilField(
               'child',
               [hideIfSinhala],
               'childNameInTamil'
-            ),
-            getFamilyNameInSinhalaField(
-              'child',
-              [hideIfTamil],
-              'chiledNameInSinhala'
             ),
             getFamilyNameInTamilField(
               'child',
@@ -319,14 +319,6 @@ export const birthForm: ISerializedForm = {
               ),
               'informantNameInSinhala'
             ),
-            getFirstNameInTamilField(
-              'informant',
-              informantFamilyNameConditionals.concat(
-                hideIfInformantMotherOrFather,
-                hideIfSinhala
-              ),
-              'informantNameInTamil'
-            ),
             getFamilyNameInSinhalaField(
               'informant',
               informantFamilyNameConditionals.concat(
@@ -334,6 +326,14 @@ export const birthForm: ISerializedForm = {
                 hideIfTamil
               ),
               'informantNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'informant',
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather,
+                hideIfSinhala
+              ),
+              'informantNameInTamil'
             ),
             getFamilyNameInTamilField(
               'informant',
@@ -426,15 +426,15 @@ export const birthForm: ISerializedForm = {
               detailsExist.concat(hideIfTamil),
               'fatherNameInSinhala'
             ),
-            getFirstNameInTamilField(
-              'father',
-              detailsExist.concat(hideIfSinhala),
-              'fatherNameInTamil'
-            ),
             getFamilyNameInSinhalaField(
               'father',
               detailsExist.concat(hideIfTamil),
               'fatherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'father',
+              detailsExist.concat(hideIfSinhala),
+              'fatherNameInTamil'
             ),
             getFamilyNameInTamilField(
               'father',
@@ -537,15 +537,15 @@ export const birthForm: ISerializedForm = {
               detailsExist.concat(hideIfTamil),
               'motherNameInSinhala'
             ),
-            getFirstNameInTamilField(
-              'mother',
-              detailsExist.concat(hideIfSinhala),
-              'motherNameInTamil'
-            ),
             getFamilyNameInSinhalaField(
               'mother',
               detailsExist.concat(hideIfTamil),
               'motherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'mother',
+              detailsExist.concat(hideIfSinhala),
+              'motherNameInTamil'
             ),
             getFamilyNameInTamilField(
               'mother',
@@ -647,15 +647,15 @@ export const birthForm: ISerializedForm = {
               [hideIfTamil],
               'grandfatherNameInSinhala'
             ),
-            getFirstNameInTamilField(
-              'grandfather',
-              [hideIfSinhala],
-              'grandfatherNameInTamil'
-            ),
             getFamilyNameInSinhalaField(
               'grandfather',
               [hideIfTamil],
               'grandfatherNameInSinhala'
+            ),
+            getFirstNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'grandfatherNameInTamil'
             ),
             getFamilyNameInTamilField(
               'grandfather',
@@ -690,16 +690,16 @@ export const birthForm: ISerializedForm = {
               'greatGrandfatherNameInSinhala',
               'greatGrandfather'
             ),
-            getFirstNameInTamilField(
-              'grandfather',
-              [hideIfSinhala],
-              'greatGrandfatherNameInTamil',
-              'greatGrandfather'
-            ),
             getFamilyNameInSinhalaField(
               'grandfather',
               [hideIfTamil],
               'greatGrandfatherNameInSinhala',
+              'greatGrandfather'
+            ),
+            getFirstNameInTamilField(
+              'grandfather',
+              [hideIfSinhala],
+              'greatGrandfatherNameInTamil',
               'greatGrandfather'
             ),
             getFamilyNameInTamilField(

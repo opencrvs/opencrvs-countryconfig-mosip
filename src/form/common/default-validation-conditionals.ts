@@ -97,6 +97,12 @@ export const detailsExist = [
   }
 ]
 
+export const hideIfNotMarried =
+  '((values.married==="NOT_MARRIED") || (!values.married))'
+
+export const singleBirthType =
+  '((values.birthType==="SINGLE") || (!values.birthType))'
+
 // if informant is not mother or father
 export const informantNotMotherOrFather =
   '((values.informantType==="MOTHER") || (values.informantType==="FATHER") || (values.informantType==="GRANDFATHER") || (!values.informantType))'

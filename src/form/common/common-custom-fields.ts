@@ -12,15 +12,15 @@ import { uppercaseFirstLetter } from '@countryconfig/utils'
 import { getCustomFieldMapping } from '@countryconfig/utils/mapping/field-mapping-utils'
 import { camelCase } from 'lodash'
 import { MessageDescriptor } from 'react-intl'
-import { getNationalIDValidators } from './default-validation-conditionals'
+import {
+  getNationalIDValidators,
+  hideIfNotMarried,
+  singleBirthType
+} from './default-validation-conditionals'
 import { formMessageDescriptors } from './messages'
 import { Conditional, SerializedFormField, ISelectOption } from '../types/types'
 import { getInitialValueFromIDReader } from '@opencrvs/mosip'
-import {
-  divider,
-  registrationEmail,
-  registrationPhone
-} from './common-optional-fields'
+import { registrationEmail, registrationPhone } from './common-optional-fields'
 
 export function getReasonForLateRegistration(
   event: string
@@ -120,7 +120,7 @@ export function getRace(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     type: 'TEXT',
     label: {
       id: 'form.field.label.race',
@@ -253,7 +253,7 @@ export function getFirstNameInSinhalaField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     type: 'TEXT',
     label: {
       id: 'form.field.label.sinhalaFirstName',
@@ -280,7 +280,7 @@ export function getFirstNameInTamilField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     type: 'TEXT',
     label: {
       id: 'form.field.label.tamilFirstName',
@@ -308,7 +308,7 @@ export function getFamilyNameInSinhalaField(
     customQuestionMappingId: fieldId,
     previewGroup,
     custom: true,
-    required: false,
+    required: true,
     type: 'TEXT',
     label: {
       id: 'form.field.label.sinhalaLastName',
@@ -334,7 +334,7 @@ export function getFamilyNameInTamilField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     previewGroup,
     type: 'TEXT',
     label: {
@@ -384,7 +384,7 @@ export function getBirthOrder(): SerializedFormField {
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     type: 'NUMBER',
     label: formMessageDescriptors.childBirthOrder,
     initialValue: '',
@@ -408,7 +408,7 @@ export function getNumberOfChildren(): SerializedFormField {
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: false,
+    required: true,
     type: 'NUMBER',
     label: formMessageDescriptors.numberOfChildren,
     initialValue: '',
@@ -422,7 +422,12 @@ export function getNumberOfChildren(): SerializedFormField {
       }
     ],
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: []
+    conditionals: [
+      {
+        action: 'hide',
+        expression: singleBirthType
+      }
+    ]
   }
 }
 
@@ -539,7 +544,7 @@ export function getHospitalAdmissionDetails(
       validator: [],
       customQuestionMappingId: fieldId2,
       mapping: getCustomFieldMapping(fieldId2),
-      conditionals: []
+      conditionals
     }
   ]
 }
@@ -588,7 +593,7 @@ export function placeOfEventInividual(
       name: fieldNameCountry,
       customQuestionMappingId: fieldIdCountry,
       custom: true,
-      required: false,
+      required: true,
       type: 'SELECT_WITH_OPTIONS',
       label: {
         defaultMessage: 'Country',
@@ -609,7 +614,7 @@ export function placeOfEventInividual(
       name: fieldNameTown,
       customQuestionMappingId: fieldIdTown,
       custom: true,
-      required: false,
+      required: true,
       type: 'TEXT',
       label: formMessageDescriptors.placeOfBirthIndividualTown,
       previewGroup: previewGroup,
@@ -646,7 +651,7 @@ export function getMarried(): SerializedFormField {
   return {
     name: fieldName,
     custom: true,
-    required: false,
+    required: true,
     type: 'RADIO_GROUP',
     label: {
       defaultMessage: 'Were parents married?',
@@ -675,7 +680,12 @@ export function getDateMarried(): SerializedFormField {
     validator: [],
     customQuestionMappingId: fieldId,
     mapping: getCustomFieldMapping(fieldId),
-    conditionals: []
+    conditionals: [
+      {
+        action: 'hide',
+        expression: hideIfNotMarried
+      }
+    ]
   }
 }
 
@@ -688,7 +698,7 @@ export function getBornInSriLanka(
   return {
     name: fieldName,
     custom: true,
-    required: false,
+    required: true,
     type: 'RADIO_GROUP',
     label: other
       ? {

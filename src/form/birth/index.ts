@@ -64,7 +64,8 @@ import {
   disableIfVerifiedOrAuthenticated,
   typeOfIDVerificationConditionals,
   hideIfTamil,
-  hideIfSinhala
+  hideIfSinhala,
+  hideIfNotMarried
 } from '../common/default-validation-conditionals'
 import {
   informantFirstNameConditionals,
@@ -239,6 +240,7 @@ export const birthForm: ISerializedForm = {
               [hideIfSinhala],
               'childNameInTamil'
             ),
+            divider('child-sex-seperator', []),
             getGender(certificateHandlebars.childGender), // Required field.
             weightAtBirth,
             getBirthOrder(),
@@ -285,6 +287,14 @@ export const birthForm: ISerializedForm = {
               informantFirstNameConditionals.concat(
                 hideIfInformantMotherOrFather
               )
+            ),
+            getIDType(
+              'birth',
+              'informant',
+              hideIfInformantMotherOrFather.concat(
+                typeOfIDVerificationConditionals
+              ),
+              true
             ),
             ...getIDNumberFields(
               'informant',
@@ -441,6 +451,8 @@ export const birthForm: ISerializedForm = {
               detailsExist.concat(hideIfSinhala),
               'fatherNameInTamil'
             ),
+
+            divider('father-birthdate-seperator', detailsExist),
             getBirthDate(
               'fatherBirthDate',
               fathersBirthDateConditionals.concat(
@@ -456,6 +468,7 @@ export const birthForm: ISerializedForm = {
               'fatherPlaceOfBirth',
               'Birth'
             ),
+            divider('father-race-seperator', detailsExist),
             getRace('father', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('father-address-seperator', [
@@ -552,6 +565,8 @@ export const birthForm: ISerializedForm = {
               detailsExist.concat(hideIfSinhala),
               'motherNameInTamil'
             ),
+
+            divider('mother-birthdate-seperator', detailsExist),
             getBirthDate(
               'motherBirthDate',
               mothersBirthDateConditionals.concat(
@@ -568,6 +583,7 @@ export const birthForm: ISerializedForm = {
               'motherPlaceOfBirth',
               'Birth'
             ),
+            divider('mother-race-seperator', detailsExist),
             getRace('mother', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
             ...getContactDetails('mother', detailsExist),
@@ -603,7 +619,12 @@ export const birthForm: ISerializedForm = {
             getMarried(),
             ...placeOfEventInividual(
               'marriage',
-              detailsExist,
+              [
+                {
+                  action: 'hide',
+                  expression: hideIfNotMarried
+                }
+              ],
               'placeOfMarrriage',
               'Marrriage'
             ),

@@ -53,7 +53,7 @@ export const weightAtBirth: SerializedFormField = {
   type: 'NUMBER',
   step: 0.01,
   label: formMessageDescriptors.weightAtBirth,
-  required: false,
+  required: true,
   initialValue: '',
   validator: [
     {

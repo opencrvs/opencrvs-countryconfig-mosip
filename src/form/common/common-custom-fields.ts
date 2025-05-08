@@ -274,7 +274,7 @@ export function getFirstNameInTamilField(
   previewGroup: string,
   other?: string
 ): SerializedFormField {
-  const fieldName: string = `${other ? other : sectionId}SinhalaFirstName`
+  const fieldName: string = `${other ? other : sectionId}TamilFirstName`
   const fieldId: string = `birth.${sectionId}.${other ? other : sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,
@@ -301,7 +301,7 @@ export function getFamilyNameInSinhalaField(
   previewGroup: string,
   other?: string
 ): SerializedFormField {
-  const fieldName: string = `${other ? other : sectionId}SinhalaFirstName`
+  const fieldName: string = `${other ? other : sectionId}SinhalaFamilyName`
   const fieldId: string = `birth.${sectionId}.${other ? other : sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,
@@ -328,7 +328,7 @@ export function getFamilyNameInTamilField(
   previewGroup: string,
   other?: string
 ): SerializedFormField {
-  const fieldName: string = `${other ? other : sectionId}SinhalaFirstName`
+  const fieldName: string = `${other ? other : sectionId}TamilFamilyName`
   const fieldId: string = `birth.${sectionId}.${other ? other : sectionId}-view-group.${fieldName}`
   return {
     name: fieldName,

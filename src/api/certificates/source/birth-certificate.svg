@@ -311,13 +311,13 @@
   குழந்தையின் முழுப்பெயர்
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="230.0">
-  {{childFullName}}
+  {{childFirstName}} {{childFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="240.0">
-  {{childFullNameSi}}
+  {{birthChildChildSinhalaFirstName}} {{birthChildChildSinhalaFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="250.0">
-  {{childFullNameTa}}
+  {{birthChildChildTamilFirstName}} {{birthChildChildTamilFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" font-weight="bold" letter-spacing="0px" style="white-space: pre" x="60" xml:space="preserve" y="290.0">
   Sex
@@ -329,13 +329,13 @@
   பாலினம்
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="290.0">
-  {{sex}}
+  {{{gender childGender 'en'}}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="300.0">
-  {{sexSi}}
+  {{{gender childGender 'si'}}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="310.0">
-  {{sexTa}}
+  {{{gender childGender 'ta'}}}
  </text>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="204" x="50" y="270.0"/>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="475" x="254" y="270.0"/>
@@ -349,13 +349,13 @@
   பிறந்த தேதி
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="350.0">
-  {{dateOfBirth}}
+  
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="360.0">
-  {{dateOfBirthSi}}
+  {{eventDate}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="370.0">
-  {{dateOfBirthTa}}
+ 
  </text>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="204" x="50" y="330.0"/>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="475" x="254" y="330.0"/>
@@ -369,13 +369,13 @@
   பிறந்த இடம்
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="410.0">
-  {{placeOfBirth}}
+  {{#ifCond placeOfBirth '===' 'HEALTH_FACILITY' }}{{placeOfBirth}}{{else}}{{statePlaceofbirth}}{{internationalStatePlaceofbirth}},{{/ifCond}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="420.0">
-  {{placeOfBirthSi}}
+  {{countryPlaceofbirth}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="430.0">
-  {{placeOfBirthTa}}
+  
  </text>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="204" x="50" y="390.0"/>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="475" x="254" y="390.0"/>
@@ -389,13 +389,13 @@
   தாயின் முழுப்பெயர்
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="470.0">
-  {{motherFullName}}
+  {{motherFirstName}} {{motherFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="480.0">
-  {{motherFullNameSi}}
+  {{birthMotherMotherSinhalaFirstName}} {{birthMotherMotherSinhalaFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="490.0">
-  {{motherFullNameTa}}
+  {{birthMotherMotherTamilFirstName}} {{birthMotherMotherTamilFamilyName}}
  </text>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="204" x="50" y="450.0"/>
  <rect fill="none" height="60" stroke="#ECECEC" stroke-width="0.97" width="475" x="254" y="450.0"/>
@@ -409,13 +409,13 @@
   தந்தையின் முழுப்பெயர்
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="530.0">
-  {{fatherFullName}}
+  {{fatherFirstName}} {{fatherFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="540.0">
-  {{fatherFullNameSi}}
+  {{birthFatherFatherSinhalaFirstName}} {{birthFatherFatherSinhalaFamilyName}}
  </text>
  <text fill="#222222" font-family="Libre Baskerville" font-size="9.7" letter-spacing="0px" style="white-space: pre" x="264" xml:space="preserve" y="550.0">
-  {{fatherFullNameTa}}
+  {{birthFatherFatherTamilFirstName}} {{birthFatherFatherTamilFamilyName}}
  </text>
   </g>
   <path d="M62.9698 586.11H533.42" stroke="#038E86" stroke-width="1.94" stroke-linecap="round" />

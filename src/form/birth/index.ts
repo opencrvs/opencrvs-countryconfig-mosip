@@ -544,6 +544,8 @@ export const birthForm: ISerializedForm = {
             ),
             getRace('mother', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
+            divider('mother-address-seperator', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
             ...getContactDetails('mother', detailsExist),
             ...getHospitalAdmissionDetails(detailsExist)
           ],

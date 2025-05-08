@@ -145,7 +145,11 @@ export const grandfatherNameInTamil: IPreviewGroup = {
 }
 export const placeOfMarrriage: IPreviewGroup = {
   id: 'placeOfMarrriage',
-  label: formMessageDescriptors.placeOfMarrriage,
+  label: {
+    defaultMessage: 'Place of Marriage',
+    description: 'Place of Marriage',
+    id: 'form.field.label.placeOfMarriage'
+  },
   fieldToRedirect: 'marriage-placeOfMarrriage-separator',
   delimiter: ' '
 }

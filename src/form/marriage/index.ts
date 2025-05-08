@@ -11,10 +11,7 @@
 
 import {
   exactDateOfBirthUnknown,
-  getAgeOfIndividualInYears,
-  registrationEmail,
-  registrationPhone,
-  divider
+  getAgeOfIndividualInYears
 } from '../common/common-optional-fields'
 import {
   getBirthDate,
@@ -151,15 +148,7 @@ export const marriageForm: ISerializedForm = {
               'informant',
               hideIfInformantBrideOrGroom,
               true
-            ),
-            ...getIDNumberFields(
-              'informant',
-              hideIfInformantBrideOrGroom,
-              true
-            ),
-            // ADDRESS FIELDS WILL RENDER HERE
-            registrationPhone,
-            registrationEmail
+            )
           ],
           previewGroups: [informantNameInEnglish]
         }

@@ -31,7 +31,7 @@ export const applicationConfig = {
   NID_NUMBER_PATTERN: '^[0-9]{10}$',
   LOGIN_BACKGROUND: {
     backgroundImage: `data:image/jpg;base64,${fs
-      .readFileSync(join(__dirname, 'Sigiriya-Rock-Fortress-header.jpg'))
+      .readFileSync(join(__dirname, 'sigiriya.jpg'))
       .toString('base64')}`,
     imageFit: 'FILL'
   },

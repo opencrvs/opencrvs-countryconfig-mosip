@@ -24,6 +24,18 @@ export function debug(): Handlebars.HelperDelegate {
   }
 }
 
+export function gender(): Handlebars.HelperDelegate {
+  return function (gender: string, lang: 'en' | 'si' | 'ta') {
+    if (lang === 'si') {
+      return gender === 'Male' ? 'පුරුෂ' : 'ගැහැණි'
+    } else if (lang === 'ta') {
+      return gender === 'Male' ? 'ஆண்' : 'பெண்'
+    } else {
+      return gender
+    }
+  }
+}
+
 export function ordinalFormatDate(): Handlebars.HelperDelegate {
   return function (dateString: string) {
     const date = new Date(dateString.trim())

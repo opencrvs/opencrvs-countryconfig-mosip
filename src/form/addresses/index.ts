@@ -53,13 +53,13 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
     // OPTIONS ARE THE FULL PLACE OF EVENT FIELDS, STANDARD ADDRESS FIELDS, ADDRESS SUBSECTION DIVIDERS, OR RADIO BUTTONS TO SIMPLIFY FORM ENTRY
 
     // PLACE OF BIRTH ADDRESS FIELDS
-    precedingFieldId: 'birth.child.child-view-group.reasonForLateRegistration',
+    precedingFieldId: 'birth.child.child-view-group.childBirthDate',
     configurations: [{ config: EventLocationAddressCases.PLACE_OF_BIRTH }]
   },
   {
     // INFORMANT ADDRESS FIELDS
     precedingFieldId:
-      'birth.informant.informant-view-group.informantBirthRegistrationNumber',
+      'birth.informant.informant-view-group.informant-address-seperator',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -90,8 +90,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
   },
   {
     // MOTHER ADDRESS FIELDS
-    precedingFieldId:
-      'birth.mother.mother-view-group.motherBirthRegistrationNumber',
+    precedingFieldId: 'birth.mother.mother-view-group.mother-address-seperator',
     configurations: [
       {
         config: AddressSubsections.PRIMARY_ADDRESS_SUBSECTION,
@@ -113,7 +112,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       }*/
     ]
   },
-  {
+  /*{
     // FATHER ADDRESS FIELDS
     precedingFieldId:
       'birth.father.father-view-group.fatherBirthRegistrationNumber',
@@ -147,7 +146,7 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
       {
         config: AddressCases.PRIMARY_ADDRESS,
         conditionalCase: `((${detailsDontExist} || ${primaryAddressSameAsOtherPrimaryAddress}) && !(${mothersDetailsDontExistOnOtherPage}) || ((${detailsDontExist}) && (${mothersDetailsDontExistOnOtherPage})))`
-      } /*,
+      }*/ /*,
       {
         config: AddressSubsections.SECONDARY_ADDRESS_SUBSECTION,
         label: formMessageDescriptors.secondaryAddress,
@@ -157,8 +156,8 @@ export const defaultAddressConfiguration: IAddressConfiguration[] = [
         config: AddressCases.SECONDARY_ADDRESS,
         conditionalCase: FATHER_DETAILS_DONT_EXIST
       }*/
-    ]
-  },
+  /* ]
+  },*/
   {
     // PLACE OF DEATH ADDRESS FIELDS
     precedingFieldId: 'death.deathEvent.death-event-details.deathDescription',

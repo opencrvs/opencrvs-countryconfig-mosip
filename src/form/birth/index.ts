@@ -59,6 +59,7 @@ import {
   fathersBirthDateConditionals,
   fatherFirstNameConditionals,
   fatherFamilyNameConditionals,
+  mothersBirthDateConditionals,
   informantNotMotherOrFather,
   disableIfVerifiedOrAuthenticated,
   typeOfIDVerificationConditionals,
@@ -446,7 +447,14 @@ export const birthForm: ISerializedForm = {
               'fatherPlaceOfBirth',
               'Birth'
             ),
-            getRace('father', detailsExist)
+            getRace('father', detailsExist),
+            // ADDRESS FIELDS WILL RENDER HERE
+            divider('father-address-seperator', [
+              {
+                action: 'hide',
+                expression: informantNotMotherOrFather
+              }
+            ])
           ],
           previewGroups: [
             fatherNameInEnglish,
@@ -535,6 +543,15 @@ export const birthForm: ISerializedForm = {
               detailsExist.concat(hideIfSinhala),
               'motherNameInTamil'
             ),
+            getBirthDate(
+              'motherBirthDate',
+              mothersBirthDateConditionals.concat(
+                disableIfVerifiedOrAuthenticated
+              ),
+              parentsBirthDateValidators,
+              certificateHandlebars.motherBirthDate,
+              getInitialValueFromIDReader('birthDate')
+            ), // Required field.
             getAgeAtDateOfBirthOfChild(detailsExist),
             ...placeOfEventInividual(
               'mother',

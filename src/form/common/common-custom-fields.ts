@@ -478,7 +478,7 @@ export function getHospitalAdmissionDetails(
   const fieldName: string = `admissionNumber`
   const fieldId: string = `birth.mother.mother-view-group.${fieldName}`
   const fieldName2: string = `dateOfAdmission`
-  const fieldId2: string = `birth.mother.mother-view-group.${fieldName}`
+  const fieldId2: string = `birth.mother.mother-view-group.${fieldName2}`
   return [
     {
       name: 'headingHospitalAdmission',

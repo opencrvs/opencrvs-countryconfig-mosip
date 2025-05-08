@@ -1,8 +1,8 @@
 primaryOfficeId,givenNames,familyName,role,mobile,username,email,password
-CRVS_OFFICE_JEhYJ82xRI,Nethali,Nanayakkara,SOCIAL_WORKER,+260911111111,k.bwalya,opencrvsmosipcollab@gmail.com,test
-CRVS_OFFICE_JEhYJ82xRI,Gamini,Fonseka,REGISTRATION_AGENT,+260922222222,f.katongo,opencrvsmosipcollab+@gmail.com,test
-CRVS_OFFICE_JEhYJ82xRI,Pushpa,Ramyani De Soyza,LOCAL_REGISTRAR,+260933333333,k.mweene,opencrvsmosipcolla.b@gmail.com,test
-CRVS_OFFICE_JEhYJ82xRI,Duleeka,Marapana,LOCAL_SYSTEM_ADMIN,+260921681112,e.mayuka,opencrvsmosipcoll.ab@gmail.com,test
-CRVS_OFFICE_2OKicPQMNI,Kumar,Sangakkara,NATIONAL_SYSTEM_ADMIN,+260921111111,j.campbell,opencrvsmosipcol.lab@gmail.com,test
-CRVS_OFFICE_2OKicPQMNI,Wasanthi,Chathurani,PERFORMANCE_MANAGER,+260977777777,e.kazembe,opencrvsmos.ipcollab@gmail.com,test
-CRVS_OFFICE_2OKicPQMNI,Dharshan,Munidasa,NATIONAL_REGISTRAR,+260915151515,j.musonda,opencrvsmo.sipcollab@gmail.com,test
+CRVS_OFFICE_JEhYJ82xRI,Nethali,Nanayakkara,SOCIAL_WORKER,+260911111111,n.nanayakkara,opencrvsmosipcollab@gmail.com,test
+CRVS_OFFICE_JEhYJ82xRI,Gamini,Fonseka,REGISTRATION_AGENT,+260922222222,g.fonseka,opencrvsmosipcollab+@gmail.com,test
+CRVS_OFFICE_JEhYJ82xRI,Pushpa,Ramyani De Soyza,LOCAL_REGISTRAR,+260933333333,p.ramyani,opencrvsmosipcolla.b@gmail.com,test
+CRVS_OFFICE_JEhYJ82xRI,Duleeka,Marapana,LOCAL_SYSTEM_ADMIN,+260921681112,d.marapana,opencrvsmosipcoll.ab@gmail.com,test
+CRVS_OFFICE_2OKicPQMNI,Kumar,Sangakkara,NATIONAL_SYSTEM_ADMIN,+260921111111,k.sangakkara,opencrvsmosipcol.lab@gmail.com,test
+CRVS_OFFICE_2OKicPQMNI,Wasanthi,Chathurani,PERFORMANCE_MANAGER,+260977777777,w.chathurani,opencrvsmos.ipcollab@gmail.com,test
+CRVS_OFFICE_2OKicPQMNI,Dharshan,Munidasa,NATIONAL_REGISTRAR,+260915151515,j.munidasa,opencrvsmo.sipcollab@gmail.com,test

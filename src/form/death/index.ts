@@ -13,8 +13,6 @@ import {
   exactDateOfBirthUnknown,
   getAgeOfIndividualInYears,
   getMaritalStatus,
-  registrationEmail,
-  registrationPhone,
   divider
   // getOccupation
 } from '../common/common-optional-fields'
@@ -88,7 +86,8 @@ import { getNumberOfDependants } from '@countryconfig/form/death/custom-fields'
 import {
   getIDNumberFields,
   getIDType,
-  getReasonForLateRegistration
+  getReasonForLateRegistration,
+  getContactDetails
 } from '@countryconfig/form/common/common-custom-fields'
 import { getSectionMapping } from '@countryconfig/utils/mapping/section/death/mapping-utils'
 import { getInitialValueFromIDReader, idReaderFields } from '@opencrvs/mosip'
@@ -376,8 +375,7 @@ export const deathForm = {
             ),
             // ADDRESS FIELDS WILL RENDER HERE
             divider('informant-address-separator', hideIfInformantSpouse),
-            registrationPhone,
-            registrationEmail
+            ...getContactDetails('informant', [])
           ],
           previewGroups: [informantNameInEnglish]
         }

@@ -473,6 +473,10 @@ export const spouseFamilyNameConditionals = [
 export const mothersDetailsDontExistOnOtherPage =
   'draftData && draftData.mother && !draftData.mother.detailsExist'
 
+// if fathers details do not exist on other page
+export const fathersDetailsDontExistOnOtherPage =
+  'draftData && draftData.father && !draftData.father.detailsExist'
+
 // if details don't exist for the current section
 export const detailsDontExist = '!values.detailsExist'
 

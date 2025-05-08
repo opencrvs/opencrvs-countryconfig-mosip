@@ -99,7 +99,7 @@ export const detailsExist = [
 
 // if informant is not mother or father
 export const informantNotMotherOrFather =
-  '((values.informantType==="MOTHER") || (values.informantType==="FATHER") || (!values.informantType))'
+  '((values.informantType==="MOTHER") || (values.informantType==="FATHER") || (values.informantType==="GRANDFATHER") || (!values.informantType))'
 
 export const hideIfInformantMotherOrFather = [
   {

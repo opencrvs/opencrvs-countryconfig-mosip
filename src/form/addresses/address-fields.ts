@@ -431,39 +431,6 @@ export function getAddressFields(
       })
     },
     {
-      name: `addressLine3${sentenceCase(useCase)}${sentenceCase(section)}`,
-      type: 'TEXT',
-      label: {
-        defaultMessage: 'Number',
-        description: 'Title for the number field',
-        id: 'form.field.label.number'
-      },
-      previewGroup: isUseCaseForPlaceOfEvent(useCase)
-        ? useCase
-        : `${useCase}Address`,
-      required: false,
-      initialValue: '',
-      validator: [],
-      dependency: `district${sentenceCase(useCase)}${sentenceCase(section)}`,
-      conditionals: isUseCaseForPlaceOfEvent(useCase)
-        ? getPlaceOfEventConditionals(
-            section,
-            'configurableAddressLines',
-            useCase
-          )
-        : getAddressConditionals(section, 'configurableAddressLines', useCase),
-      mapping: getMapping({
-        section,
-        type: 'TEXT',
-        location: '',
-        useCase,
-        fieldName: `addressLine3${sentenceCase(useCase)}${sentenceCase(
-          section
-        )}`,
-        fhirLineArrayPosition: 0
-      })
-    },
-    {
       name: `postalCode${sentenceCase(useCase)}${sentenceCase(section)}`,
       type: 'TEXT',
       label: {

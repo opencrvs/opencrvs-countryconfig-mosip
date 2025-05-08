@@ -126,6 +126,11 @@ export const informantMessageDescriptors = {
 }
 
 export const formMessageDescriptors = {
+  empty: {
+    defaultMessage: ' ',
+    description: 'empty string',
+    id: 'form.field.label.empty'
+  },
   placeOfBirthIndividualTown: {
     defaultMessage: 'Town / Village',
     description: 'Title of the placeOfBirthIndividualTown',
@@ -167,9 +172,9 @@ export const formMessageDescriptors = {
     id: 'form.field.label.secondaryAddress'
   },
   primaryAddressSameAsOtherPrimary: {
-    defaultMessage: "Same as mother's usual place of residence?",
+    defaultMessage: "Same as father's usual place of residence?",
     description:
-      "Title for the radio button to select that the persons primary address is the same as the mother's primary address",
+      "Title for the radio button to select that the persons primary address is the same as the father's primary address",
     id: 'form.field.label.primaryAddressSameAsOtherPrimary'
   },
   deceasedPrimaryAddress: {

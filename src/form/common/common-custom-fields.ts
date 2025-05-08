@@ -338,9 +338,9 @@ export function getFamilyNameInTamilField(
     previewGroup,
     type: 'TEXT',
     label: {
-      id: 'form.field.label.tamilFirstName',
+      id: 'form.field.label.tamilLastName',
       description: 'A form field that asks for the Tamil first name',
-      defaultMessage: 'First name in Tamil'
+      defaultMessage: 'Last name in Tamil'
     },
     initialValue: '',
     validator: [],
@@ -435,7 +435,7 @@ export function registrationLandLine(
   return {
     name: fieldName,
     type: 'TEL',
-    label: formMessageDescriptors.phoneNumber,
+    label: formMessageDescriptors.registrationLandLine,
     required: false,
     initialValue: '',
     validator: [
@@ -447,6 +447,21 @@ export function registrationLandLine(
     customQuestionMappingId: fieldId,
     custom: true,
     mapping: getCustomFieldMapping(fieldId)
+  }
+}
+
+export function getSpacingParagraph(
+  name: string,
+  conditionals: Conditional[] = []
+): SerializedFormField {
+  return {
+    custom: true,
+    name,
+    type: 'PARAGRAPH',
+    label: formMessageDescriptors.empty,
+    initialValue: '',
+    validator: [],
+    conditionals
   }
 }
 
@@ -464,7 +479,8 @@ export function getContactDetails(
         id: 'form.field.label.contactDetails'
       },
       initialValue: '',
-      validator: []
+      validator: [],
+      conditionals
     },
     registrationPhone(sectionId, conditionals),
     registrationLandLine(sectionId, conditionals),
@@ -544,14 +560,11 @@ export function placeOfEventInividual(
   const fieldIdCountry: string = `birth.${sectionId}.${sectionId}-view-group.${fieldNameCountry}`
   const fieldNameTown: string = `${other ? other : sectionId}PlaceOf${eventSentenceCase}Town`
   const fieldIdTown: string = `birth.${sectionId}.${sectionId}-view-group.${fieldNameTown}`
+  const fieldNameHeading: string = `${other ? other : sectionId}PlaceOf${eventSentenceCase}Heading`
   return [
-    divider(
-      `${other ? other : sectionId}-placeOf${eventSentenceCase}-separator`,
-      conditionals
-    ),
     eventSentenceCase === 'Birth'
       ? {
-          name: 'headingPlaceOfBirth',
+          name: fieldNameHeading,
           type: 'HEADING3',
           label: {
             defaultMessage: 'Place of Birth',
@@ -560,6 +573,7 @@ export function placeOfEventInividual(
           },
           previewGroup: previewGroup,
           initialValue: '',
+          conditionals,
           validator: []
         }
       : {
@@ -572,6 +586,7 @@ export function placeOfEventInividual(
           },
           previewGroup: previewGroup,
           initialValue: '',
+          conditionals,
           validator: []
         },
     {
@@ -605,7 +620,7 @@ export function placeOfEventInividual(
       initialValue: '',
       validator: [],
       mapping: getCustomFieldMapping(fieldIdTown),
-      conditionals: []
+      conditionals
     }
   ]
 }
@@ -647,8 +662,7 @@ export function getMarried(): SerializedFormField {
     customQuestionMappingId: fieldId,
     mapping: getCustomFieldMapping(fieldId),
     conditionals: [],
-    options: birthMarriageStatus,
-    hideHeader: true
+    options: birthMarriageStatus
   }
 }
 
@@ -683,7 +697,7 @@ export function getBornInSriLanka(
     label: other
       ? {
           defaultMessage:
-            'If the Father was not born in Sri Lanka, was the Great Grandfather of the child born in Sri Lanka?',
+            'If the Grandfather was not born in Sri Lanka, was the Great Grandfather of the child born in Sri Lanka?',
           id: 'form.field.label.greatGrandFatherBornInSriLanka',
           description: 'Great Grandfather born in Sri Lanka?'
         }
@@ -697,8 +711,7 @@ export function getBornInSriLanka(
     customQuestionMappingId: fieldId,
     mapping: getCustomFieldMapping(fieldId),
     conditionals: [],
-    options: birthMarriageStatus,
-    hideHeader: true
+    options: birthMarriageStatus
   }
 }
 

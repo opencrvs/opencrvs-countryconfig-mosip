@@ -102,7 +102,8 @@ import {
   getHospitalAdmissionDetails,
   getDateMarried,
   getBornInSriLanka,
-  getYearOfBirth
+  getYearOfBirth,
+  getSpacingParagraph
 } from '../common/common-custom-fields'
 
 // import { createCustomFieldExample } from '../custom-fields'
@@ -207,6 +208,7 @@ export const birthForm: ISerializedForm = {
               certificateHandlebars.eventDate
             ), // Required field.
             // PLACE OF BIRTH FIELDS WILL RENDER HERE
+            divider('child-address-seperator', []),
             getFirstNameField(
               'childNameInEnglish',
               [],
@@ -311,31 +313,38 @@ export const birthForm: ISerializedForm = {
             ), // Required field.
             getFirstNameInSinhalaField(
               'informant',
-              informantFamilyNameConditionals.concat(hideIfTamil),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather,
+                hideIfTamil
+              ),
               'informantNameInSinhala'
             ),
             getFirstNameInTamilField(
               'informant',
-              informantFamilyNameConditionals.concat(hideIfSinhala),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather,
+                hideIfSinhala
+              ),
               'informantNameInTamil'
             ),
             getFamilyNameInSinhalaField(
               'informant',
-              informantFamilyNameConditionals.concat(hideIfTamil),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather,
+                hideIfTamil
+              ),
               'informantNameInSinhala'
             ),
             getFamilyNameInTamilField(
               'informant',
-              informantFamilyNameConditionals.concat(hideIfSinhala),
+              informantFamilyNameConditionals.concat(
+                hideIfInformantMotherOrFather,
+                hideIfSinhala
+              ),
               'informantNameInTamil'
             ),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('informant-address-seperator', [
-              {
-                action: 'hide',
-                expression: informantNotMotherOrFather
-              }
-            ]),
+            getSpacingParagraph('informant-address-seperator'),
             ...getContactDetails('informant')
           ],
           previewGroups: [
@@ -561,8 +570,6 @@ export const birthForm: ISerializedForm = {
             ),
             getRace('mother', detailsExist),
             // ADDRESS FIELDS WILL RENDER HERE
-            divider('mother-address-seperator', detailsExist),
-            // ADDRESS FIELDS WILL RENDER HERE
             ...getContactDetails('mother', detailsExist),
             ...getHospitalAdmissionDetails(detailsExist)
           ],
@@ -623,6 +630,18 @@ export const birthForm: ISerializedForm = {
           id: 'grandfather-view-group',
           fields: [
             getBornInSriLanka('grandfather'),
+            {
+              name: 'headingGrandfather',
+              type: 'HEADING3',
+              label: {
+                defaultMessage: 'Grandfather',
+                description: '',
+                id: 'form.field.label.app.whoContDet.grandFather'
+              },
+              initialValue: '',
+              conditionals: [],
+              validator: []
+            },
             getFirstNameInSinhalaField(
               'grandfather',
               [hideIfTamil],
@@ -651,7 +670,20 @@ export const birthForm: ISerializedForm = {
               'grandfatherPlaceOfBirth',
               'Birth'
             ),
+            divider('greatGrandfather-seperator', []),
             getBornInSriLanka('grandfather', 'greatGrandfather'),
+            {
+              name: 'headingGreatGrandfather',
+              type: 'HEADING3',
+              label: {
+                defaultMessage: 'Great Grandfather',
+                description: '',
+                id: 'form.field.label.app.whoContDet.greatGrandFather'
+              },
+              initialValue: '',
+              conditionals: [],
+              validator: []
+            },
             getFirstNameInSinhalaField(
               'grandfather',
               [hideIfTamil],
@@ -688,8 +720,8 @@ export const birthForm: ISerializedForm = {
               'grandfather',
               detailsExist,
               'greatGrandfatherPlaceOfBirth',
-              'greatGrandfather',
-              'Birth'
+              'Birth',
+              'greatGrandfather'
             )
           ],
           previewGroups: [

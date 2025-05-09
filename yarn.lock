@@ -834,10 +834,10 @@
   dependencies:
     "@octokit/openapi-types" "^18.0.0"
 
-"@opencrvs/mosip@^1.8.0-beta.4":
-  version "1.8.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.8.0-beta.4.tgz#09f84eec18d8098207a8c45bb80078844839f730"
-  integrity sha512-0SpVx9a5ub1rlfZfqZTK6bO/ava/9pWqeePspfmPoZ+uDnN/0EkREv6/6NtKJvJoPcA6ILzHPzu7KJB34NSENg==
+"@opencrvs/mosip@^1.8.0-beta.7.dev":
+  version "1.8.0-beta.7.dev"
+  resolved "https://registry.yarnpkg.com/@opencrvs/mosip/-/mosip-1.8.0-beta.7.dev.tgz#8d1a7afbee8bb1ab97163ecf4f82defaac4c65d9"
+  integrity sha512-vTYg+qZQIOIo57yARmPiHkOGB9iG+/V81dWImKmqcEhjGH/TzQ1k66z7OBWIotlyQMOQsCk17oo+ffuP/+koUw==
 
 "@opencrvs/toolkit@1.8.0-rc.070a41a":
   version "1.8.0-rc.070a41a"

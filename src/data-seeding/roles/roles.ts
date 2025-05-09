@@ -45,11 +45,11 @@ export const roles: Role[] = [
     ]
   },
   {
-    id: 'SOCIAL_WORKER',
+    id: 'HEALTH_CLERK',
     label: {
-      defaultMessage: 'Social Worker',
-      description: 'Name for user role Social Worker',
-      id: 'userRole.socialWorker'
+      defaultMessage: 'Health Clerk',
+      description: 'Name for user role Health Clerk',
+      id: 'userRole.healthClerk'
     },
     scopes: [
       SCOPES.RECORD_DECLARE_BIRTH,

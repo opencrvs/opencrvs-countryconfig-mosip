@@ -231,10 +231,6 @@ export const genderOptions: ISelectOption[] = [
   {
     value: 'female',
     label: formMessageDescriptors.sexFemale
-  },
-  {
-    value: 'unknown',
-    label: formMessageDescriptors.sexUnknown
   }
 ]
 

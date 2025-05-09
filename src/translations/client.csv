@@ -356,7 +356,7 @@ constants.registeredAt,Label for comparison row registeredAt type,Registered at,
 constants.registeredBy,Label for comparison row registeredBy type,Registered by,ලියාපදිංචියෙන්,பதிவு செய்யப்பட்டது
 constants.registeredInTargetd,A label for Registered in {registrationTargetDays} days,Registered in {registrationTargetDays} days,{registrationTargetDays} දිනයේදී ලියාපදිංචි වී ඇත,{registrationTargetDays} நாட்களில் பதிவு செய்யப்பட்டுள்ளது
 constants.registeredWithinTargetd,A label for Registered {registrationTargetDays} within  days of event,Registered within{lineBreak}{registrationTargetDays} days of event,{lineBreak}සම්බන්ධ කළ පසු {registrationTargetDays} දිනයන්ට අයිතිකරු වී ඇත,நிகழ்ச்சிக்கு முன்பு {lineBreak} {registrationTargetDays} நாட்களில் பதிவு செய்யப்பட்டுள்ளது
-constants.registrationAgent,The description for REGISTRATION_AGENT role,Registration Agent,ලියාපදිංචි නියාමකයා,பதிவு ஏஜென்ட்
+constants.registrationAgent,The description for REGISTRATION_AGENT role,Registrar of Births & Deaths,උප්පැන්න සහ මරණ ලේඛකාධිකාරියා,பிறப்பு மற்றும் மரண பதிவாளர்
 constants.registrationNumber,Label for registered number,Reg no.,රෙජ් අංකය.,பதிவு எண்.
 constants.rejected,A label for rejected,rejected,ප්‍රතිචාරයක් කරන ලදි,நிராகரித்தது
 constants.rejectedDays,The title of rejected days of declaration,Rejected {text},{text} ප්‍රතිචාරයි,{உரை} நிராகரிக்கப்பட்டது
@@ -966,7 +966,7 @@ form.field.label.docTypeHospitalDeathCertificate,,Hospital certificate of death,
 form.field.label.docTypeLetterOfDeath,,Attested letter of death,මස්සාරු ලියාපදිංචිය,மரணத்தின் சான்றிதழ்
 form.field.label.docTypeMarriageNotice,,Notice of marriage,විවේචනයේ දීම,திருமண அறிக்கை
 form.field.label.docTypeMedicalInstitution,,Proof of birth from medical institution,රෝග ආශ්‍රිත ස්ථානයෙන් උපරිම ප්‍රතිස්ථාපනය,மருத்துவ நிறுவற்றிலிருந்து பிறப்புப் பதிவேற்றம்
-form.field.label.docTypeNID,,National ID,ජාතික හැඳුනුම්පත,தேசிய ஐடி
+form.field.label.docTypeNID,,National Identity Card,ජාතික හැඳුනුම්පත්පත,தேசிய அடையாள அட்டை
 form.field.label.docTypeOther,,Other,අමතර,மற்றொரு
 form.field.label.docTypePassport,,Passport,ගුවන් ලිපිනය,கடவுச்சீட்டு
 form.field.label.docTypePoliceCertificate,,Police certificate of death,මරණ සහිතව සහිතවිය යුතු පොලිස් සහිතවය,காவல் மரண சான்றிதழ்
@@ -1022,7 +1022,7 @@ form.field.label.iDTypeAlienNumber,,Alien Number,ද්විතියි අං
 form.field.label.iDTypeBRN,,Birth Registration Number,උපන්දින ලියාපදිංචි අංකය,பிறப்பு பதிவு எண்
 form.field.label.iDTypeDRN,,Death Registration Number,මරණ ලිපි අංකය,மரணம் பதிவு எண்
 form.field.label.iDTypeDrivingLicense,,Drivers License,රියදුරු බලපත්රය,ஓட்டு அனுமதிப்பத்தில்
-form.field.label.iDTypeNationalID,,National ID,ජාතික හැඳුනුම්පත,தேசிய ஐடி
+form.field.label.iDTypeNationalID,,National Identity Card No.,ජාතික හැඳුනුම්පත් අංකය,தேசிய அடையாள அட்டை எண்
 form.field.label.iDTypeNoID,,No ID available,අන්තර්ජාලය නොලබා ඇත,ஐடி இல்லை
 form.field.label.iDTypeNone,Option for form field: Type of ID,None,කිසිවක් නැත,எதுவும்
 form.field.label.iDTypeOther,,Other,අමතර,மற்றொரு
@@ -1127,7 +1127,7 @@ form.field.label.otherInformantType,,Other relation,වෙනත් සම්බ
 form.field.label.otherInstitution,,Other,අමතර,மற்றொரு
 form.field.label.otherOption,,Other,අමතර,மற்றொரு
 form.field.label.parentDetailsType,,Do you have the mother and father's details?,ඔබට මව් සහ පිරිස්වාරයාගේ විස්තර ඇත්ද?,அம்மா மற்றும் அப்பாவின் விவரங்கள் உங்களுக்கு உள்ளனவா?
-form.field.label.phoneNumber,,Phone number,දුරකථන අංකය,தொலைபேசி எண்
+form.field.label.phoneNumber,,Mobile number,ජංගම දුරකථන අංකය,மொபைல் எண்
 form.field.label.physician,,Physician,වෛරස්කාරයා,மருத்துவர்
 form.field.label.placeOfBirth,,Location,ස්ථානය,இடம்
 form.field.label.placeOfBirthIndividualTown,,Town / Village,නගරය / ගම,நகரம் / கிராமம்
@@ -1169,7 +1169,7 @@ form.field.label.reasonFatherNotApplying,,Reason,කාලය,காரணம்
 form.field.label.reasonFatherNotApplyingPreview,,Reason,කාලය,காரணம்
 form.field.label.reasonMotherNotApplyingPreview,,Reason,කාලය,காரணம்
 form.field.label.reasonNotApplying,,Reason,කාලය,காரணம்
-form.field.label.registrationLandLine,,Land Line No.,ලෑන්ඩ් ලයින් නො.,லேண்ட் லைன் எண்.
+form.field.label.registrationLandLine,,Land line number,ලෑන්ඩ් ලයින් නො.,லேண்ட் லைன் எண்.
 form.field.label.registrationName,,Registration Name,ලියාපදිංචි නම,பதிவு பெயர்
 form.field.label.registrationOffice,,Registration Office,ලියාපදිංචි කාර්යාලය,பதிவு அலுவலகம்
 form.field.label.relInstHeadPlaceOfBirth,,Head of the institution where the birth occurred,උපන් දිනය සිදු වීමේ ආයතනයේ හැඳුනුම්කරු,பிறந்த இடத்தின் முதலாளி
@@ -1193,7 +1193,7 @@ form.field.label.secondaryAddressSameAsPermanent,,Is her usual place of residenc
 form.field.label.secondaryAddressSameAsPrimary,,Is their secondary address the same as their primary address?,ඔවුන්ගේ දෙවන ලිපිනය ඔවුන්ගේ ප්‍රමාද ලිපිනයට සමානයිද?,அவர்களின் இரண்டாவது முகவரி முகவரியுடன் ஒப்பீடுக்கொள்கின்றதா?
 form.field.label.selectOne,,Please select an option,කරුණාකර විකල්පයක් තෝරන්න,தயவுசெய்து ஒரு விகில் தேர்ந்தெடுக்கவும்.
 form.field.label.self,The title that appears when selecting self as informant,Self,ඔබේ ස්වාධීනවත්වලට,சுயம்
-form.field.label.sex,,Sex,ස්ත්‍රී පුරුෂ භාවය,பாலினம்
+form.field.label.sex,,Gender,ස්ත්‍රී පුරුෂ භාවය,பாலினம்
 form.field.label.sexFemale,,Female,ගැහැණි,பெண்
 form.field.label.sexMale,,Male,පුරුෂ,ஆண்
 form.field.label.sexUnknown,,Unknown,නොදන්න,அறியப்படாது
@@ -2311,9 +2311,10 @@ user.profile.sectionTitle.audit,Title for audit section,History,ඉතිහා�
 user.profile.startDate,Title for startDate field,Start date,ආරම්භ දිනය,தொடக்க தேதி
 user.profile.userName,Title for userName field,Username,පරිශීලකවරු,பயனர்பெயர்
 userRole.fieldAgent,Name for user role Field Agent,Field Agent,ක්ෂේත්‍ර කාර්යාලය,புலம் முதலாளி
+userRole.healthClerk,,Health Clerk,සෞඛ්‍ය කාර්යාලය,சுகாதார அலுவலர்
 userRole.healthcareWorker,Name for user role Healthcare Worker,Healthcare Worker,රෝහල් සේවය කරු,சுகாதார பணியாளர்
 userRole.localLeader,Name for user role Local Leader,Local Leader,දේශීය නායක,உள்ளூர் தலைவர்
-userRole.localRegistrar,Name for user role Local Registrar,Local Registrar,දේශීය ලියාපදිංචි,உள்ளூர் பதிவாளர்
+userRole.localRegistrar,Name for user role Local Registrar,Assistant District Registrar,ජේෂ්ඨ දිස්ත්‍රික් ලේඛකාධිකාරි සහයකයා,மாவட்ட உதவி பதிவாளர்
 userRole.localSystemAdmin,Name for user role Local System Admin,Local System Admin,දේශීය පද්ධති කළමනාකාරවරයා,உள்ளூர் அமைப்பு நிர்வாகி
 userRole.nationalRegistrar,Name for user role National Registrar,National Registrar,ජාතික ලියාපදිංචිය,தேசிய பதிவுரையாளர்
 userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,ජාතික පද්ධති කළමනාකාරවරය,தேசிய அமைப்பு நிர்வாகி

@@ -2320,7 +2320,7 @@ userRole.nationalRegistrar,Name for user role National Registrar,National Regist
 userRole.nationalSystemAdmin,Name for user role National System Admin,National System Admin,ජාතික පද්ධති කළමනාකාරවරය,தேசிய அமைப்பு நிர்வாகி
 userRole.performanceManager,Name for user role Performance Manager,Performance Manager,කාර්යභාර කළමනාකාරකයා,செயல்பாடு மேலாண்மையாளர்
 userRole.policeOfficer,Name for user role Police Officer,Police Officer,පොලීස් අධිකාරියා,காவல் அதிகாரி
-userRole.registrationAgent,Name for user role Registration Agent,Registration Agent,ලියාපදිංචි නියාකරු,பதிவு ஏஜென்ட்
+userRole.registrationAgent,Name for user role Registration Agent,Registrar of Births & Deaths,උප්පැන්න සහ මරණ ලේඛකාධිකාරියා,பிறப்பு மற்றும் மரண பதிவாளர்
 userRole.socialWorker,Name for user role Social Worker,Social Worker,සමාජ කාර්යාලය,சமூக உழைப்பாளர்
 userSetup.complete.instruction,Instruction for the setup complete,Login to your account with your username and newly created password,ඔබගේ ගිණුමට ඔබගේ පරිශීලක නාමය සහ නවතම තනි මුරපදය සමඟ ඇතුලු වන්න.,உங்கள் பயனர்பெயருடன் மற்றும் புதியவரை உருவாக்கப்பட்ட கடவுச்சொல்லுடன் உங்கள் கணக்குக்கு உள்நுழையவும்.
 userSetup.complete.title,Title for the setup complete page,Account setup complete,ගිණුම සැකසුම සම්පූර්ණයි,கணக்கு அமைப்பு முடிந்தது

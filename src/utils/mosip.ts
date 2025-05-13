@@ -167,7 +167,13 @@ export const fhirDeathToMosip = (bundle: fhir3.Bundle) => {
           logger.error('Error getting deceased from bundle', error)
           return ''
         }
-        return (deceased && getPatientNationalId(deceased)) || ''
+        try {
+          return (deceased && getPatientNationalId(deceased)) || ''
+        } catch (error) {
+          // If using E-Signet, we don't know the National ID but for demonstrating purposes it's ok
+          logger.error('Error getting national ID from deceased', error)
+          return ''
+        }
       }
     }
   })

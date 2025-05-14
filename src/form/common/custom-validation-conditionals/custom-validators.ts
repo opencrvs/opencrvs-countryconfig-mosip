@@ -24,3 +24,23 @@ export function isNumberLessThan21(value: IFormFieldValue) {
 
   return {}
 }
+
+export function isLandline(value: IFormFieldValue) {
+  const cast = value as string
+  const trimmedValue = cast === undefined || cast === null ? '' : cast.trim()
+
+  if (!trimmedValue) {
+    return undefined
+  }
+  const regex = /^0\d{9}$/
+  return new RegExp(regex).test(trimmedValue)
+    ? undefined
+    : {
+        message: {
+          id: 'validations.landLineFormat',
+          defaultMessage: 'Must be a valid 10 digit number that starts with 0',
+          description:
+            'The error message appears when the land line number is incorrect'
+        }
+      }
+}

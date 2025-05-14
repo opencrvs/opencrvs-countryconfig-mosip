@@ -2589,7 +2589,7 @@ v2.event.birth.action.declare.form.section.father.field.reason.label,This is the
 v2.event.birth.action.declare.form.section.informant.field.age.label,This is the label for the field,Age of informant,නිවාඩුවේ වයසයි,தகவல் வழக்கம்
 v2.event.birth.action.declare.form.section.informant.field.email.label,This is the label for the field,Email,ඊ-මොලය,மின்னஞ்சல்
 v2.event.birth.action.declare.form.section.informant.field.other.relation.label,This is the label for the field,Relationship to child,ළමයාට සම්බන්ධයක්,குழந்தைக்கு உறவு
-v2.event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),0(7|9) දෙකයේ ආකෘතිය හැකි දශකය විය යුතුය.,0(7|9) ஆரம்பிக்கும் 10 இலக்க எண் இருக்க வேண்டும்.
+v2.event.birth.action.declare.form.section.informant.field.phoneNo.error,The error message that appears on phone numbers,Must be a valid 10 digit number that starts with 0(7|9),0(7|9) දෙකයේ ආකෘතිය හැකි දශකය විය යුතුය.,0(7|9) ஆரம்பிக்கும் 10 இலக்க எண் இருக்க வேண்டும்.
 v2.event.birth.action.declare.form.section.informant.field.phoneNo.label,This is the label for the field,Phone number,දුරකථන අංකය,தொலைபேசி எண்
 v2.event.birth.action.declare.form.section.informant.field.relation.label,This is the label for the field,Relationship to child,දරුවෝ සම්බන්ධය,குழந்தைக்கு உறவு
 v2.event.birth.action.declare.form.section.mother.field.age.label,This is the label for the field,Age of mother,මව්න්ගේ වයසේ,தாயின் வயது
@@ -2907,13 +2907,14 @@ validations.isMoVisitAfterDeath,The error message appears when the given date of
 validations.isMoVisitBeforeBirth,The error message appears when the given date of visit of medical practitioner is before the birth date of deceased,Medical Practitioner visit date must not be before the birth of deceased,රෝහල් වෛරස් පිළිබඳ වසරක් පෙර රෝහල් වෛරස් පිළිබඳ පිළිවෙතින් සිටින දිනක් නොවේද නැති යැයි පෙනෙනවා.,மருத்துவ மனிதர் ஆவணம் தேதி இறந்தவரின் பிறப்புக்கு முன்பு இருக்க கூடாது.
 validations.isValidBirthDate,The error message appears when the given birth date is not valid,Must be a valid birth date,වලංගු උපන් දිනය විසින් විය යුතුය,ஒரு செல்லுபடியாக பிறந்த தேதி இருக்க வேண்டும்.
 validations.isValidDateOfDeath,The error message appears when the given date of death is not valid,Must be a valid date of death,මම මරු විටිනවා යන්නේ වලංගු මදිනංගු දිනය විය යුතුය,மரணத் தேதி செல்ல வேண்டும்
+validations.landLineFormat,The error message that appears on land line numbers,Must be a valid 10 digit number that starts with 0,0 දෙකයේ ආකෘතිය සහිත 10 සෂ්ටයේ වර්ෂය විය යුතුය.,0 உடைய 10 இலக்க எண் செல்ல வேண்டும்.
 validations.maxLength,The error message that appears on fields with a maximum length,Must not be more than {max} characters,{max} ට වක්‍ර වැරදි විස්තර විය නොහැකිය,{max} க்கு மேற்பட்ட எழுத்துக்கள் இருக்க கூடாது
 validations.minLength,The error message that appears on fields with a minimum length,Must be {min} characters or more,{min} අක්ෂර හෝ ඊතලයේ වචනවලට වත් විශාල යෙදුමක් විය යුතුය,{min} என்பது அல்லது அதற்கு மேல் என்று இருக்க வேண்டும்
 validations.nonDecimalPointNumber,The error message that appeards when any decimal point number is used,Can not have any decimal point number,අන්තය ඇතුළු අංශ අංකයක් නොහැකියි,ஏதேனும் தசம புள்ளி எண்ணை கொண்டு இருக்க முடியாது
 validations.notGreaterThan,The error message that appears on numeric fields that exceed a limit,Must not be more than {maxValue},{maxValue} ට වඩා වැඩි වී නොහැකිය.,{maxValue} க்கு மேல் இருக்க கூடாது
 validations.numberRequired,The error message that appears on fields where the value must be a number,Must be a number,අංකය විය යුතු විය.,ஒரு எண் இருக்க வேண்டும்.
 validations.officeMustBeSelected,The error message appears when no valid office is selected,No office selected,කාර්යාලය තෝරා නැත,ஒரு அலுவல் தேர்ந்தெடுக்கப்படவில்லை.
-validations.phoneNumberFormat,The error message that appears on phone numbers where the first two characters must be a 01 and length must be 11,Must be a valid 10 digit number that starts with 0(7|9),0(7|9) දෙකයේ ආකෘතිය සහිත 10 සෂ්ටයේ වර්ෂය විය යුතුය.,0(7|9) உடைய 10 இலக்க எண் செல்ல வேண்டும்.
+validations.phoneNumberFormat,The error message that appears on phone numbers,Must be a valid 10 digit number that starts with 0(7|9),0(7|9) දෙකයේ ආකෘතිය සහිත 10 සෂ්ටයේ වර්ෂය විය යුතුය.,0(7|9) உடைய 10 இலக்க எண் செல்ல வேண்டும்.
 validations.range,The error message that appears when an out of range value is used,Must be within {min} and {max},{min} සහ {max} තනි තුරු විය යුතුය.,{min} மற்றும் {max} உள்ளிடப்பட வேண்டும்
 validations.required,The error message that appears on required fields,Required for registration,ලියාපදිංචි සඳහා අවශ්‍යයි,பதிவு செய்ய தேவையானது
 validations.requiredBasic,The error message that appears on required fields,Required,අවශ්‍යයි,தேவையானது

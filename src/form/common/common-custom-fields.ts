@@ -245,6 +245,7 @@ export function getFirstNameInSinhalaField(
   sectionId: string,
   conditionals: Conditional[] = [],
   previewGroup: string,
+  required: boolean,
   other?: string
 ): SerializedFormField {
   const fieldName: string = `${other ? other : sectionId}SinhalaFirstName`
@@ -253,7 +254,7 @@ export function getFirstNameInSinhalaField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: true,
+    required,
     type: 'TEXT',
     label: {
       id: 'form.field.label.sinhalaFirstName',
@@ -272,6 +273,7 @@ export function getFirstNameInTamilField(
   sectionId: string,
   conditionals: Conditional[] = [],
   previewGroup: string,
+  required: boolean,
   other?: string
 ): SerializedFormField {
   const fieldName: string = `${other ? other : sectionId}TamilFirstName`
@@ -280,7 +282,7 @@ export function getFirstNameInTamilField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: true,
+    required,
     type: 'TEXT',
     label: {
       id: 'form.field.label.tamilFirstName',
@@ -299,6 +301,7 @@ export function getFamilyNameInSinhalaField(
   sectionId: string,
   conditionals: Conditional[] = [],
   previewGroup: string,
+  required: boolean,
   other?: string
 ): SerializedFormField {
   const fieldName: string = `${other ? other : sectionId}SinhalaFamilyName`
@@ -308,7 +311,7 @@ export function getFamilyNameInSinhalaField(
     customQuestionMappingId: fieldId,
     previewGroup,
     custom: true,
-    required: true,
+    required,
     type: 'TEXT',
     label: {
       id: 'form.field.label.sinhalaLastName',
@@ -326,6 +329,7 @@ export function getFamilyNameInTamilField(
   sectionId: string,
   conditionals: Conditional[] = [],
   previewGroup: string,
+  required: boolean,
   other?: string
 ): SerializedFormField {
   const fieldName: string = `${other ? other : sectionId}TamilFamilyName`
@@ -334,7 +338,7 @@ export function getFamilyNameInTamilField(
     name: fieldName,
     customQuestionMappingId: fieldId,
     custom: true,
-    required: true,
+    required,
     previewGroup,
     type: 'TEXT',
     label: {
@@ -445,7 +449,7 @@ export function registrationLandLine(
     initialValue: '',
     validator: [
       {
-        operation: 'phoneNumberFormat'
+        operation: 'isLandline'
       }
     ],
     conditionals,
@@ -698,7 +702,7 @@ export function getBornInSriLanka(
   return {
     name: fieldName,
     custom: true,
-    required: true,
+    required: false,
     type: 'RADIO_GROUP',
     label: other
       ? {

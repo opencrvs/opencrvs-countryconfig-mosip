@@ -11,9 +11,12 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
+import { createMosipInteropClient, MOSIPPayload } from '@opencrvs/mosip/api'
 import { ActionInput } from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
+import { logger } from '@countryconfig/logger'
+import { env } from '@countryconfig/environment'
 
 interface ActionConfirmationRequest extends Hapi.Request {
   payload: {
@@ -51,7 +54,7 @@ interface ActionConfirmationRequest extends Hapi.Request {
  * @param {Hapi.ResponseToolkit} h - The response toolkit.
  * @returns {Hapi.Response} The response object. Should return HTTP 200, 202 or 400. With HTTP 200, the payload should contain the generated registration number.
  */
-export function onRegisterHandler(
+export async function onRegisterHandler(
   request: ActionConfirmationRequest,
   h: Hapi.ResponseToolkit
 ) {
@@ -60,32 +63,47 @@ export function onRegisterHandler(
   const eventId = request.payload.event.id
   const action = request.payload.action
 
+  const openCrvsMosipInteropUrl = env.isProd
+    ? 'http://mosip-api:2024'
+    : 'http://localhost:2024'
+  const mosipInteropClient = createMosipInteropClient(
+    openCrvsMosipInteropUrl,
+    `Bearer ${token}`
+  )
+
+  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
+
   // OPTION 1: Immediate acceptance (HTTP 200)
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
+  if (!shouldForwardToMosip)
+    return h
+      .response({ registrationNumber: generateRegistrationNumber() })
+      .code(200)
 
-  return h
-    .response({ registrationNumber: generateRegistrationNumber() })
-    .code(200)
-
-  // OPTION 2: Immediate rejection (HTTP 400)
-  // To reject the registration immediately, uncomment the following:
-  //
-  // return h.response({ reason: 'Rejection reason here' }).code(400)
-
-  // OPTION 3: Deferred decision (HTTP 202)
-  // To implement an asynchronous workflow where the decision is made later:
-  // 1. Store the token, eventId, actionId, and action details in your system
-  // 2. Return HTTP 202 to place the action in 'Requested' state
-  // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
-  //
-  // Below is example of how to defer the confirmation, accepting it after a 10 second delay
-  // To defer the confirmation, uncomment the following:
-  //
-  // setTimeout(() => {
-  //   acceptRequestedRegistration(token, eventId, actionId, action)
-  // }, 10000)
-  // return h.response().code(202)
+  try {
+    // OPTION 3: Deferred decision (HTTP 202)
+    // To implement an asynchronous workflow where the decision is made later:
+    // 1. Store the token, eventId, actionId, and action details in your system
+    // 2. Return HTTP 202 to place the action in 'Requested' state
+    // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
+    //
+    // Below is example of how to defer the confirmation, accepting it after a 10 second delay
+    // To defer the confirmation, uncomment the following:
+    logger.info(
+      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+    )
+    await mosipInteropClient.register({} satisfies MOSIPPayload)
+    return h.response().code(202)
+  } catch (error) {
+    // OPTION 2: Immediate rejection (HTTP 400)
+    // To reject the registration immediately, uncomment the following:
+    return h
+      .response({
+        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
+      })
+      .code(400)
+  }
 }
 
 /**

@@ -11,21 +11,20 @@
 import * as Hapi from '@hapi/hapi'
 import { generateRegistrationNumber } from './registrationNumber'
 import { createClient } from '@opencrvs/toolkit/api'
-import { createMosipInteropClient, MOSIPPayload } from '@opencrvs/mosip/api'
-import { ActionInput } from '@opencrvs/toolkit/events'
+import {
+  ActionInput,
+  EventDocument,
+  getPendingAction
+} from '@opencrvs/toolkit/events'
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
+import { sendInformantNotification } from '../notification/informantNotification'
+import { createMosipInteropClient, MOSIPPayload } from '@opencrvs/mosip/api'
 import { logger } from '@countryconfig/logger'
 import { env } from '@countryconfig/environment'
 
-interface ActionConfirmationRequest extends Hapi.Request {
-  payload: {
-    actionId: string
-    event: {
-      id: string
-    }
-    action: ActionInput
-  }
+export interface ActionConfirmationRequest extends Hapi.Request {
+  payload: EventDocument
 }
 
 /* eslint-disable no-unused-vars */
@@ -59,9 +58,9 @@ export async function onRegisterHandler(
   h: Hapi.ResponseToolkit
 ) {
   const token = request.auth.artifacts.token as string
-  const actionId = request.payload.actionId
-  const eventId = request.payload.event.id
-  const action = request.payload.action
+  const event = request.payload
+  const eventId = event.id
+  const action = getPendingAction(event.actions)
 
   const openCrvsMosipInteropUrl = env.isProd
     ? 'http://mosip-api:2024'
@@ -71,15 +70,19 @@ export async function onRegisterHandler(
     `Bearer ${token}`
   )
 
+  const registrationNumber = generateRegistrationNumber()
+
   const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
 
   // OPTION 1: Immediate acceptance (HTTP 200)
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
-  if (!shouldForwardToMosip)
+  if (!shouldForwardToMosip) {
+    await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
       .code(200)
+  }
 
   try {
     // OPTION 3: Deferred decision (HTTP 202)
@@ -93,6 +96,8 @@ export async function onRegisterHandler(
     logger.info(
       'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
     )
+
+    await sendInformantNotification({ event, token, registrationNumber })
     await mosipInteropClient.register({} satisfies MOSIPPayload)
     return h.response().code(202)
   } catch (error) {

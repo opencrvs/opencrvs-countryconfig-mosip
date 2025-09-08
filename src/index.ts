@@ -56,12 +56,7 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
-import {
-  mosipRegistrationForReviewHandler,
-  mosipRegistrationForApprovalHandler,
-  mosipRegistrationHandler,
-  verify
-} from '@opencrvs/mosip'
+import { verify } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
   getCustomEventsHandler,
@@ -431,44 +426,6 @@ export async function createServer() {
       description: 'Serves country logo'
     }
   })
-
-  server.route({
-    method: 'POST',
-    path: '/event-registration',
-    handler: async (request, h) => {
-      const url = env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-      const result = await verify({ url, request })
-      const bundle = request.payload as fhir3.Bundle
-
-      if (shouldForwardToIDSystem(request.payload as fhir3.Bundle, result)) {
-        const payload =
-          getEventType(bundle) === 'BIRTH'
-            ? fhirBirthToMosip(bundle)
-            : fhirDeathToMosip(bundle)
-
-        logger.info(
-          'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
-        )
-
-        return mosipRegistrationHandler({
-          url,
-          headers: request.headers,
-          payload
-        })(request, h)
-      } else {
-        logger.info(
-          'Failed country specified custom logic check for id creation. Bypassing id system...'
-        )
-        return eventRegistrationHandler(request, h)
-      }
-    },
-    options: {
-      tags: ['api'],
-      description:
-        'Opportunity for sychrounous integrations with 3rd party systems as a final step in event registration. If successful returns identifiers for that event.'
-    }
-  })
-
   server.route({
     method: 'GET',
     path: '/crude-death-rate',
@@ -611,52 +568,42 @@ export async function createServer() {
     }
   })
 
-  server.route({
-    method: 'POST',
-    path: `/trigger/events/${Event.TENNIS_CLUB_MEMBERSHIP}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
-    options: {
-      tags: ['api', 'events'],
-      description: 'Receives notifications on event actions'
-    }
-  })
+  // server.route({
+  //   method: 'POST',
+  //   path: '/trigger/events/{event}/actions/sent-notification',
+  //   handler: mosipRegistrationForReviewHandler({
+  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+  //   }),
+  //   options: {
+  //     tags: ['api', 'custom-event'],
+  //     description: 'Receives notifications on sent-notification action'
+  //   }
+  // })
 
-  server.route({
-    method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-notification',
-    handler: mosipRegistrationForReviewHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
-    options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on sent-notification action'
-    }
-  })
+  // server.route({
+  //   method: 'POST',
+  //   path: '/trigger/events/{event}/actions/sent-notification-for-review',
+  //   handler: mosipRegistrationForReviewHandler({
+  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+  //   }),
+  //   options: {
+  //     tags: ['api', 'custom-event'],
+  //     description:
+  //       'Receives notifications on sent-notification-for-review action'
+  //   }
+  // })
 
-  server.route({
-    method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-notification-for-review',
-    handler: mosipRegistrationForReviewHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
-    options: {
-      tags: ['api', 'custom-event'],
-      description:
-        'Receives notifications on sent-notification-for-review action'
-    }
-  })
-
-  server.route({
-    method: 'POST',
-    path: '/trigger/events/{event}/actions/sent-for-approval',
-    handler: mosipRegistrationForApprovalHandler({
-      url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-    }),
-    options: {
-      tags: ['api', 'custom-event'],
-      description: 'Receives notifications on sent-for-approval action'
-    }
-  })
+  // server.route({
+  //   method: 'POST',
+  //   path: '/trigger/events/{event}/actions/sent-for-approval',
+  //   handler: mosipRegistrationForApprovalHandler({
+  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
+  //   }),
+  //   options: {
+  //     tags: ['api', 'custom-event'],
+  //     description: 'Receives notifications on sent-for-approval action'
+  //   }
+  // })
 
   server.route({
     method: 'POST',

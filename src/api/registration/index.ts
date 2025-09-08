@@ -19,9 +19,10 @@ import {
 import { GATEWAY_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
-import { createMosipInteropClient, MOSIPPayload } from '@opencrvs/mosip/api'
+import { createMosipInteropClient } from '@opencrvs/mosip/api'
 import { logger } from '@countryconfig/logger'
 import { env } from '@countryconfig/environment'
+import { composeMosipPayload } from '@countryconfig/utils/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -62,14 +63,6 @@ export async function onRegisterHandler(
   const eventId = event.id
   const action = getPendingAction(event.actions)
 
-  const openCrvsMosipInteropUrl = env.isProd
-    ? 'http://mosip-api:2024'
-    : 'http://localhost:2024'
-  const mosipInteropClient = createMosipInteropClient(
-    openCrvsMosipInteropUrl,
-    `Bearer ${token}`
-  )
-
   const registrationNumber = generateRegistrationNumber()
 
   const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
@@ -93,12 +86,24 @@ export async function onRegisterHandler(
     //
     // Below is example of how to defer the confirmation, accepting it after a 10 second delay
     // To defer the confirmation, uncomment the following:
+
+    // @TODO: Do we actually want to send the informant notification here, or only after MOSIP registration is successful?
+    // await sendInformantNotification({ event, token, registrationNumber })
+
     logger.info(
       'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
     )
 
-    await sendInformantNotification({ event, token, registrationNumber })
-    await mosipInteropClient.register({} satisfies MOSIPPayload)
+    const openCrvsMosipInteropUrl = env.isProd
+      ? 'http://mosip-api:2024'
+      : 'http://localhost:2024'
+    const mosipInteropClient = createMosipInteropClient(
+      openCrvsMosipInteropUrl,
+      `Bearer ${token}`
+    )
+    const mosipPayload = composeMosipPayload(event, registrationNumber)
+    await mosipInteropClient.register(mosipPayload)
+
     return h.response().code(202)
   } catch (error) {
     // OPTION 2: Immediate rejection (HTTP 400)

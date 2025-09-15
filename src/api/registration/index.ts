@@ -102,7 +102,9 @@ export async function onRegisterHandler(
       `Bearer ${token}`
     )
     const mosipPayload = composeMosipPayload(event, registrationNumber)
-    await mosipInteropClient.register(mosipPayload)
+
+    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
+    mosipInteropClient.register(mosipPayload)
 
     return h.response().code(202)
   } catch (error) {

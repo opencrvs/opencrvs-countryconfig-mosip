@@ -21,8 +21,10 @@ import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { createMosipInteropClient } from '@opencrvs/mosip/api'
 import { logger } from '@countryconfig/logger'
-import { env } from '@countryconfig/environment'
-import { composeMosipPayload } from '@countryconfig/utils/mosip'
+import {
+  composeMosipPayload,
+  openCrvsMosipInteropUrl
+} from '@countryconfig/utils/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -94,9 +96,6 @@ export async function onRegisterHandler(
       'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
     )
 
-    const openCrvsMosipInteropUrl = env.isProd
-      ? 'http://mosip-api:2024'
-      : 'http://localhost:2024'
     const mosipInteropClient = createMosipInteropClient(
       openCrvsMosipInteropUrl,
       `Bearer ${token}`

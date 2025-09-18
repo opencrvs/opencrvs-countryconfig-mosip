@@ -14,6 +14,9 @@ import { deathEvent } from '@countryconfig/form/v2/death'
 import * as Hapi from '@hapi/hapi'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { ActionConfirmationRequest } from '../registration'
+import { createMosipInteropClient } from '@opencrvs/mosip/api'
+import { openCrvsMosipInteropUrl } from '@countryconfig/utils/mosip'
+import { getCurrentEventState } from '@opencrvs/toolkit/events'
 
 export function getCustomEventsHandler(
   _: Hapi.Request,
@@ -35,7 +38,91 @@ export async function onAnyActionHandler(
   const event = request.payload
   await sendInformantNotification({ event, token })
 
+  return h.response({}).code(200)
+}
+
+export async function onBirthActionHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+
+  const event = request.payload
+  await sendInformantNotification({ event, token })
+
+  const currentState = getCurrentEventState(event, birthEvent)
+
+  const mosipInteropClient = createMosipInteropClient(
+    openCrvsMosipInteropUrl,
+    `Bearer ${token}`
+  )
+
+  const mother = await mosipInteropClient.verifyNid({
+    dob: currentState.declaration['mother.dob'],
+    nid: currentState.declaration['mother.nationalId'],
+    name: currentState.declaration['mother.name'],
+    gender: 'female'
+  })
+
+  const father = await mosipInteropClient.verifyNid({
+    dob: currentState.declaration['father.dob'],
+    nid: currentState.declaration['father.nationalId'],
+    name: currentState.declaration['father.name'],
+    gender: 'male'
+  })
+
+  const informant = await mosipInteropClient.verifyNid({
+    dob: currentState.declaration['informant.dob'],
+    nid: currentState.declaration['informant.nationalId'],
+    name: currentState.declaration['informant.name']
+  })
+
   return h
-    .response({ declaration: { 'mother.verified': 'verified' } })
+    .response({
+      declaration: {
+        'mother.verified': mother,
+        'father.verified': father,
+        'informant.verified': informant
+      }
+    })
+    .code(200)
+}
+
+export async function onDeathActionHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+
+  const event = request.payload
+  await sendInformantNotification({ event, token })
+
+  const currentState = getCurrentEventState(event, birthEvent)
+
+  const mosipInteropClient = createMosipInteropClient(
+    openCrvsMosipInteropUrl,
+    `Bearer ${token}`
+  )
+
+  const deceased = await mosipInteropClient.verifyNid({
+    dob: currentState.declaration['deceased.dob'],
+    nid: currentState.declaration['deceased.nationalId'],
+    name: currentState.declaration['deceased.name'],
+    gender: currentState.declaration['deceased.gender']
+  })
+
+  const informant = await mosipInteropClient.verifyNid({
+    dob: currentState.declaration['informant.dob'],
+    nid: currentState.declaration['informant.nationalId'],
+    name: currentState.declaration['informant.name']
+  })
+
+  return h
+    .response({
+      declaration: {
+        'deceased.verified': deceased,
+        'informant.verified': informant
+      }
+    })
     .code(200)
 }

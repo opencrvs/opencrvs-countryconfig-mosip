@@ -32,6 +32,11 @@ import { logger } from '@countryconfig/logger'
 import { MosipInteropPayload, VerificationStatus } from '@opencrvs/mosip/api'
 import { EventDocument } from '@opencrvs/toolkit/events'
 import { Event } from '@countryconfig/form/types/types'
+import { env } from '@countryconfig/environment'
+
+export const openCrvsMosipInteropUrl = env.isProd
+  ? 'http://mosip-api:2024'
+  : 'http://localhost:2024'
 
 /**
  * Transforms the incoming `EventDocument` and certificate number into a MOSIP payload.

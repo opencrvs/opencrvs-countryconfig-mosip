@@ -35,5 +35,7 @@ export async function onAnyActionHandler(
   const event = request.payload
   await sendInformantNotification({ event, token })
 
-  return h.response().code(200)
+  return h
+    .response({ declaration: { 'mother.verified': 'verified' } })
+    .code(200)
 }

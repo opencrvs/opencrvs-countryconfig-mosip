@@ -98,6 +98,15 @@ export const mother = defineFormPage({
       ]
     },
     {
+      id: 'mother.verified',
+      type: FieldType.TEXT,
+      label: {
+        defaultMessage: 'Verification status',
+        description: 'This is the label for the field',
+        id: 'event.birth.action.declare.form.section.mother.field.verified.label'
+      }
+    },
+    {
       id: 'mother.name',
       type: FieldType.NAME,
       required: true,

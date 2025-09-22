@@ -62,6 +62,10 @@ export const mother = defineFormPage({
           conditional: not(
             field('informant.relation').isEqualTo(InformantType.MOTHER)
           )
+        },
+        {
+          type: ConditionalType.DISPLAY_ON_REVIEW,
+          conditional: field('mother.detailsNotAvailable').isEqualTo(true)
         }
       ]
     },
@@ -130,6 +134,7 @@ export const mother = defineFormPage({
       type: 'DATE',
       required: true,
       secured: true,
+      analytics: true,
       validation: [
         {
           message: {
@@ -390,6 +395,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.maritalStatus',
       type: FieldType.SELECT,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'Marital Status',
@@ -408,6 +414,7 @@ export const mother = defineFormPage({
       id: 'mother.educationalAttainment',
       type: FieldType.SELECT,
       required: false,
+      analytics: true,
       label: {
         defaultMessage: 'Level of education',
         description: 'This is the label for the field',
@@ -425,6 +432,7 @@ export const mother = defineFormPage({
       id: 'mother.occupation',
       type: FieldType.TEXT,
       required: false,
+      analytics: true,
       label: {
         defaultMessage: 'Occupation',
         description: 'This is the label for the field',
@@ -440,6 +448,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.previousBirths',
       type: FieldType.NUMBER,
+      analytics: true,
       required: false,
       label: {
         defaultMessage: 'No. of previous births',

@@ -16,7 +16,11 @@ import { sendInformantNotification } from '../notification/informantNotification
 import { ActionConfirmationRequest } from '../registration'
 import { createMosipInteropClient } from '@opencrvs/mosip/api'
 import { openCrvsMosipInteropUrl } from '@countryconfig/utils/mosip'
-import { getCurrentEventState } from '@opencrvs/toolkit/events'
+import {
+  aggregateActionDeclarations,
+  deepMerge,
+  getPendingAction
+} from '@opencrvs/toolkit/events'
 
 export function getCustomEventsHandler(
   _: Hapi.Request,
@@ -50,7 +54,11 @@ export async function onBirthActionHandler(
   const event = request.payload
   await sendInformantNotification({ event, token })
 
-  const currentState = getCurrentEventState(event, birthEvent)
+  const pendingAction = getPendingAction(event.actions)
+  const declaration = deepMerge(
+    aggregateActionDeclarations(event, birthEvent),
+    pendingAction.declaration
+  )
 
   const mosipInteropClient = createMosipInteropClient(
     openCrvsMosipInteropUrl,
@@ -58,23 +66,23 @@ export async function onBirthActionHandler(
   )
 
   const mother = await mosipInteropClient.verifyNid({
-    dob: currentState.declaration['mother.dob'],
-    nid: currentState.declaration['mother.nationalId'],
-    name: currentState.declaration['mother.name'],
+    dob: declaration['mother.dob'],
+    nid: declaration['mother.nationalId'],
+    name: declaration['mother.name'],
     gender: 'female'
   })
 
   const father = await mosipInteropClient.verifyNid({
-    dob: currentState.declaration['father.dob'],
-    nid: currentState.declaration['father.nationalId'],
-    name: currentState.declaration['father.name'],
+    dob: declaration['father.dob'],
+    nid: declaration['father.nationalId'],
+    name: declaration['father.name'],
     gender: 'male'
   })
 
   const informant = await mosipInteropClient.verifyNid({
-    dob: currentState.declaration['informant.dob'],
-    nid: currentState.declaration['informant.nationalId'],
-    name: currentState.declaration['informant.name']
+    dob: declaration['informant.dob'],
+    nid: declaration['informant.nationalId'],
+    name: declaration['informant.name']
   })
 
   return h
@@ -97,7 +105,11 @@ export async function onDeathActionHandler(
   const event = request.payload
   await sendInformantNotification({ event, token })
 
-  const currentState = getCurrentEventState(event, birthEvent)
+  const pendingAction = getPendingAction(event.actions)
+  const declaration = deepMerge(
+    aggregateActionDeclarations(event, birthEvent),
+    pendingAction.declaration
+  )
 
   const mosipInteropClient = createMosipInteropClient(
     openCrvsMosipInteropUrl,
@@ -105,16 +117,16 @@ export async function onDeathActionHandler(
   )
 
   const deceased = await mosipInteropClient.verifyNid({
-    dob: currentState.declaration['deceased.dob'],
-    nid: currentState.declaration['deceased.nationalId'],
-    name: currentState.declaration['deceased.name'],
-    gender: currentState.declaration['deceased.gender']
+    dob: declaration['deceased.dob'],
+    nid: declaration['deceased.nationalId'],
+    name: declaration['deceased.name'],
+    gender: declaration['deceased.gender']
   })
 
   const informant = await mosipInteropClient.verifyNid({
-    dob: currentState.declaration['informant.dob'],
-    nid: currentState.declaration['informant.nationalId'],
-    name: currentState.declaration['informant.name']
+    dob: declaration['informant.dob'],
+    nid: declaration['informant.nationalId'],
+    name: declaration['informant.name']
   })
 
   return h

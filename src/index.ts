@@ -60,7 +60,9 @@ import { verify } from '@opencrvs/mosip'
 import { env } from './environment'
 import {
   getCustomEventsHandler,
-  onAnyActionHandler
+  onAnyActionHandler,
+  onBirthActionHandler,
+  onDeathActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
 import { eventRegistrationHandler } from './api/event-registration/handler'
@@ -562,6 +564,26 @@ export async function createServer() {
     method: 'POST',
     path: '/trigger/events/{event}/actions/{action}',
     handler: onAnyActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/trigger/events/birth/actions/{action}',
+    handler: onBirthActionHandler,
+    options: {
+      tags: ['api', 'events'],
+      description: 'Receives notifications on event actions'
+    }
+  })
+
+  server.route({
+    method: 'POST',
+    path: '/trigger/events/death/actions/{action}',
+    handler: onDeathActionHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'

@@ -67,30 +67,15 @@ export async function onBirthActionHandler(
 
   const mother = await mosipInteropClient.verifyNid({
     dob: declaration['mother.dob'],
-    nid: declaration['mother.nationalId'],
+    nid: declaration['mother.nid'],
     name: declaration['mother.name'],
     gender: 'female'
-  })
-
-  const father = await mosipInteropClient.verifyNid({
-    dob: declaration['father.dob'],
-    nid: declaration['father.nationalId'],
-    name: declaration['father.name'],
-    gender: 'male'
-  })
-
-  const informant = await mosipInteropClient.verifyNid({
-    dob: declaration['informant.dob'],
-    nid: declaration['informant.nationalId'],
-    name: declaration['informant.name']
   })
 
   return h
     .response({
       declaration: {
-        'mother.verified': mother,
-        'father.verified': father,
-        'informant.verified': informant
+        'mother.verified': mother
       }
     })
     .code(200)

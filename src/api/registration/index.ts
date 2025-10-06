@@ -16,15 +16,11 @@ import {
   EventDocument,
   getPendingAction
 } from '@opencrvs/toolkit/events'
-import { GATEWAY_URL } from '@countryconfig/constants'
+import { GATEWAY_URL, MOSIP_INTEROP_URL } from '@countryconfig/constants'
 import { v4 as uuidv4 } from 'uuid'
 import { sendInformantNotification } from '../notification/informantNotification'
 import { createMosipInteropClient } from '@opencrvs/mosip/api'
 import { logger } from '@countryconfig/logger'
-import {
-  composeMosipPayload,
-  openCrvsMosipInteropUrl
-} from '@countryconfig/utils/mosip'
 
 export interface ActionConfirmationRequest extends Hapi.Request {
   payload: EventDocument
@@ -65,56 +61,34 @@ export async function onRegisterHandler(
   const eventId = event.id
   const action = getPendingAction(event.actions)
 
-  const registrationNumber = generateRegistrationNumber()
-
-  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
-
   // OPTION 1: Immediate acceptance (HTTP 200)
   // Return HTTP 200 with a registration number to immediately accept the registration action.
   // This is the default implementation that automatically generates and assigns a registration number.
-  if (!shouldForwardToMosip) {
-    await sendInformantNotification({ event, token, registrationNumber })
-    return h
-      .response({ registrationNumber: generateRegistrationNumber() })
-      .code(200)
-  }
 
-  try {
-    // OPTION 3: Deferred decision (HTTP 202)
-    // To implement an asynchronous workflow where the decision is made later:
-    // 1. Store the token, eventId, actionId, and action details in your system
-    // 2. Return HTTP 202 to place the action in 'Requested' state
-    // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
-    //
-    // Below is example of how to defer the confirmation, accepting it after a 10 second delay
-    // To defer the confirmation, uncomment the following:
+  const registrationNumber = generateRegistrationNumber()
 
-    // @TODO: Do we actually want to send the informant notification here, or only after MOSIP registration is successful?
-    // await sendInformantNotification({ event, token, registrationNumber })
+  await sendInformantNotification({ event, token, registrationNumber })
 
-    logger.info(
-      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
-    )
+  return h.response({ registrationNumber }).code(200)
 
-    const mosipInteropClient = createMosipInteropClient(
-      openCrvsMosipInteropUrl,
-      `Bearer ${token}`
-    )
-    const mosipPayload = composeMosipPayload(event, registrationNumber)
+  // OPTION 2: Immediate rejection (HTTP 400)
+  // To reject the registration immediately, uncomment the following:
+  //
+  // return h.response({ reason: 'Rejection reason here' }).code(400)
 
-    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
-    mosipInteropClient.register(mosipPayload)
-
-    return h.response().code(202)
-  } catch (error) {
-    // OPTION 2: Immediate rejection (HTTP 400)
-    // To reject the registration immediately, uncomment the following:
-    return h
-      .response({
-        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
-      })
-      .code(400)
-  }
+  // OPTION 3: Deferred decision (HTTP 202)
+  // To implement an asynchronous workflow where the decision is made later:
+  // 1. Store the token, eventId, actionId, and action details in your system
+  // 2. Return HTTP 202 to place the action in 'Requested' state
+  // 3. Later call client.event.actions.register.accept.mutate() or client.event.actions.register.reject.mutate()
+  //
+  // Below is example of how to defer the confirmation, accepting it after a 10 second delay
+  // To defer the confirmation, uncomment the following:
+  //
+  // setTimeout(() => {
+  //   acceptRequestedRegistration(token, eventId, actionId, action)
+  // }, 10000)
+  // return h.response().code(202)
 }
 
 /**
@@ -169,4 +143,116 @@ async function rejectRequestedRegistration(
   })
 
   return event
+}
+
+export async function onMosipBirthRegisterHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+  const event = request.payload
+
+  const registrationNumber = generateRegistrationNumber()
+
+  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
+
+  if (!shouldForwardToMosip) {
+    await sendInformantNotification({ event, token, registrationNumber })
+    return h
+      .response({ registrationNumber: generateRegistrationNumber() })
+      .code(200)
+  }
+
+  try {
+    logger.info(
+      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+    )
+
+    const mosipInteropClient = createMosipInteropClient(
+      MOSIP_INTEROP_URL,
+      `Bearer ${token}`
+    )
+
+    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
+    mosipInteropClient.register({
+      trackingId: event.trackingId,
+      requestFields: {
+        birthCertificateNumber: registrationNumber,
+        fullName: '@TODO',
+        dateOfBirth: '@TODO',
+        gender: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    })
+
+    return h.response().code(202)
+  } catch (error) {
+    return h
+      .response({
+        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
+      })
+      .code(400)
+  }
+}
+
+export async function onMosipDeathRegisterHandler(
+  request: ActionConfirmationRequest,
+  h: Hapi.ResponseToolkit
+) {
+  const token = request.auth.artifacts.token as string
+  const event = request.payload
+
+  const registrationNumber = generateRegistrationNumber()
+
+  const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
+
+  if (!shouldForwardToMosip) {
+    await sendInformantNotification({ event, token, registrationNumber })
+    return h
+      .response({ registrationNumber: generateRegistrationNumber() })
+      .code(200)
+  }
+
+  try {
+    logger.info(
+      'Passed country specified custom logic check for id creation. Forwarding to MOSIP...'
+    )
+
+    const mosipInteropClient = createMosipInteropClient(
+      MOSIP_INTEROP_URL,
+      `Bearer ${token}`
+    )
+
+    // @TODO: Check whether this might crash country-config if MOSIP doesn't respond
+    mosipInteropClient.register({
+      trackingId: event.trackingId,
+      requestFields: {
+        deathCertificateNumber: registrationNumber,
+        fullName: '@TODO',
+        dateOfBirth: '@TODO',
+        gender: '@TODO'
+      },
+      notification: {
+        recipientEmail: '@TODO',
+        recipientFullName: '@TODO',
+        recipientPhone: '@TODO'
+      },
+      metaInfo: {},
+      audit: {}
+    })
+
+    return h.response().code(202)
+  } catch (error) {
+    return h
+      .response({
+        reason: 'Unexpected error in OpenCRVS-MOSIP interoperability layer'
+      })
+      .code(400)
+  }
 }

@@ -56,8 +56,6 @@ import { trackingIDHandler } from './api/tracking-id/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
-import { verify } from '@opencrvs/mosip'
-import { env } from './environment'
 import {
   getCustomEventsHandler,
   onAnyActionHandler,
@@ -65,11 +63,13 @@ import {
   onDeathActionHandler
 } from '@countryconfig/api/custom-event/handler'
 import { readFileSync } from 'fs'
-import { eventRegistrationHandler } from './api/event-registration/handler'
-import { getEventType } from './utils/fhir'
 import { ActionType, EventDocument } from '@opencrvs/toolkit/events'
 import { Event } from './form/types/types'
-import { onRegisterHandler } from './api/registration'
+import {
+  onMosipBirthRegisterHandler,
+  onMosipDeathRegisterHandler,
+  onRegisterHandler
+} from './api/registration'
 import { workqueueconfigHandler } from './api/workqueue/handler'
 import getUserNotificationRoutes from './config/routes/userNotificationRoutes'
 import {
@@ -79,11 +79,6 @@ import {
   syncLocationStatistics
 } from './analytics/analytics'
 import { getClient } from './analytics/postgres'
-import {
-  fhirBirthToMosip,
-  fhirDeathToMosip,
-  shouldForwardToIDSystem
-} from './utils/mosip'
 import { env } from './environment'
 
 export interface ITokenPayload {
@@ -660,47 +655,10 @@ export async function createServer() {
     }
   })
 
-  // server.route({
-  //   method: 'POST',
-  //   path: '/trigger/events/{event}/actions/sent-notification',
-  //   handler: mosipRegistrationForReviewHandler({
-  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-  //   }),
-  //   options: {
-  //     tags: ['api', 'custom-event'],
-  //     description: 'Receives notifications on sent-notification action'
-  //   }
-  // })
-
-  // server.route({
-  //   method: 'POST',
-  //   path: '/trigger/events/{event}/actions/sent-notification-for-review',
-  //   handler: mosipRegistrationForReviewHandler({
-  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-  //   }),
-  //   options: {
-  //     tags: ['api', 'custom-event'],
-  //     description:
-  //       'Receives notifications on sent-notification-for-review action'
-  //   }
-  // })
-
-  // server.route({
-  //   method: 'POST',
-  //   path: '/trigger/events/{event}/actions/sent-for-approval',
-  //   handler: mosipRegistrationForApprovalHandler({
-  //     url: env.isProd ? 'http://mosip-api:2024' : 'http://localhost:2024'
-  //   }),
-  //   options: {
-  //     tags: ['api', 'custom-event'],
-  //     description: 'Receives notifications on sent-for-approval action'
-  //   }
-  // })
-
   server.route({
     method: 'POST',
     path: `/trigger/events/${Event.Birth}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
+    handler: onMosipBirthRegisterHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'
@@ -710,7 +668,7 @@ export async function createServer() {
   server.route({
     method: 'POST',
     path: `/trigger/events/${Event.Death}/actions/${ActionType.REGISTER}`,
-    handler: onRegisterHandler,
+    handler: onMosipDeathRegisterHandler,
     options: {
       tags: ['api', 'events'],
       description: 'Receives notifications on event actions'

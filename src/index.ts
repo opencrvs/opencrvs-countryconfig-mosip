@@ -84,6 +84,7 @@ import {
   fhirDeathToMosip,
   shouldForwardToIDSystem
 } from './utils/mosip'
+import { env } from './environment'
 
 export interface ITokenPayload {
   sub: string
@@ -571,6 +572,18 @@ export async function createServer() {
       }
     },
     handler: async (req, h) => {
+      if (!env.ANALYTICS_DATABASE_URL) {
+        // kill client upload immediately
+        if (!req.raw.req.destroyed) {
+          req.raw.req.destroy()
+        }
+
+        logger.warn(
+          'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
+        )
+        return h.response().code(200)
+      }
+
       const stream = req.raw.req.pipe(StreamArray.withParser())
       const BATCH_SIZE = 1000
       const queue: EventDocument[] = []
@@ -743,10 +756,10 @@ export async function createServer() {
     await server.start()
     await syncLocationLevels()
     await syncLocationStatistics()
-    server.log(
-      'info',
-      `server started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
-    )
+
+    const logMsg = `Server successfully started on ${COUNTRY_CONFIG_HOST}:${COUNTRY_CONFIG_PORT}`
+    logger.info(logMsg)
+    server.log('info', logMsg)
   }
 
   return { server, start, stop }

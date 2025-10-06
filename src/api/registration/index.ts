@@ -156,8 +156,9 @@ export async function onMosipBirthRegisterHandler(
 
   const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
 
+  await sendInformantNotification({ event, token, registrationNumber })
+
   if (!shouldForwardToMosip) {
-    await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
       .code(200)
@@ -212,8 +213,9 @@ export async function onMosipDeathRegisterHandler(
 
   const shouldForwardToMosip = true // This should be determined by your custom logic, e.g., based on verification status
 
+  await sendInformantNotification({ event, token, registrationNumber })
+
   if (!shouldForwardToMosip) {
-    await sendInformantNotification({ event, token, registrationNumber })
     return h
       .response({ registrationNumber: generateRegistrationNumber() })
       .code(200)

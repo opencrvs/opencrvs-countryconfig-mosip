@@ -36,6 +36,10 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
+import {
+  ESIGNET_REDIRECT_URL,
+  OPENID_PROVIDER_CLIENT_ID
+} from '@countryconfig/constants'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
@@ -104,6 +108,9 @@ export const mother = defineFormPage({
         }
       ]
     },
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
     {
       id: 'mother.verified',
       type: FieldType.VERIFICATION_STATUS,
@@ -133,6 +140,40 @@ export const mother = defineFormPage({
           conditional: requireMotherDetails
         }
       ]
+    },
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: 'mother.verify',
+      type: FieldType.LINK_BUTTON,
+      label: {
+        id: 'mother.verify',
+        defaultMessage: 'Authenticate',
+        description: 'The title for the E-Signet verification button'
+      },
+      configuration: {
+        url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
+        text: {
+          id: 'mother.verify',
+          defaultMessage: 'Verify with E-Signet',
+          description: 'The title for the E-Signet verification button'
+        }
+      }
+    },
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: 'mother.query-params',
+      type: FieldType.QUERY_PARAM_READER,
+      label: {
+        id: 'mother.query-params.label',
+        defaultMessage: 'Query param reader',
+        description:
+          'This is the label for the query param reader field - usually this is hidden'
+      },
+      configuration: {}
     },
     {
       id: 'mother.name',

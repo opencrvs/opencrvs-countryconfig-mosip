@@ -175,6 +175,27 @@ export const mother = defineFormPage({
       },
       configuration: {}
     },
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: 'mother.verify-nid-http-fetch',
+      type: FieldType.HTTP,
+      label: {
+        defaultMessage: 'Fetch applicant information',
+        description: 'Fetch applicant information',
+        id: 'applicant.http-fetch.label'
+      },
+      configuration: {
+        trigger: field('mother.query-params'),
+        url: '/api/user-info',
+        timeout: 5000,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    },
     {
       id: 'mother.name',
       type: FieldType.NAME,

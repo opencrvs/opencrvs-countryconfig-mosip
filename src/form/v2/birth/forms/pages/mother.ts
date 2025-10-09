@@ -46,16 +46,6 @@ export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
   field('informant.relation').isEqualTo(InformantType.MOTHER)
 )
-const esignetURL = new URL(ESIGNET_REDIRECT_URL)
-esignetURL.searchParams.set('client_id', '123')
-esignetURL.searchParams.set('response_type', 'code')
-esignetURL.searchParams.set('scope', 'openid+profile')
-esignetURL.searchParams.set('acr_values', 'mosip:idp:acr:static-code')
-esignetURL.searchParams.set('state', 'fetch-on-mount')
-esignetURL.searchParams.set(
-  'claims',
-  'name,family_name,given_name,middle_name,birthdate,address'
-)
 
 export const mother = defineFormPage({
   id: 'mother',

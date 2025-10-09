@@ -185,6 +185,36 @@ export const mother = defineFormPage({
         }
       }
     },
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: 'mother.fetch-loader',
+      type: FieldType.LOADER,
+      parent: field('mother.verify-nid-http-fetch'),
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(
+            field('mother.verify-nid-http-fetch').get('loading').isFalsy()
+          )
+        }
+      ],
+      label: {
+        id: 'mother.fetch-loader.label',
+        defaultMessage: "Fetching the person's data from E-Signet",
+        description:
+          'This is the label for the fetch individual information loader'
+      },
+      configuration: {
+        text: {
+          id: 'mother.fetch-loader.label',
+          defaultMessage: "Fetching the person's data from E-Signet",
+          description:
+            'This is the label for the fetch individual information loader'
+        }
+      }
+    },
     {
       id: 'mother.id-reader',
       type: FieldType.ID_READER,
@@ -214,10 +244,11 @@ export const mother = defineFormPage({
             description: 'The title for the E-Signet verification button'
           },
           configuration: {
+            icon: 'Globe',
             url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
             text: {
               id: 'mother.verify',
-              defaultMessage: 'Verify with E-Signet',
+              defaultMessage: 'e-Signet',
               description: 'The title for the E-Signet verification button'
             }
           }

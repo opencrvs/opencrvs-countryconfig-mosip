@@ -115,6 +115,7 @@ export const mother = defineFormPage({
     {
       id: 'mother.verified',
       type: FieldType.VERIFICATION_STATUS,
+      parent: field('mother.verify-nid-http-fetch'),
       label: {
         id: 'mother.verified.status',
         defaultMessage: 'Verification status',
@@ -140,7 +141,10 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: requireMotherDetails
         }
-      ]
+      ],
+      value: field('mother.verify-nid-http-fetch').get(
+        'data.verificationStatus'
+      )
     },
     /*
      * @opencrvs/mosip: MOSIP / E-Signet
@@ -182,6 +186,9 @@ export const mother = defineFormPage({
         params: {
           code: field('mother.query-params').get('code'),
           state: field('mother.query-params').get('state')
+        },
+        errorValue: {
+          verificationStatus: 'failed'
         }
       }
     },
@@ -224,7 +231,15 @@ export const mother = defineFormPage({
         description: 'This is the label for the field',
         id: 'event.birth.action.declare.form.section.mother.field.qr.label'
       },
-      conditionals: [],
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            requireMotherDetails,
+            field('mother.verify-nid-http-fetch').get('data').isFalsy()
+          )
+        }
+      ],
       methods: [
         {
           type: FieldType.QR_READER,
@@ -257,30 +272,6 @@ export const mother = defineFormPage({
     },
     {
       id: 'mother.name',
-      parent: field('mother.id-reader'),
-      type: FieldType.NAME,
-      required: true,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      hideLabel: true,
-      label: {
-        defaultMessage: "Mother's name",
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.mother.field.name.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            requireMotherDetails,
-            field('mother.verify-nid-http-fetch').get('data.name').isFalsy()
-          )
-        }
-      ],
-      value: field('mother.id-reader').get('name'),
-      validation: [invalidNameValidator('mother.name')]
-    },
-    {
-      id: 'mother.name',
       parent: field('mother.verify-nid-http-fetch'),
       type: FieldType.NAME,
       required: true,
@@ -293,66 +284,18 @@ export const mother = defineFormPage({
       },
       conditionals: [
         {
-          type: ConditionalType.ENABLE,
-          conditional: never()
+          type: ConditionalType.SHOW,
+          conditional: and(requireMotherDetails)
         },
         {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            requireMotherDetails,
-            not(
-              field('mother.verify-nid-http-fetch').get('data.name').isFalsy()
-            )
-          )
+          type: ConditionalType.ENABLE,
+          conditional: field('mother.verify-nid-http-fetch')
+            .get('data.name')
+            .isFalsy()
         }
       ],
       value: field('mother.verify-nid-http-fetch').get('data.name'),
       validation: [invalidNameValidator('mother.name')]
-    },
-    {
-      id: 'mother.dob',
-      type: 'DATE',
-      parent: field('mother.id-reader'),
-      value: field('mother.id-reader').get('birthDate'),
-      required: true,
-      secured: true,
-      analytics: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid birth date',
-            description: 'This is the error message for invalid date',
-            id: 'event.birth.action.declare.form.section.person.field.dob.error'
-          },
-          validator: field('mother.dob').isBefore().now()
-        },
-        {
-          message: {
-            defaultMessage: "Birth date must be before child's birth date",
-            description:
-              "This is the error message for a birth date after child's birth date",
-            id: 'event.birth.action.declare.form.section.person.dob.afterChild'
-          },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
-        }
-      ],
-      label: {
-        defaultMessage: 'Date of birth',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.dob.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(field('mother.dobUnknown').isEqualTo(true)),
-            requireMotherDetails,
-            field('mother.verify-nid-http-fetch')
-              .get('data.birthDate')
-              .isFalsy()
-          )
-        }
-      ]
     },
     {
       id: 'mother.dob',
@@ -391,17 +334,14 @@ export const mother = defineFormPage({
           type: ConditionalType.SHOW,
           conditional: and(
             not(field('mother.dobUnknown').isEqualTo(true)),
-            requireMotherDetails,
-            not(
-              field('mother.verify-nid-http-fetch')
-                .get('data.birthDate')
-                .isFalsy()
-            )
+            requireMotherDetails
           )
         },
         {
           type: ConditionalType.ENABLE,
-          conditional: never()
+          conditional: field('mother.verify-nid-http-fetch')
+            .get('data.birthDate')
+            .isFalsy()
         }
       ]
     },

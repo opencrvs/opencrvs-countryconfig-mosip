@@ -1,4 +1,19 @@
-import { SelectOption, TranslationConfig } from '@opencrvs/toolkit/events'
+import {
+  MOSIP_API_USERINFO_URL,
+  OPENID_PROVIDER_CLIENT_ID,
+  ESIGNET_REDIRECT_URL
+} from '@countryconfig/constants'
+import {
+  ConditionalType,
+  field,
+  FieldConfigInput,
+  SelectOption,
+  TranslationConfig
+} from '@opencrvs/toolkit/events'
+
+// Import or define all missing symbols
+import { FieldType } from '@opencrvs/toolkit/events'
+import { not, and } from '@opencrvs/toolkit/events'
 
 export const createSelectOptions = <
   T extends Record<string, string>,
@@ -16,4 +31,208 @@ export const emptyMessage = {
   defaultMessage: '',
   description: 'empty string',
   id: 'messages.emptyString'
+}
+
+export const connectToMOSIPIdReader = (
+  fieldInput: FieldConfigInput,
+  valuePath: string
+): FieldConfigInput => {
+  const page = fieldInput.id.split('.')[0]
+  const conditionals = fieldInput.conditionals || []
+  const enableConditional = conditionals.find(
+    (c) => c.type === ConditionalType.ENABLE
+  )
+  if (enableConditional) {
+    enableConditional.conditional = enableConditional.conditional.and(
+      field(`${page}.verify-nid-http-fetch`).get(valuePath).isFalsy()
+    )
+  } else {
+    conditionals.push({
+      type: ConditionalType.ENABLE,
+      conditional: field(`${page}.verify-nid-http-fetch`)
+        .get(valuePath)
+        .isFalsy()
+    })
+  }
+  return {
+    ...fieldInput,
+    conditionals,
+    parent: field(`${page}.verify-nid-http-fetch`),
+    value: field(`${page}.verify-nid-http-fetch`).get(valuePath)
+  }
+}
+
+export const getMOSIPIntegrationFields = (
+  page: string,
+  existingConditionals: FieldConfigInput['conditionals']
+): FieldConfigInput[] => {
+  const existingShowConditional = existingConditionals?.find(
+    (c) => c.type === ConditionalType.SHOW
+  )
+  return [
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: `${page}.verified`,
+      type: FieldType.VERIFICATION_STATUS,
+      parent: field(`${page}.verify-nid-http-fetch`),
+      label: {
+        id: `${page}.verified.status`,
+        defaultMessage: 'Verification status',
+        description: 'The title for the status field label'
+      },
+      configuration: {
+        status: {
+          id: 'verified.status.text',
+          defaultMessage:
+            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
+          description:
+            'Status text shown on the pill on both form declaration and review page'
+        },
+        description: {
+          id: 'verified.status.description',
+          defaultMessage:
+            "{value, select, authenticated {This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.} verified {This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individual's biometrics. To make edits, please remove the verification first.} pending {Identity pending verification with Farajaland’s National ID system} failed {The identity data does not match an entry in Farajaland’s National ID System} other {Invalid value}}",
+          description: 'Description text of the status'
+        }
+      },
+      conditionals: existingConditionals,
+      value: field(`${page}.verify-nid-http-fetch`).get(
+        'data.verificationStatus'
+      )
+    },
+
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: `${page}.query-params`,
+      type: FieldType.QUERY_PARAM_READER,
+      label: {
+        id: 'form.query-params.label',
+        defaultMessage: 'Query param reader',
+        description:
+          'This is the label for the query param reader field - usually this is hidden'
+      },
+      configuration: {}
+    },
+
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: `${page}.verify-nid-http-fetch`,
+      type: FieldType.HTTP,
+      label: {
+        defaultMessage: 'Fetch applicant information',
+        description: 'Fetch applicant information',
+        id: 'applicant.http-fetch.label'
+      },
+      configuration: {
+        trigger: field(`${page}.query-params`),
+        url: MOSIP_API_USERINFO_URL,
+        timeout: 5000,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: {
+          clientId: OPENID_PROVIDER_CLIENT_ID,
+          redirectUri: '/' // noop
+        },
+        params: {
+          code: field(`${page}.query-params`).get('code'),
+          state: field(`${page}.query-params`).get('state')
+        },
+        errorValue: {
+          verificationStatus: 'failed'
+        }
+      }
+    },
+
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: `${page}.fetch-loader`,
+      type: FieldType.LOADER,
+      parent: field(`${page}.verify-nid-http-fetch`),
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: not(
+            field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy()
+          )
+        }
+      ],
+      label: {
+        id: 'form.fetch-loader.label',
+        defaultMessage: "Fetching the person's data from E-Signet",
+        description:
+          'This is the label for the fetch individual information loader'
+      },
+      configuration: {
+        text: {
+          id: 'form.fetch-loader.label',
+          defaultMessage: "Fetching the person's data from E-Signet",
+          description:
+            'This is the label for the fetch individual information loader'
+        }
+      }
+    },
+
+    /*
+     * @opencrvs/mosip: MOSIP / E-Signet
+     */
+    {
+      id: `${page}.id-reader`,
+      type: FieldType.ID_READER,
+      required: false,
+      label: {
+        defaultMessage: 'QR Code',
+        description: 'This is the label for the field',
+        id: `event.birth.action.declare.form.section.${page}.field.qr.label`
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            existingShowConditional?.conditional,
+            field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
+            field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
+          )
+        }
+      ],
+      methods: [
+        {
+          type: FieldType.QR_READER,
+          label: {
+            id: `event.birth.action.declare.form.section.${page}.field.qr.label`,
+            defaultMessage: 'Scan QR code',
+            description: 'This is the label for the field'
+          },
+          id: `${page}.id-reader`
+        },
+        {
+          id: `${page}.verify`,
+          type: FieldType.LINK_BUTTON,
+          label: {
+            id: 'verify.label',
+            defaultMessage: 'Authenticate',
+            description: 'The title for the E-Signet verification button'
+          },
+          configuration: {
+            icon: 'Globe',
+            url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
+            text: {
+              id: 'verify.label',
+              defaultMessage: 'e-Signet',
+              description: 'The title for the E-Signet verification button'
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

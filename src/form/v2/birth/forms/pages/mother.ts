@@ -20,7 +20,11 @@ import {
   user
 } from '@opencrvs/toolkit/events'
 import { or, not, never } from '@opencrvs/toolkit/conditionals'
-import { emptyMessage } from '@countryconfig/form/v2/utils'
+import {
+  connectToMOSIPIdReader,
+  emptyMessage,
+  getMOSIPIntegrationFields
+} from '@countryconfig/form/v2/utils'
 import {
   invalidNameValidator,
   nationalIdValidator,
@@ -36,11 +40,6 @@ import {
   defaultStreetAddressConfiguration,
   getNestedFieldValidators
 } from '@countryconfig/form/street-address-configuration'
-import {
-  ESIGNET_REDIRECT_URL,
-  MOSIP_API_USERINFO_URL,
-  OPENID_PROVIDER_CLIENT_ID
-} from '@countryconfig/constants'
 
 export const requireMotherDetails = or(
   field('mother.detailsNotAvailable').isFalsy(),
@@ -109,242 +108,78 @@ export const mother = defineFormPage({
         }
       ]
     },
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: 'mother.verified',
-      type: FieldType.VERIFICATION_STATUS,
-      parent: field('mother.verify-nid-http-fetch'),
-      label: {
-        id: 'mother.verified.status',
-        defaultMessage: 'Verification status',
-        description: 'The title for the status field label'
-      },
-      configuration: {
-        status: {
-          id: 'mother.verified.status.text',
-          defaultMessage:
-            '{value, select, authenticated {ID Authenticated} verified {ID Verified} failed {Unverified ID} pending {Pending verification} other {Invalid value}}',
-          description:
-            'Status text shown on the pill on both form declaration and review page'
-        },
-        description: {
-          id: 'mother.verified.status.description',
-          defaultMessage:
-            '{value, select, authenticated {This identity has been successfully authenticated with the Farajaland’s National ID System. To make edits, please remove the authentication first.} verified {This identity data has been successfully verified with the Farajaland’s National ID System. Please note that their identity has not been authenticated using the individuals biometrics. To make edits, please remove the verification first.} pending {Identity pending verification with Farajaland’s National ID system} failed {The identity data does match an entry in Farajaland’s National ID System} other {Invalid value}}',
-          description: 'Description text of the status'
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ],
-      value: field('mother.verify-nid-http-fetch').get(
-        'data.verificationStatus'
-      )
-    },
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: 'mother.query-params',
-      type: FieldType.QUERY_PARAM_READER,
-      label: {
-        id: 'mother.query-params.label',
-        defaultMessage: 'Query param reader',
-        description:
-          'This is the label for the query param reader field - usually this is hidden'
-      },
-      configuration: {}
-    },
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: 'mother.verify-nid-http-fetch',
-      type: FieldType.HTTP,
-      label: {
-        defaultMessage: 'Fetch applicant information',
-        description: 'Fetch applicant information',
-        id: 'applicant.http-fetch.label'
-      },
-      configuration: {
-        trigger: field('mother.query-params'),
-        url: MOSIP_API_USERINFO_URL,
-        timeout: 5000,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {
-          clientId: OPENID_PROVIDER_CLIENT_ID,
-          redirectUri: '/' // noop
-        },
-        params: {
-          code: field('mother.query-params').get('code'),
-          state: field('mother.query-params').get('state')
-        },
-        errorValue: {
-          verificationStatus: 'failed'
-        }
+    ...getMOSIPIntegrationFields('mother', [
+      {
+        type: ConditionalType.SHOW,
+        conditional: requireMotherDetails
       }
-    },
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: 'mother.fetch-loader',
-      type: FieldType.LOADER,
-      parent: field('mother.verify-nid-http-fetch'),
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: not(
-            field('mother.verify-nid-http-fetch').get('loading').isFalsy()
-          )
-        }
-      ],
-      label: {
-        id: 'mother.fetch-loader.label',
-        defaultMessage: "Fetching the person's data from E-Signet",
-        description:
-          'This is the label for the fetch individual information loader'
-      },
-      configuration: {
-        text: {
-          id: 'mother.fetch-loader.label',
-          defaultMessage: "Fetching the person's data from E-Signet",
-          description:
-            'This is the label for the fetch individual information loader'
-        }
-      }
-    },
-    {
-      id: 'mother.id-reader',
-      type: FieldType.ID_READER,
-      required: false,
-      label: {
-        defaultMessage: 'QR Code',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.mother.field.qr.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            requireMotherDetails,
-            field('mother.verify-nid-http-fetch').get('data').isFalsy()
-          )
-        }
-      ],
-      methods: [
-        {
-          type: FieldType.QR_READER,
-          label: {
-            id: 'event.birth.action.declare.form.section.mother.field.qr.label',
-            defaultMessage: 'Scan QR code',
-            description: 'This is the label for the field'
-          },
-          id: 'mother.id-reader'
+    ]),
+    connectToMOSIPIdReader(
+      {
+        id: 'mother.name',
+        type: FieldType.NAME,
+        required: true,
+        configuration: { maxLength: MAX_NAME_LENGTH },
+        hideLabel: true,
+        label: {
+          defaultMessage: "Mother's name",
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.mother.field.name.label'
         },
-        {
-          id: 'mother.verify',
-          type: FieldType.LINK_BUTTON,
-          label: {
-            id: 'mother.verify',
-            defaultMessage: 'Authenticate',
-            description: 'The title for the E-Signet verification button'
-          },
-          configuration: {
-            icon: 'Globe',
-            url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
-            text: {
-              id: 'mother.verify',
-              defaultMessage: 'e-Signet',
-              description: 'The title for the E-Signet verification button'
-            }
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(requireMotherDetails)
           }
-        }
-      ]
-    },
-    {
-      id: 'mother.name',
-      parent: field('mother.verify-nid-http-fetch'),
-      type: FieldType.NAME,
-      required: true,
-      configuration: { maxLength: MAX_NAME_LENGTH },
-      hideLabel: true,
-      label: {
-        defaultMessage: "Mother's name",
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.mother.field.name.label'
+        ],
+        validation: [invalidNameValidator('mother.name')]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(requireMotherDetails)
-        },
-        {
-          type: ConditionalType.ENABLE,
-          conditional: field('mother.verify-nid-http-fetch')
-            .get('data.name')
-            .isFalsy()
-        }
-      ],
-      value: field('mother.verify-nid-http-fetch').get('data.name'),
-      validation: [invalidNameValidator('mother.name')]
-    },
-    {
-      id: 'mother.dob',
-      type: 'DATE',
-      parent: field('mother.verify-nid-http-fetch'),
-      value: field('mother.verify-nid-http-fetch').get('data.birthDate'),
-      required: true,
-      secured: true,
-      analytics: true,
-      validation: [
-        {
-          message: {
-            defaultMessage: 'Must be a valid birth date',
-            description: 'This is the error message for invalid date',
-            id: 'event.birth.action.declare.form.section.person.field.dob.error'
+      'data.name'
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'mother.dob',
+        type: 'DATE',
+
+        required: true,
+        secured: true,
+        analytics: true,
+        validation: [
+          {
+            message: {
+              defaultMessage: 'Must be a valid birth date',
+              description: 'This is the error message for invalid date',
+              id: 'event.birth.action.declare.form.section.person.field.dob.error'
+            },
+            validator: field('mother.dob').isBefore().now()
           },
-          validator: field('mother.dob').isBefore().now()
+          {
+            message: {
+              defaultMessage: "Birth date must be before child's birth date",
+              description:
+                "This is the error message for a birth date after child's birth date",
+              id: 'event.birth.action.declare.form.section.person.dob.afterChild'
+            },
+            validator: field('mother.dob').isBefore().date(field('child.dob'))
+          }
+        ],
+        label: {
+          defaultMessage: 'Date of birth',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.dob.label'
         },
-        {
-          message: {
-            defaultMessage: "Birth date must be before child's birth date",
-            description:
-              "This is the error message for a birth date after child's birth date",
-            id: 'event.birth.action.declare.form.section.person.dob.afterChild'
-          },
-          validator: field('mother.dob').isBefore().date(field('child.dob'))
-        }
-      ],
-      label: {
-        defaultMessage: 'Date of birth',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.dob.label'
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              not(field('mother.dobUnknown').isEqualTo(true)),
+              requireMotherDetails
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            not(field('mother.dobUnknown').isEqualTo(true)),
-            requireMotherDetails
-          )
-        },
-        {
-          type: ConditionalType.ENABLE,
-          conditional: field('mother.verify-nid-http-fetch')
-            .get('data.birthDate')
-            .isFalsy()
-        }
-      ]
-    },
+      'data.birthDate'
+    ),
     {
       id: 'mother.dobUnknown',
       type: FieldType.CHECKBOX,

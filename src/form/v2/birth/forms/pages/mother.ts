@@ -22,6 +22,7 @@ import {
 import { or, not, never } from '@opencrvs/toolkit/conditionals'
 import {
   connectToMOSIPIdReader,
+  connectToMOSIPVerificationStatus,
   emptyMessage,
   getMOSIPIntegrationFields
 } from '@countryconfig/form/v2/utils'
@@ -140,7 +141,6 @@ export const mother = defineFormPage({
       {
         id: 'mother.dob',
         type: 'DATE',
-
         required: true,
         secured: true,
         analytics: true,
@@ -180,51 +180,59 @@ export const mother = defineFormPage({
       },
       'data.birthDate'
     ),
-    {
-      id: 'mother.dobUnknown',
-      type: FieldType.CHECKBOX,
-      label: {
-        defaultMessage: 'Exact date of birth unknown',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
+    connectToMOSIPIdReader(
+      {
+        id: 'mother.dobUnknown',
+        type: FieldType.CHECKBOX,
+        label: {
+          defaultMessage: 'Exact date of birth unknown',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.age.checkbox.label'
         },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ]
-    },
-    {
-      id: 'mother.age',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Age of mother',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.mother.field.age.label'
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireMotherDetails
+          },
+          {
+            type: ConditionalType.DISPLAY_ON_REVIEW,
+            conditional: never()
+          }
+        ]
       },
-      configuration: {
-        postfix: {
-          defaultMessage: 'years',
-          description: 'This is the postfix for age field',
-          id: 'event.birth.action.declare.form.section.person.field.age.postfix'
-        }
+      '',
+      'data.birthDate' /* hidePath */
+    ),
+    connectToMOSIPIdReader(
+      {
+        id: 'mother.age',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'Age of mother',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.mother.field.age.label'
+        },
+        configuration: {
+          postfix: {
+            defaultMessage: 'years',
+            description: 'This is the postfix for age field',
+            id: 'event.birth.action.declare.form.section.person.field.age.postfix'
+          }
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('mother.dobUnknown').isEqualTo(true),
+              requireMotherDetails
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('mother.dobUnknown').isEqualTo(true),
-            requireMotherDetails
-          )
-        }
-      ]
-    },
+      '',
+      'data.birthDate' /* hidePath */
+    ),
     {
       id: 'mother.nationality',
       type: FieldType.COUNTRY,
@@ -242,56 +250,62 @@ export const mother = defineFormPage({
       ],
       defaultValue: 'FAR'
     },
-    {
-      id: 'mother.idType',
-      type: FieldType.SELECT,
-      required: true,
-      label: {
-        defaultMessage: 'Type of ID',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.idType.label'
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'mother.idType',
+        type: FieldType.SELECT,
+        required: true,
+        label: {
+          defaultMessage: 'Type of ID',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.idType.label'
+        },
+        options: idTypeOptions,
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: requireMotherDetails
+          }
+        ]
       },
-      options: idTypeOptions,
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: requireMotherDetails
-        }
-      ]
-    },
-    {
-      id: 'mother.nid',
-      type: FieldType.ID,
-      required: true,
-      label: {
-        defaultMessage: 'ID Number',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.person.field.nid.label'
+      { hideIfAuthenticated: true }
+    ),
+    connectToMOSIPVerificationStatus(
+      {
+        id: 'mother.nid',
+        type: FieldType.ID,
+        required: true,
+        label: {
+          defaultMessage: 'ID Number',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.person.field.nid.label'
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('mother.idType').isEqualTo(IdType.NATIONAL_ID),
+              requireMotherDetails
+            )
+          }
+        ],
+        validation: [
+          nationalIdValidator('mother.nid'),
+          {
+            message: {
+              defaultMessage: 'National id must be unique',
+              description: 'This is the error message for non-unique ID Number',
+              id: 'event.birth.action.declare.form.nid.unique'
+            },
+            validator: and(
+              not(field('mother.nid').isEqualTo(field('father.nid'))),
+              not(field('mother.nid').isEqualTo(field('informant.nid')))
+            )
+          }
+        ]
       },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('mother.idType').isEqualTo(IdType.NATIONAL_ID),
-            requireMotherDetails
-          )
-        }
-      ],
-      validation: [
-        nationalIdValidator('mother.nid'),
-        {
-          message: {
-            defaultMessage: 'National id must be unique',
-            description: 'This is the error message for non-unique ID Number',
-            id: 'event.birth.action.declare.form.nid.unique'
-          },
-          validator: and(
-            not(field('mother.nid').isEqualTo(field('father.nid'))),
-            not(field('mother.nid').isEqualTo(field('informant.nid')))
-          )
-        }
-      ]
-    },
+      { hideIfAuthenticated: true }
+    ),
     {
       id: 'mother.passport',
       type: FieldType.TEXT,

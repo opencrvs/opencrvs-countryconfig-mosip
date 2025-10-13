@@ -35,24 +35,46 @@ export const emptyMessage = {
 
 export const connectToMOSIPIdReader = (
   fieldInput: FieldConfigInput,
-  valuePath: string
+  valuePath: string,
+  hidePath?: string
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
   const conditionals = fieldInput.conditionals || []
-  const enableConditional = conditionals.find(
-    (c) => c.type === ConditionalType.ENABLE
-  )
-  if (enableConditional) {
-    enableConditional.conditional = enableConditional.conditional.and(
-      field(`${page}.verify-nid-http-fetch`).get(valuePath).isFalsy()
+  if (valuePath) {
+    const enableConditional = conditionals.find(
+      (c) => c.type === ConditionalType.ENABLE
     )
-  } else {
-    conditionals.push({
-      type: ConditionalType.ENABLE,
-      conditional: field(`${page}.verify-nid-http-fetch`)
-        .get(valuePath)
-        .isFalsy()
-    })
+    if (enableConditional) {
+      enableConditional.conditional = and(
+        enableConditional.conditional,
+        field(`${page}.verify-nid-http-fetch`).get(valuePath).isFalsy()
+      )
+    } else {
+      conditionals.push({
+        type: ConditionalType.ENABLE,
+        conditional: field(`${page}.verify-nid-http-fetch`)
+          .get(valuePath)
+          .isFalsy()
+      })
+    }
+  }
+  if (hidePath) {
+    const showConditional = conditionals.find(
+      (c) => c.type === ConditionalType.SHOW
+    )
+    if (showConditional) {
+      showConditional.conditional = and(
+        showConditional.conditional,
+        field(`${page}.verify-nid-http-fetch`).get(hidePath).isFalsy()
+      )
+    } else {
+      conditionals.push({
+        type: ConditionalType.SHOW,
+        conditional: field(`${page}.verify-nid-http-fetch`)
+          .get(hidePath)
+          .isFalsy()
+      })
+    }
   }
   return {
     ...fieldInput,
@@ -235,4 +257,39 @@ export const getMOSIPIntegrationFields = (
       ]
     }
   ]
+}
+
+interface ConnectOption {
+  hideIfAuthenticated?: boolean
+}
+
+export const connectToMOSIPVerificationStatus = (
+  fieldInput: FieldConfigInput,
+  options: ConnectOption = {}
+): FieldConfigInput => {
+  if (!options.hideIfAuthenticated) {
+    return fieldInput
+  }
+  const page = fieldInput.id.split('.')[0]
+  const conditionals = fieldInput.conditionals || []
+  const showConditional = conditionals.find(
+    (c) => c.type === ConditionalType.SHOW
+  )
+  if (showConditional) {
+    showConditional.conditional = and(
+      showConditional.conditional,
+      not(field(`${page}.verified`).isEqualTo('authenticated'))
+    )
+  } else {
+    conditionals.push({
+      type: ConditionalType.SHOW,
+      conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
+    })
+  }
+
+  return {
+    ...fieldInput,
+    conditionals,
+    parent: field(`${page}.verified`)
+  }
 }

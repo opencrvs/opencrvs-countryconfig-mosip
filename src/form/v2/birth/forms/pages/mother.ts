@@ -109,12 +109,14 @@ export const mother = defineFormPage({
         }
       ]
     },
-    ...getMOSIPIntegrationFields('mother', [
-      {
-        type: ConditionalType.SHOW,
-        conditional: requireMotherDetails
-      }
-    ]),
+    ...getMOSIPIntegrationFields('mother', {
+      existingConditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: requireMotherDetails
+        }
+      ]
+    }),
     connectToMOSIPIdReader(
       {
         id: 'mother.name',
@@ -135,7 +137,7 @@ export const mother = defineFormPage({
         ],
         validation: [invalidNameValidator('mother.name')]
       },
-      'data.name'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
     ),
     connectToMOSIPIdReader(
       {
@@ -178,7 +180,7 @@ export const mother = defineFormPage({
           }
         ]
       },
-      'data.birthDate'
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {
@@ -200,8 +202,7 @@ export const mother = defineFormPage({
           }
         ]
       },
-      '',
-      'data.birthDate' /* hidePath */
+      { hideIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {
@@ -230,8 +231,7 @@ export const mother = defineFormPage({
           }
         ]
       },
-      '',
-      'data.birthDate' /* hidePath */
+      { hideIfDataInPath: 'data.birthDate' }
     ),
     {
       id: 'mother.nationality',

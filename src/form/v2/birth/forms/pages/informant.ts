@@ -150,12 +150,14 @@ export const informant = defineFormPage({
       ],
       parent: field('informant.relation')
     },
-    ...getMOSIPIntegrationFields('informant', [
-      {
-        type: ConditionalType.SHOW,
-        conditional: informantOtherThanParent
-      }
-    ]),
+    ...getMOSIPIntegrationFields('informant', {
+      existingConditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanParent
+        }
+      ]
+    }),
     connectToMOSIPIdReader(
       {
         id: 'informant.name',
@@ -177,7 +179,7 @@ export const informant = defineFormPage({
         parent: field('informant.relation'),
         validation: [invalidNameValidator('informant.name')]
       },
-      'data.name'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
     ),
     connectToMOSIPIdReader(
       {
@@ -221,7 +223,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      'data.birthDate'
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {
@@ -244,36 +246,38 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      '',
-      'data.birthDate'
+      { hideIfDataInPath: 'data.birthDate' }
     ),
-    {
-      id: 'informant.age',
-      type: FieldType.TEXT,
-      required: true,
-      label: {
-        defaultMessage: 'Age of informant',
-        description: 'This is the label for the field',
-        id: 'event.birth.action.declare.form.section.informant.field.age.label'
+    connectToMOSIPIdReader(
+      {
+        id: 'informant.age',
+        type: FieldType.TEXT,
+        required: true,
+        label: {
+          defaultMessage: 'Age of informant',
+          description: 'This is the label for the field',
+          id: 'event.birth.action.declare.form.section.informant.field.age.label'
+        },
+        configuration: {
+          postfix: {
+            defaultMessage: 'years',
+            description: 'This is the postfix for age field',
+            id: 'event.birth.action.declare.form.section.person.field.age.postfix'
+          }
+        },
+        conditionals: [
+          {
+            type: ConditionalType.SHOW,
+            conditional: and(
+              field('informant.dobUnknown').isEqualTo(true),
+              informantOtherThanParent
+            )
+          }
+        ],
+        parent: field('informant.relation')
       },
-      configuration: {
-        postfix: {
-          defaultMessage: 'years',
-          description: 'This is the postfix for age field',
-          id: 'event.birth.action.declare.form.section.person.field.age.postfix'
-        }
-      },
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: and(
-            field('informant.dobUnknown').isEqualTo(true),
-            informantOtherThanParent
-          )
-        }
-      ],
-      parent: field('informant.relation')
-    },
+      { hideIfDataInPath: 'data.birthDate' }
+    ),
     {
       id: 'informant.nationality',
       type: FieldType.COUNTRY,

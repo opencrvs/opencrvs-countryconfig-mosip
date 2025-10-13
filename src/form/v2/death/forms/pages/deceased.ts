@@ -79,7 +79,9 @@ export const deceased = defineFormPage({
     id: 'form.death.deceased.title'
   },
   fields: [
-    ...getMOSIPIntegrationFields('deceased', []),
+    ...getMOSIPIntegrationFields('deceased', {
+      existingConditionals: []
+    }),
     connectToMOSIPIdReader(
       {
         id: 'deceased.name',
@@ -94,7 +96,7 @@ export const deceased = defineFormPage({
         },
         validation: [invalidNameValidator('deceased.name')]
       },
-      'data.name'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
     ),
     connectToMOSIPIdReader(
       {
@@ -108,7 +110,7 @@ export const deceased = defineFormPage({
         },
         options: genderOptions
       },
-      'data.gender'
+      { valuePath: 'data.gender', disableIfDataInPath: 'data.gender' }
     ),
     connectToMOSIPIdReader(
       {
@@ -148,7 +150,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      'data.dateOfBirth'
+      { valuePath: 'data.dateOfBirth', disableIfDataInPath: 'data.dateOfBirth' }
     ),
     connectToMOSIPIdReader(
       {
@@ -166,8 +168,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      '',
-      'data.dateOfBirth'
+      { hideIfDataInPath: 'data.dateOfBirth' }
     ),
     connectToMOSIPIdReader(
       {
@@ -193,8 +194,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      '',
-      'data.dateOfBirth'
+      { hideIfDataInPath: 'data.dateOfBirth' }
     ),
     {
       id: `deceased.nationality`,

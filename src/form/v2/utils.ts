@@ -6,6 +6,7 @@ import {
 import {
   ConditionalType,
   field,
+  FieldConditional,
   FieldConfigInput,
   SelectOption,
   TranslationConfig
@@ -33,62 +34,84 @@ export const emptyMessage = {
   id: 'messages.emptyString'
 }
 
+const upsertConditional = (
+  conditionals: FieldConditional[],
+  newConditional: FieldConditional
+): FieldConditional[] => {
+  const existingIndex = conditionals.findIndex(
+    (c) => c.type === newConditional.type
+  )
+
+  if (existingIndex !== -1) {
+    return conditionals.map((c, i) =>
+      i === existingIndex
+        ? {
+            ...c,
+            conditional: and(c.conditional, newConditional.conditional)
+          }
+        : c
+    )
+  }
+
+  return [...conditionals, newConditional]
+}
+
 export const connectToMOSIPIdReader = (
   fieldInput: FieldConfigInput,
-  valuePath: string,
-  hidePath?: string
+  {
+    valuePath,
+    disableIfDataInPath,
+    hideIfDataInPath
+  }: {
+    valuePath?: string
+    disableIfDataInPath?: string
+    hideIfDataInPath?: string
+  } = {}
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
-  const conditionals = fieldInput.conditionals || []
+  let output: FieldConfigInput = { ...fieldInput }
+
   if (valuePath) {
-    const enableConditional = conditionals.find(
-      (c) => c.type === ConditionalType.ENABLE
-    )
-    if (enableConditional) {
-      enableConditional.conditional = and(
-        enableConditional.conditional,
-        field(`${page}.verify-nid-http-fetch`).get(valuePath).isFalsy()
-      )
-    } else {
-      conditionals.push({
+    output = {
+      ...output,
+      parent: field(`${page}.verify-nid-http-fetch`),
+      value: field(`${page}.verify-nid-http-fetch`).get(valuePath)
+    }
+  }
+
+  if (disableIfDataInPath) {
+    output = {
+      ...output,
+      parent: field(`${page}.verify-nid-http-fetch`),
+      conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.ENABLE,
         conditional: field(`${page}.verify-nid-http-fetch`)
-          .get(valuePath)
+          .get(disableIfDataInPath)
           .isFalsy()
       })
     }
   }
-  if (hidePath) {
-    const showConditional = conditionals.find(
-      (c) => c.type === ConditionalType.SHOW
-    )
-    if (showConditional) {
-      showConditional.conditional = and(
-        showConditional.conditional,
-        field(`${page}.verify-nid-http-fetch`).get(hidePath).isFalsy()
-      )
-    } else {
-      conditionals.push({
+
+  if (hideIfDataInPath) {
+    output = {
+      ...output,
+      parent: field(`${page}.verify-nid-http-fetch`),
+      conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
         conditional: field(`${page}.verify-nid-http-fetch`)
-          .get(hidePath)
+          .get(hideIfDataInPath)
           .isFalsy()
       })
     }
   }
-  return {
-    ...fieldInput,
-    conditionals,
-    parent: field(`${page}.verify-nid-http-fetch`),
-    value: field(`${page}.verify-nid-http-fetch`).get(valuePath)
-  }
+  return output
 }
 
 export const getMOSIPIntegrationFields = (
   page: string,
-  existingConditionals: FieldConfigInput['conditionals']
+  { existingConditionals }: { existingConditionals: FieldConditional[] }
 ): FieldConfigInput[] => {
-  const existingShowConditional = existingConditionals?.find(
+  const existingShowConditional = existingConditionals.find(
     (c) => c.type === ConditionalType.SHOW
   )
   return [
@@ -219,11 +242,16 @@ export const getMOSIPIntegrationFields = (
       conditionals: [
         {
           type: ConditionalType.SHOW,
-          conditional: and(
-            existingShowConditional?.conditional,
-            field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
-            field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
-          )
+          conditional: existingShowConditional?.conditional
+            ? and(
+                existingShowConditional?.conditional,
+                field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
+                field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
+              )
+            : and(
+                field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy(),
+                field(`${page}.verify-nid-http-fetch`).get('data').isFalsy()
+              )
         }
       ],
       methods: [
@@ -259,37 +287,27 @@ export const getMOSIPIntegrationFields = (
   ]
 }
 
-interface ConnectOption {
-  hideIfAuthenticated?: boolean
-}
-
 export const connectToMOSIPVerificationStatus = (
   fieldInput: FieldConfigInput,
-  options: ConnectOption = {}
+  {
+    hideIfAuthenticated
+  }: {
+    hideIfAuthenticated?: boolean
+  }
 ): FieldConfigInput => {
-  if (!options.hideIfAuthenticated) {
-    return fieldInput
-  }
   const page = fieldInput.id.split('.')[0]
-  const conditionals = fieldInput.conditionals || []
-  const showConditional = conditionals.find(
-    (c) => c.type === ConditionalType.SHOW
-  )
-  if (showConditional) {
-    showConditional.conditional = and(
-      showConditional.conditional,
-      not(field(`${page}.verified`).isEqualTo('authenticated'))
-    )
-  } else {
-    conditionals.push({
-      type: ConditionalType.SHOW,
-      conditional: not(field(`${page}.verified`).isEqualTo('authenticated'))
-    })
+  if (hideIfAuthenticated) {
+    return {
+      ...fieldInput,
+      conditionals: upsertConditional(fieldInput.conditionals || [], {
+        type: ConditionalType.SHOW,
+        conditional: not(
+          field(`${page}.verify-nid-http-fetch`)
+            .get('data.verificationStatus')
+            .isEqualTo('authenticated')
+        )
+      })
+    }
   }
-
-  return {
-    ...fieldInput,
-    conditionals,
-    parent: field(`${page}.verified`)
-  }
+  return fieldInput
 }

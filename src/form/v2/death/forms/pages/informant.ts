@@ -161,12 +161,14 @@ export const informant = defineFormPage({
       ],
       parent: field('informant.relation')
     },
-    ...getMOSIPIntegrationFields('informant', [
-      {
-        type: ConditionalType.SHOW,
-        conditional: informantOtherThanSpouse
-      }
-    ]),
+    ...getMOSIPIntegrationFields('informant', {
+      existingConditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: informantOtherThanSpouse
+        }
+      ]
+    }),
     connectToMOSIPIdReader(
       {
         id: 'informant.name',
@@ -188,7 +190,7 @@ export const informant = defineFormPage({
         parent: field('informant.relation'),
         validation: [invalidNameValidator('informant.name')]
       },
-      'data.name'
+      { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
     ),
     connectToMOSIPIdReader(
       {
@@ -221,7 +223,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      'data.birthDate'
+      { valuePath: 'data.dateOfBirth', disableIfDataInPath: 'data.dateOfBirth' }
     ),
     connectToMOSIPIdReader(
       {
@@ -244,8 +246,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      '',
-      'data.birthDate'
+      { hideIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {
@@ -275,8 +276,7 @@ export const informant = defineFormPage({
         ],
         parent: field('informant.relation')
       },
-      '',
-      'data.birthDate'
+      { hideIfDataInPath: 'data.birthDate' }
     ),
     {
       id: 'informant.nationality',

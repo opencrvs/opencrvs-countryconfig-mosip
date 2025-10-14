@@ -69,20 +69,27 @@ export const connectToMOSIPIdReader = (
   } = {}
 ): FieldConfigInput => {
   const page = fieldInput.id.split('.')[0]
-  let output: FieldConfigInput = { ...fieldInput }
+  let output: FieldConfigInput = {
+    parent: [
+      field(`${page}.id-reader`),
+      field(`${page}.verify-nid-http-fetch`)
+    ],
+    ...fieldInput
+  }
 
   if (valuePath) {
     output = {
       ...output,
-      parent: field(`${page}.verify-nid-http-fetch`),
-      value: field(`${page}.verify-nid-http-fetch`).get(valuePath)
+      value: [
+        field(`${page}.verify-nid-http-fetch`).get(valuePath),
+        field(`${page}.id-reader`).get(valuePath)
+      ]
     }
   }
 
   if (disableIfDataInPath) {
     output = {
       ...output,
-      parent: field(`${page}.verify-nid-http-fetch`),
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.ENABLE,
         conditional: field(`${page}.verify-nid-http-fetch`)
@@ -95,10 +102,6 @@ export const connectToMOSIPIdReader = (
   if (hideIfDataInPath) {
     output = {
       ...output,
-      parent: [
-        field(`${page}.verify-nid-http-fetch`),
-        field(`${page}.id-reader`)
-      ],
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
         conditional: field(`${page}.verify-nid-http-fetch`)
@@ -124,7 +127,10 @@ export const getMOSIPIntegrationFields = (
     {
       id: `${page}.verified`,
       type: FieldType.VERIFICATION_STATUS,
-      parent: field(`${page}.verify-nid-http-fetch`),
+      parent: [
+        field(`${page}.verify-nid-http-fetch`),
+        field(`${page}.id-reader`)
+      ],
       label: {
         id: `${page}.verified.status`,
         defaultMessage: 'Verification status',

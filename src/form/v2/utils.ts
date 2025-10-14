@@ -95,7 +95,10 @@ export const connectToMOSIPIdReader = (
   if (hideIfDataInPath) {
     output = {
       ...output,
-      parent: field(`${page}.verify-nid-http-fetch`),
+      parent: [
+        field(`${page}.verify-nid-http-fetch`),
+        field(`${page}.id-reader`)
+      ],
       conditionals: upsertConditional(fieldInput.conditionals || [], {
         type: ConditionalType.SHOW,
         conditional: field(`${page}.verify-nid-http-fetch`)

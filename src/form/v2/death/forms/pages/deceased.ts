@@ -150,7 +150,7 @@ export const deceased = defineFormPage({
           }
         ]
       },
-      { valuePath: 'data.dateOfBirth', disableIfDataInPath: 'data.dateOfBirth' }
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {

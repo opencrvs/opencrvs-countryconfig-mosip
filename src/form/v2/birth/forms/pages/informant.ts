@@ -176,7 +176,6 @@ export const informant = defineFormPage({
             conditional: informantOtherThanParent
           }
         ],
-        parent: field('informant.relation'),
         validation: [invalidNameValidator('informant.name')]
       },
       { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
@@ -220,8 +219,7 @@ export const informant = defineFormPage({
               informantOtherThanParent
             )
           }
-        ],
-        parent: field('informant.relation')
+        ]
       },
       { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
     ),

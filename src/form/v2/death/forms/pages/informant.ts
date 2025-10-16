@@ -187,7 +187,6 @@ export const informant = defineFormPage({
             conditional: informantOtherThanSpouse
           }
         ],
-        parent: field('informant.relation'),
         validation: [invalidNameValidator('informant.name')]
       },
       { valuePath: 'data.name', disableIfDataInPath: 'data.name' }
@@ -220,10 +219,9 @@ export const informant = defineFormPage({
               informantOtherThanSpouse
             )
           }
-        ],
-        parent: field('informant.relation')
+        ]
       },
-      { valuePath: 'data.dateOfBirth', disableIfDataInPath: 'data.dateOfBirth' }
+      { valuePath: 'data.birthDate', disableIfDataInPath: 'data.birthDate' }
     ),
     connectToMOSIPIdReader(
       {

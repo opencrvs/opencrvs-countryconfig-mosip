@@ -8,7 +8,7 @@
  *
  * Copyright (C) The OpenCRVS Authors located at https://github.com/opencrvs/opencrvs-core/blob/master/AUTHORS.
  */
-import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
+// import { tennisClubMembershipEvent } from '@countryconfig/form/tennis-club-membership'
 import { birthEvent } from '@countryconfig/form/v2/birth'
 import { deathEvent } from '@countryconfig/form/v2/death'
 import * as Hapi from '@hapi/hapi'
@@ -27,7 +27,7 @@ export function getCustomEventsHandler(
   h: Hapi.ResponseToolkit
 ) {
   return h
-    .response([tennisClubMembershipEvent, birthEvent, deathEvent])
+    .response([/*tennisClubMembershipEvent, */ birthEvent, deathEvent])
     .code(200)
 }
 

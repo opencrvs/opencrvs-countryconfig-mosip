@@ -13,6 +13,7 @@ import { env } from './environment'
 export const TEST_SOURCE = `${process.cwd()}/src/tests/`
 export const DEFAULT_TIMEOUT = 600000
 export const SEVEN_DAYS_IN_MILISECOND = 1000 * 60 * 60 * 24 * 7
+export const THIRTY_MINUTES_IN_MILLISECONDS = 1000 * 60 * 30
 
 export const DOMAIN = env.DOMAIN
 export const GATEWAY_URL = env.GATEWAY_URL
@@ -40,3 +41,4 @@ export const OPENID_PROVIDER_CLIENT_ID = env.OPENID_PROVIDER_CLIENT_ID
 export const OPENID_PROVIDER_CLAIMS = env.OPENID_PROVIDER_CLAIMS
 export const MOSIP_API_USERINFO_URL = env.MOSIP_API_USERINFO_URL
 export const MOSIP_INTEROP_URL = env.MOSIP_INTEROP_URL
+export const USER_MANAGEMENT_URL = env.USER_MANAGEMENT_URL

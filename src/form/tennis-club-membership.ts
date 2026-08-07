@@ -25,10 +25,132 @@ import {
   not,
   defineConditional,
   never,
-  now
+  now,
+  FieldConfig
 } from '@opencrvs/toolkit/events'
 import { Event } from './types/types'
 import { MAX_NAME_LENGTH } from './v2/birth/validators'
+
+function applicantAddressFields() {
+  const isDomesticAddress = field('applicant.address')
+    .get('country')
+    .isEqualTo('FAR')
+  const isInternationalAddress = not(
+    or(
+      field('applicant.address').get('country').isEqualTo('FAR'),
+      field('applicant.address').get('country').isFalsy()
+    )
+  )
+  return [
+    {
+      id: 'applicant.address',
+      type: FieldType.FIELD_GROUP,
+      label: {
+        defaultMessage: "Applicant's address",
+        description: 'This is the label for the field',
+        id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.label'
+      },
+      fields: [
+        {
+          id: 'country',
+          type: FieldType.COUNTRY,
+          defaultValue: 'FAR',
+          label: {
+            defaultMessage: 'Country',
+            description: 'This is the label for the field',
+            id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.country.label'
+          }
+        },
+        {
+          id: 'domestic',
+          type: FieldType.FIELD_GROUP,
+          label: {
+            defaultMessage: '',
+            description: '',
+            id: 'form.field.label.empty'
+          },
+          conditionals: [{ type: 'SHOW', conditional: isDomesticAddress }],
+          fields: [
+            {
+              id: 'province',
+              type: FieldType.ADMINISTRATIVE_AREA,
+              label: {
+                defaultMessage: 'Province',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.province.label'
+              },
+              defaultValue: user('primaryOfficeId').locationLevel('province'),
+              configuration: {
+                type: 'ADMIN_STRUCTURE'
+              }
+            },
+            {
+              id: 'district',
+              type: FieldType.ADMINISTRATIVE_AREA,
+              label: {
+                defaultMessage: 'District',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.district.label'
+              },
+              defaultValue: user('primaryOfficeId').locationLevel('district'),
+              parent: field('applicant.address').getByPath([
+                'domestic',
+                'province'
+              ]),
+              configuration: {
+                type: 'ADMIN_STRUCTURE',
+                partOf: field('applicant.address').getByPath([
+                  'domestic',
+                  'province'
+                ])
+              },
+              conditionals: [
+                {
+                  type: ConditionalType.SHOW,
+                  conditional: not(
+                    field('applicant.address')
+                      .getByPath(['domestic', 'province'])
+                      .isFalsy()
+                  )
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: 'international',
+          type: FieldType.FIELD_GROUP,
+          label: {
+            defaultMessage: '',
+            description: '',
+            id: 'form.field.label.empty'
+          },
+          conditionals: [{ type: 'SHOW', conditional: isInternationalAddress }],
+          fields: [
+            {
+              id: 'province',
+              type: FieldType.TEXT,
+              label: {
+                defaultMessage: 'Province',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.province.label'
+              }
+            },
+            {
+              id: 'district',
+              type: FieldType.TEXT,
+              label: {
+                defaultMessage: 'District',
+                description: 'This is the label for the field',
+                id: 'event.tennis-club-membership.action.declare.form.section.who.field.address.district.label'
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ] satisfies FieldConfig[]
+}
 
 const TENNIS_CLUB_DECLARATION_REVIEW = {
   title: {
@@ -76,7 +198,40 @@ const TENNIS_CLUB_DECLARATION_REVIEW = {
           description: "Print button's label",
           id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
         }
-      }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: and(
+            user.hasRole('LOCAL_REGISTRAR'),
+            not(event.hasAction(ActionType.DECLARE)),
+            not(event.hasAction(ActionType.NOTIFY))
+          )
+        }
+      ]
+    },
+    {
+      type: FieldType.ALPHA_PRINT_BUTTON,
+      id: 'review.print-declaration',
+      label: {
+        defaultMessage: 'Print declaration for hospital clerk',
+        description: 'Print',
+        id: 'event.tennis-club-membership.action.declare.form.review.print-record.label'
+      },
+      configuration: {
+        template: 'v2.tennis-club-membership-certificate-alpha',
+        buttonLabel: {
+          defaultMessage: 'Print declaration summary by hospital clerk',
+          description: "Print button's label",
+          id: 'event.tennis-club-membership.action.declare.form.review.print.button.label'
+        }
+      },
+      conditionals: [
+        {
+          type: ConditionalType.SHOW,
+          conditional: user.hasRole('HOSPITAL_CLERK')
+        }
+      ]
     }
   ]
 }
@@ -233,6 +388,7 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             id: 'event.tennis-club-membership.action.declare.form.section.who.field.dob.label'
           }
         },
+        ...applicantAddressFields(),
         {
           id: 'applicant.tob',
           type: FieldType.TIME,
@@ -344,6 +500,12 @@ const TENNIS_CLUB_DECLARATION_FORM = defineDeclarationForm({
             defaultMessage: 'Registration Number of recommender',
             description: 'This is the label for the field',
             id: 'event.tennis-club-membership.action.declare.form.section.recommender.field.search.label'
+          },
+          helperText: {
+            defaultMessage:
+              'You can search tennis records created on Farajaland since beginning of 2023',
+            description: 'This is the helper text for the field',
+            id: 'tennis-club-membership.searchField.helperText'
           },
           configuration: {
             query: {
@@ -578,6 +740,7 @@ const TENNIS_CLUB_MEMBERSHIP_CERTIFICATE_COLLECTOR_FORM = defineActionForm({
     {
       id: 'collector',
       type: PageTypes.enum.FORM,
+      requireCompletionToContinue: true,
       title: {
         id: 'event.tennis-club-membership.action.certificate.form.section.who.title',
         defaultMessage: 'Print certified copy',
@@ -1016,6 +1179,25 @@ export const tennisClubMembershipEvent = defineConfig({
           defaultMessage: "Recommender's ID",
           description: 'Label for the recommender’s ID field',
           id: 'event.tennis-club-membership.summary.field.recommender.id.label'
+        }
+      },
+      {
+        id: 'event.registeredAt',
+        emptyValueMessage: {
+          defaultMessage: 'No registration date',
+          description: 'This is shown when there is no registration date',
+          id: 'event.birth.summary.event.registeredAt.empty'
+        },
+        label: {
+          defaultMessage: 'Registration date',
+          description: 'This is the label for the registration date',
+          id: 'event.birth.summary.event.registeredAt.label'
+        },
+        value: {
+          defaultMessage:
+            '{event.legalStatuses.REGISTERED.acceptedAt, date, ::dd MMMM yyyy}',
+          description: 'This is the registration date value',
+          id: 'event.birth.summary.event.registeredAt.value'
         }
       }
     ]

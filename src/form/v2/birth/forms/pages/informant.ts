@@ -149,6 +149,9 @@ export const informant = defineFormPage({
       ],
       parent: field('informant.relation')
     },
+    // fields:
+    // informant.verified, informant.query-params, informant.verify-nid-http-fetch,
+    // informant.fetch-loader, informant.id-reader
     ...getMOSIPIntegrationFields('informant', {
       existingConditionals: [
         {
@@ -175,7 +178,8 @@ export const informant = defineFormPage({
             conditional: informantOtherThanParent
           }
         ],
-        validation: [invalidNameValidator('informant.name')]
+        validation: [invalidNameValidator('informant.name')],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.name',
@@ -221,7 +225,8 @@ export const informant = defineFormPage({
               informantOtherThanParent
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.birthDate',
@@ -330,7 +335,8 @@ export const informant = defineFormPage({
             type: ConditionalType.SHOW,
             conditional: informantOtherThanParent
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.idType',
@@ -370,7 +376,8 @@ export const informant = defineFormPage({
               not(field('informant.nid').isEqualTo(field('father.nid')))
             )
           }
-        ]
+        ],
+        parent: field('informant.relation')
       },
       {
         valuePath: 'data.nid',

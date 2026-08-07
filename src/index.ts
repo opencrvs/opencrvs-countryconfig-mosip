@@ -10,6 +10,7 @@
  */
 require('app-module-path').addPath(require('path').join(__dirname))
 require('dotenv').config()
+import './monitoring'
 
 import StreamArray from 'stream-json/streamers/StreamArray'
 import path from 'path'
@@ -29,7 +30,8 @@ import {
   CHECK_INVALID_TOKEN,
   AUTH_URL,
   DEFAULT_TIMEOUT,
-  GATEWAY_URL
+  GATEWAY_URL,
+  THIRTY_MINUTES_IN_MILLISECONDS
 } from '@countryconfig/constants'
 import {
   contentHandler,
@@ -52,6 +54,7 @@ import { conditionalsHandler } from './form/common/custom-validation-conditional
 import { COUNTRY_WIDE_CRUDE_DEATH_RATE } from './api/application/application-config'
 import { handlebarsHandler } from './form/common/certificate/handlebars/handler'
 import { trackingIDHandler } from './api/tracking-id/handler'
+import { systemReadyHandler } from './api/integration/handler'
 import { dashboardQueriesHandler } from './api/dashboards/handler'
 import { fontsHandler } from './api/fonts/handler'
 import { recordNotificationHandler } from './api/record-notification/handler'
@@ -211,9 +214,16 @@ export async function createServer() {
     port: COUNTRY_CONFIG_PORT,
     routes: {
       cors: { origin: whitelist },
-      payload: { maxBytes: 52428800, timeout: DEFAULT_TIMEOUT }
+      timeout: {
+        server: DEFAULT_TIMEOUT
+      },
+      payload: {
+        maxBytes: 52428800
+      }
     }
   })
+
+  server.listener.requestTimeout = THIRTY_MINUTES_IN_MILLISECONDS
 
   await server.register(getPlugins())
 
@@ -561,59 +571,30 @@ export async function createServer() {
        * In deployed environments, the reindex path is blocked by Traefik.
        * See docker-compose.deploy.yml for more details.
        */
-      auth: false,
-      payload: {
-        output: 'stream',
-        parse: false
-      }
+      auth: false
     },
     handler: async (req, h) => {
       if (!env.ANALYTICS_DATABASE_URL) {
-        // kill client upload immediately
-        if (!req.raw.req.destroyed) {
-          req.raw.req.destroy()
-        }
-
         logger.warn(
           'Skipping reindex, no ANALYTICS_DATABASE_URL environment variable set.'
         )
         return h.response().code(200)
       }
 
-      const stream = req.raw.req.pipe(StreamArray.withParser())
-      const BATCH_SIZE = 1000
-      const queue: EventDocument[] = []
+      const batch = req.payload as EventDocument[]
       const client = getClient()
 
       try {
         await client.transaction().execute(async (trx) => {
-          for await (const { value } of stream) {
-            queue.push(value)
-
-            if (queue.length >= BATCH_SIZE) {
-              const batch = queue.splice(0, queue.length)
-              await importEvents(batch, trx)
-            }
-          }
-
-          if (queue.length > 0) {
-            await importEvents(queue, trx)
-          }
-
-          // Import locations
-          const url = new URL('events', GATEWAY_URL).toString()
-          const client = createClient(url, req.headers.authorization)
-          const locations = await client.locations.list.query()
-          await importLocations(locations)
+          await importEvents(batch, trx)
         })
 
-        logger.info('Reindexed all events into analytics.')
+        await syncLocations(req)
+
+        logger.info(`Reindexed batch of ${batch.length} events into analytics.`)
 
         return h.response().code(200)
       } catch (e) {
-        // stop consuming the stream if something failed on import
-        if (!stream.destroyed) stream.destroy(e)
-
         logger.error(e)
 
         return h.response({ error: 'Unexpected error' }).code(500)
@@ -629,6 +610,17 @@ export async function createServer() {
       auth: false,
       tags: ['api', 'events'],
       description: 'Serves custom events'
+    }
+  })
+
+  server.route({
+    method: 'GET',
+    path: '/triggers/system/ready',
+    handler: systemReadyHandler,
+    options: {
+      tags: ['api', 'integration'],
+      description:
+        'Called by events on startup. Registers integrations in user-mgmt using the provided bootstrap token.'
     }
   })
 
@@ -738,6 +730,22 @@ export async function createServer() {
     }
     return h.continue
   })
+
+  let lastLocationSyncAt = 0
+  const ONE_HOUR_MS = 60 * 60 * 1000
+
+  async function syncLocations(req: Hapi.Request<Hapi.ReqRefDefaults>) {
+    const now = Date.now()
+    // Sync locations at most once per hour rather than every call
+    if (now - lastLocationSyncAt > ONE_HOUR_MS) {
+      const url = new URL('events', GATEWAY_URL).toString()
+      const apiClient = createClient(url, req.headers.authorization)
+      const locations = await apiClient.locations.list.query()
+      await importLocations(locations)
+      lastLocationSyncAt = now
+      logger.info('Reindex: locations synced into analytics.')
+    }
+  }
 
   async function stop() {
     await server.stop()

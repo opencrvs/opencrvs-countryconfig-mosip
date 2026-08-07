@@ -23,6 +23,17 @@ import isAfter from 'date-fns/isAfter'
 const CHILD_MAX_AGE_YEARS_FOR_MOSIP = 10
 
 const BIRTH_REGISTRATION_MOSIP_CONSTRAINTS = [
+  /*
+   * Kept separate from the age constraint below: a constraint carrying a
+   * `validator` skips the presence check, so without this entry a missing
+   * `child.dob` would be forwarded (`new Date(undefined)` yields an Invalid
+   * Date, which the age comparison treats as eligible).
+   */
+  {
+    fieldId: 'child.dob',
+    expectedValues: 'any',
+    rejectReason: 'Child date of birth not provided'
+  },
   {
     fieldId: 'child.dob',
     expectedValues: 'any',
@@ -181,7 +192,10 @@ export const connectToMOSIPIdReader = (
 
 export const getMOSIPIntegrationFields = (
   page: string,
-  { existingConditionals }: { existingConditionals: FieldConditional[] }
+  {
+    existingConditionals,
+    esignet = true
+  }: { existingConditionals: FieldConditional[]; esignet?: boolean }
 ): FieldConfigInput[] => {
   const existingShowConditional = existingConditionals.find(
     (c) => c.type === ConditionalType.SHOW
@@ -224,102 +238,108 @@ export const getMOSIPIntegrationFields = (
       ]
     },
 
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: `${page}.query-params`,
-      type: FieldType.QUERY_PARAM_READER,
-      conditionals: [
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ],
-      label: {
-        id: 'form.query-params.label',
-        defaultMessage: 'Query param reader',
-        description:
-          'This is the label for the query param reader field - usually this is hidden'
-      },
-      configuration: {
-        pickParams: ['code', 'state']
-      }
-    },
+    ...(esignet
+      ? ([
+          /*
+           * @opencrvs/mosip: MOSIP / E-Signet
+           */
+          {
+            id: `${page}.query-params`,
+            type: FieldType.QUERY_PARAM_READER,
+            conditionals: [
+              {
+                type: ConditionalType.DISPLAY_ON_REVIEW,
+                conditional: never()
+              }
+            ],
+            label: {
+              id: 'form.query-params.label',
+              defaultMessage: 'Query param reader',
+              description:
+                'This is the label for the query param reader field - usually this is hidden'
+            },
+            configuration: {
+              pickParams: ['code', 'state']
+            }
+          },
 
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: `${page}.verify-nid-http-fetch`,
-      type: FieldType.HTTP,
-      conditionals: [
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ],
-      label: {
-        defaultMessage: 'Fetch applicant information',
-        description: 'Fetch applicant information',
-        id: 'applicant.http-fetch.label'
-      },
-      configuration: {
-        trigger: field(`${page}.query-params`),
-        url: MOSIP_API_USERINFO_URL,
-        timeout: 5000,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: {
-          clientId: OPENID_PROVIDER_CLIENT_ID,
-          redirectUri: window().location.get('href')
-        },
-        params: {
-          code: field(`${page}.query-params`).get('data.code'),
-          state: field(`${page}.query-params`).get('data.state')
-        },
-        errorValue: {
-          verificationStatus: 'failed'
-        }
-      }
-    },
+          /*
+           * @opencrvs/mosip: MOSIP / E-Signet
+           */
+          {
+            id: `${page}.verify-nid-http-fetch`,
+            type: FieldType.HTTP,
+            conditionals: [
+              {
+                type: ConditionalType.DISPLAY_ON_REVIEW,
+                conditional: never()
+              }
+            ],
+            label: {
+              defaultMessage: 'Fetch applicant information',
+              description: 'Fetch applicant information',
+              id: 'applicant.http-fetch.label'
+            },
+            configuration: {
+              trigger: field(`${page}.query-params`),
+              url: MOSIP_API_USERINFO_URL,
+              timeout: 5000,
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: {
+                clientId: OPENID_PROVIDER_CLIENT_ID,
+                redirectUri: window().location.get('href')
+              },
+              params: {
+                code: field(`${page}.query-params`).get('data.code'),
+                state: field(`${page}.query-params`).get('data.state')
+              },
+              errorValue: {
+                verificationStatus: 'failed'
+              }
+            }
+          },
 
-    /*
-     * @opencrvs/mosip: MOSIP / E-Signet
-     */
-    {
-      id: `${page}.fetch-loader`,
-      type: FieldType.LOADER,
-      parent: field(`${page}.verify-nid-http-fetch`),
-      conditionals: [
-        {
-          type: ConditionalType.SHOW,
-          conditional: not(
-            field(`${page}.verify-nid-http-fetch`).get('loading').isFalsy()
-          )
-        },
-        {
-          type: ConditionalType.DISPLAY_ON_REVIEW,
-          conditional: never()
-        }
-      ],
-      label: {
-        id: 'form.fetch-loader.label',
-        defaultMessage: "Fetching the person's data from E-Signet",
-        description:
-          'This is the label for the fetch individual information loader'
-      },
-      configuration: {
-        text: {
-          id: 'form.fetch-loader.label',
-          defaultMessage: "Fetching the person's data from E-Signet",
-          description:
-            'This is the label for the fetch individual information loader'
-        }
-      }
-    },
+          /*
+           * @opencrvs/mosip: MOSIP / E-Signet
+           */
+          {
+            id: `${page}.fetch-loader`,
+            type: FieldType.LOADER,
+            parent: field(`${page}.verify-nid-http-fetch`),
+            conditionals: [
+              {
+                type: ConditionalType.SHOW,
+                conditional: not(
+                  field(`${page}.verify-nid-http-fetch`)
+                    .get('loading')
+                    .isFalsy()
+                )
+              },
+              {
+                type: ConditionalType.DISPLAY_ON_REVIEW,
+                conditional: never()
+              }
+            ],
+            label: {
+              id: 'form.fetch-loader.label',
+              defaultMessage: "Fetching the person's data from E-Signet",
+              description:
+                'This is the label for the fetch individual information loader'
+            },
+            configuration: {
+              text: {
+                id: 'form.fetch-loader.label',
+                defaultMessage: "Fetching the person's data from E-Signet",
+                description:
+                  'This is the label for the fetch individual information loader'
+              }
+            }
+          }
+        ] satisfies FieldConfigInput[])
+      : []),
 
     /*
      * @opencrvs/mosip: MOSIP / E-Signet
@@ -372,24 +392,29 @@ export const getMOSIPIntegrationFields = (
           },
           id: `${page}.id-reader`
         },
-        {
-          id: `${page}.verify`,
-          type: FieldType.LINK_BUTTON,
-          label: {
-            id: 'verify.label',
-            defaultMessage: 'Authenticate',
-            description: 'The title for the E-Signet verification button'
-          },
-          configuration: {
-            icon: 'Globe',
-            url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
-            text: {
-              id: 'verify.label',
-              defaultMessage: 'e-Signet',
-              description: 'The title for the E-Signet verification button'
-            }
-          }
-        }
+        ...(esignet
+          ? [
+              {
+                id: `${page}.verify`,
+                type: FieldType.LINK_BUTTON,
+                label: {
+                  id: 'verify.label',
+                  defaultMessage: 'Authenticate',
+                  description: 'The title for the E-Signet verification button'
+                },
+                configuration: {
+                  icon: 'Globe',
+                  url: `${ESIGNET_REDIRECT_URL}?client_id=${OPENID_PROVIDER_CLIENT_ID}&response_type=code&scope=openid%20profile&acr_values=mosip:idp:acr:static-code&claims=name,family_name,given_name,middle_name,birthdate,address&state=fetch-on-mount`,
+                  text: {
+                    id: 'verify.label',
+                    defaultMessage: 'e-Signet',
+                    description:
+                      'The title for the E-Signet verification button'
+                  }
+                }
+              }
+            ]
+          : [])
       ]
     }
   ]
